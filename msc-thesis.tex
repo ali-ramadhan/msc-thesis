@@ -1,0 +1,78 @@
+% **************************************************************************************************************
+% A Classic Thesis Style
+% An Homage to The Elements of Typographic Style
+%
+% Copyright (C) 2015 André Miede http://www.miede.de
+%
+% If you like the style then I would appreciate a postcard. My address 
+% can be found in the file ClassicThesis.pdf. A collection of the 
+% postcards I received so far is available online at 
+% http://postcards.miede.de
+%
+% **************************************************************************************************************
+\RequirePackage{fix-cm} % fix some latex issues see: http://texdoc.net/texmf-dist/doc/latex/base/fixltx2e.pdf
+\documentclass[ 
+twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,% 
+%%letterpaper a4paper
+                footinclude=true,cleardoublepage=empty,abstractoff, % <--- obsolete, remove (todo)
+                BCOR=5mm,paper=letter,fontsize=11pt,
+                ngerman,american,
+                ]{scrreprt}
+
+\input{classicthesis-config}
+
+\addbibresource{Bibliography.bib}
+\addbibresource[label=ownpubs]{AMiede_Publications.bib}
+
+%\hyphenation{put special hyphenation here}
+
+\begin{document}
+\frenchspacing
+\raggedbottom
+\selectlanguage{american} % american ngerman
+%\renewcommand*{\bibname}{new name}
+%\setbibpreamble{}
+\pagenumbering{roman}
+\pagestyle{plain}
+
+\include{FrontBackmatter/DirtyTitlepage}
+\include{FrontBackmatter/Titlepage}
+\include{FrontBackmatter/Titleback}
+%\cleardoublepage\include{FrontBackmatter/Dedication}
+%\cleardoublepage\include{FrontBackmatter/Foreword}
+%\cleardoublepage\include{FrontBackmatter/Abstract}
+%\cleardoublepage\include{FrontBackmatter/Publications}
+%\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+\pagestyle{scrheadings}
+\cleardoublepage\include{FrontBackmatter/Contents}
+
+
+\cleardoublepage\pagenumbering{arabic}
+%\setcounter{page}{90}
+% use \cleardoublepage here to avoid problems with pdfbookmark
+\cleardoublepage
+
+\ctparttext{A lot goes into exploding a molecule, even the tiny ones featured 
+here. }
+
+\part{How to explode a molecule}
+\include{Chapters/CEI}
+\cleardoublepage
+
+%\part{The Showcase}
+%\include{Chapters/Chapter02}
+%%\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
+%\include{Chapters/Chapter03}
+%%\include{multiToC} % <--- just debug stuff, ignore for your documents
+
+\appendix
+%\renewcommand{\thechapter}{\alph{chapter}}
+\cleardoublepage
+
+%\part{Appendix}
+%\include{Chapters/Chapter0A}
+\cleardoublepage\include{FrontBackmatter/Bibliography}
+%\cleardoublepage\include{FrontBackmatter/Declaration}
+%\cleardoublepage\include{FrontBackmatter/Colophon}
+
+\end{document}
