@@ -38,7 +38,7 @@
 
 % 2. Personal data and user ad-hoc commands
 \newcommand{\myTitle}{MMMGRUBS: Molecular motion movies and geometry reconstruction using Bayesian statistics\xspace}
-\newcommand{\mySubtitle}{An Homage to The Elements of Typographic Style\xspace}
+\newcommand{\mySubtitle}{Hakuna matata?\xspace}
 \newcommand{\myDegree}{Master of Science (M.Sc.)\xspace}
 \newcommand{\myName}{Ali Ramadhan\xspace}
 \newcommand{\myProf}{Put name here\xspace}
@@ -73,25 +73,29 @@
 %\PassOptionsToPackage{ngerman,american}{babel}   % change this to your language(s)
 % Spanish languages need extra options in order to work with this template
 %\PassOptionsToPackage{spanish,es-lcroman}{babel}
-	\usepackage{babel}                  
+\usepackage{babel}                  
 
 \usepackage{csquotes}
 \PassOptionsToPackage{%
-    %backend=biber, %instead of bibtex
+  %backend=biber, %instead of bibtex
 	backend=bibtex8,bibencoding=ascii,%
 	language=auto,%
-	style=numeric-comp,%
-    %style=authoryear-comp, % Author 1999, 2010
-    %bibstyle=authoryear,dashed=false, % dashed: substitute rep. author with ---
-    sorting=nyt, % name, year, title
-    maxbibnames=10, % default: 3, et al.
-    %backref=true,%
-    natbib=true % natbib compatibility mode (\citep and \citet still work)
+	style=authoryear-comp,
+  bibstyle=authoryear,
+  firstinits=true,
+  %dashed=false, % dashed: substitute rep. author with ---
+  sorting=nyt,
+  maxbibnames=10,
+  %backref=true,%
+  natbib=true % natbib compatibility mode (\citep and \citet still work)
 }{biblatex}
-    \usepackage{biblatex}
 
-\PassOptionsToPackage{fleqn}{amsmath}       % math environments and more by the AMS 
-    \usepackage{amsmath}
+\usepackage{biblatex}
+\renewbibmacro{in:}{}
+\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}}
+
+\PassOptionsToPackage{fleqn}{amsmath} % math environments and more by the AMS 
+\usepackage{amsmath}
 
 % ******************************************************************** 
 % General useful packages

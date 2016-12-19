@@ -22,7 +22,7 @@ twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,%
 \input{classicthesis-config}
 
 \addbibresource{Bibliography.bib}
-\addbibresource[label=ownpubs]{AMiede_Publications.bib}
+%\addbibresource[label=ownpubs]{AMiede_Publications.bib}
 
 %\hyphenation{put special hyphenation here}
 
@@ -40,7 +40,8 @@ twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,%
 \include{FrontBackmatter/Titleback}
 %\cleardoublepage\include{FrontBackmatter/Dedication}
 %\cleardoublepage\include{FrontBackmatter/Foreword}
-%\cleardoublepage\include{FrontBackmatter/Abstract}
+\cleardoublepage\include{FrontBackmatter/TechnicalAbstract}
+\cleardoublepage\include{FrontBackmatter/PlainLanguageAbstract}
 %\cleardoublepage\include{FrontBackmatter/Publications}
 %\cleardoublepage\include{FrontBackmatter/Acknowledgments}
 \pagestyle{scrheadings}
@@ -53,17 +54,24 @@ twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,%
 \cleardoublepage
 
 \ctparttext{A lot goes into exploding a molecule, even the tiny ones featured 
-here. }
+here. To begin, a short laser pulse must be created and its interaction with 
+the molecule must be understood. Once we have a short laser pulse and 
+understand how it interacts, we can do Coulomb explosion imaging.}
 
 \part{How to explode a molecule}
+\include{Chapters/MakeShortPulse}
+\include{Chapters/ShortPulseDoes}
 \include{Chapters/CEI}
 \cleardoublepage
 
-%\part{The Showcase}
-%\include{Chapters/Chapter02}
+%\part{Tools}
+%\include{Chapters/Bayesian}
 %%\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
 %\include{Chapters/Chapter03}
 %%\include{multiToC} % <--- just debug stuff, ignore for your documents
+
+%\part{Making movies}
+%\include{Chapters/GeometryReconstruction}
 
 \appendix
 %\renewcommand{\thechapter}{\alph{chapter}}
