@@ -12,17 +12,19 @@
 % **************************************************************************************************************
 \RequirePackage{fix-cm} % fix some latex issues see: http://texdoc.net/texmf-dist/doc/latex/base/fixltx2e.pdf
 \documentclass[ 
-twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,% 
-%%letterpaper a4paper
-                footinclude=true,cleardoublepage=empty,abstractoff, % <--- obsolete, remove (todo)
-                BCOR=5mm,paper=letter,fontsize=11pt,
-                ngerman,american,
-                ]{scrreprt}
+  twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,% 
+  %%letterpaper a4paper
+  footinclude=true,cleardoublepage=empty,abstractoff, % <--- obsolete, remove (todo)
+  BCOR=5mm,paper=letter,fontsize=11pt,
+  ngerman,american,
+  ]{scrreprt}
 
 \input{classicthesis-config}
 
-\addbibresource{Bibliography.bib}
-%\addbibresource[label=ownpubs]{AMiede_Publications.bib}
+\numberwithin{equation}{chapter}
+
+\addbibresource{Bibliographies/CEI.bib}
+\addbibresource{Bibliographies/MolecularMovies.bib}
 
 %\hyphenation{put special hyphenation here}
 
@@ -53,10 +55,7 @@ twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,%
 % use \cleardoublepage here to avoid problems with pdfbookmark
 \cleardoublepage
 
-\ctparttext{A lot goes into exploding a molecule, even the tiny ones featured 
-here. To begin, a short laser pulse must be created and its interaction with 
-the molecule must be understood. Once we have a short laser pulse and 
-understand how it interacts, we can do Coulomb explosion imaging.}
+\ctparttext{To image the dynamics of a molecule by destroying it seems paradoxical. As we shall see, the molecule's structure is encoded in the atmoic shrapnel left behind after an explosion. However, to destroy one of nature's simplest creations is no easy task. Molecules are held together by strong chemical bonds. Our best line of attach is to shoot them with a short laser pulse---engulfing the molecule in an intense oscillating electric field will strip away its electrons and cause it to break up quickly. In these first few chapters, I will discuss how to create a short laser pulse and how these pulses interact with matter. Then I will introduce the technique of pump-probe Coulomb explosion imaging, which we will use to probe the dynamic structure of small molecules by studying the atomic fragments resulting from the explosion.}
 
 \part{How to explode a molecule}
 \include{Chapters/MakeShortPulse}
@@ -64,14 +63,18 @@ understand how it interacts, we can do Coulomb explosion imaging.}
 \include{Chapters/CEI}
 \cleardoublepage
 
-%\part{Tools}
+\ctparttext{Having destroyed a molecule and measured the momentum of each of its atomic fragments, we are left with the inverse problem of inferring its structure. While explosions proceed in a deterministic fashion, that is structures map bijectively to momentum measurements, the converse is not true. Two very different structures may produce the same momentum measurements. To make matters worse, there is no analytic solution to the problem and as the molecule grows, the problem of finding its structure becomes increasingly high dimensional. To combat this problem we will require the use of various mathematical and statistical methods. I first discuss some results from the theory of inverse problems to shed some general insight on these problems. I then follow with a discussion of optimization methods which may be used to tackle the problem for very small molecules. However, for full imaging of larger polyatomic molecules with an analysis of measurement error, Bayesian inference using Markov chain Monte Carlo methods is the way to go, which I discuss in the last chapter of this part.}
+
+\part{How to image a molecule}
 %\include{Chapters/Bayesian}
 %%\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
 %\include{Chapters/Chapter03}
 %%\include{multiToC} % <--- just debug stuff, ignore for your documents
 
-%\part{Making movies}
-%\include{Chapters/GeometryReconstruction}
+\ctparttext{Equipped with the means to explode a molecule and the necessary mathematical tools, we can now image the molecule's structure and shoot our molecular movie.}
+
+\part{Shooting the movie}
+\include{Chapters/MolecularMovies}
 
 \appendix
 %\renewcommand{\thechapter}{\alph{chapter}}
