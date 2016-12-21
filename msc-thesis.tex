@@ -21,6 +21,11 @@
 
 \input{classicthesis-config}
 
+\usepackage{imakeidx}
+\makeindex
+
+%\usepackage[version=4]{mhchem}
+
 \numberwithin{equation}{chapter}
 
 \addbibresource{Bibliographies/CEI.bib}
@@ -85,5 +90,8 @@
 \cleardoublepage\include{FrontBackmatter/Bibliography}
 %\cleardoublepage\include{FrontBackmatter/Declaration}
 %\cleardoublepage\include{FrontBackmatter/Colophon}
+
+\cleardoublepage
+\printindex
 
 \end{document}

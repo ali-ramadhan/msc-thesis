@@ -1,11 +1,35 @@
 \chapter{Molecular Movies}\label{ch:MolecularMovies}
 
 \section{History and accomplishments}
+The idea that Coulomb explosion imaging could be used to produce so-called molecular movies has permeated the literature ever since the technique's emergence. The goal of observing 
 
 \subsection{Coulomb explosion imaging}
+\index{Classical imaging formula}
+\index{Coulomb explosion imaging!Classical imaging formula}
+Surprisingly, an attempt was made to arrive at an analytical solution for calculating geometries from measured momentum data. \citet{Nagaya04} \marginpar{They seem to have worked hard to find an analytical solution but their unsaid conclusion seems to be that it is an intractable problem and their group went silent on this problem.} are able to derive so-called classical imaging formulas giving the position wavefunction squared for the Coulomb explosion of a diatomic molecule and a linear triatomic molecule (the cases of symmetric and asymmetric Coulomb explosion are treated).
+
+\index{Coulomb explosion imaging!History}
+\citet{Legare05structure,Legare05dynamics} was the first to use Coulomb explosion imaging and report molecular structures. To obtain structures, they assume the explosion proceeds under a purely Coulombic potential and use optimization methods to make guesses at the structure that most accurately reproduces the observed data consistent with minimizing a least-squares objective function. Unfortunately they provide very minimal information regarding their methods and there is a complete lack of discussion acknowledging the shortcomings of this method.\marginpar{The main shortcomings being degenerate solutions and the fact that they employ convex optimization methods to a problem that is not convex. It is not clear if they even knew about these issues.} Using 8 fs laser pulses they report on the structure of D2O and SO2 \citep{Legare05structure}. They also claim to have imaged vibrating D2+ and dissociating SO22+ and SO23+ however they provide no more than a couple of dissociation frames and infer the transient D2+ bond length from kinetic energy release ratios as a function of pump-probe time delay \citep{Legare05dynamics}.
+
+\citet{Gagnon08} reported the reconstruction of dichloromethane (CH2Cl2) using a home-made \marginpar{There is nothing wrong with writing your own code here but nonconvex optimization algorithms are tricky to get right and the reliance should be on professional code.} stochastic-based simulated annealing algorithm that globally optimizes the molecular spatial configuration. They discuss uncertainties but are only able to obtain the structure in five cases.
+
+\index{Lookup table}
+The best effort so far has probably been the one by \citet{Kunitski15} in which they use a lookup table approach to image the Efimov state of the helium trimer.
+
 \subsection{Laser-induced electron diffraction}
 \subsection{Femtosecond X-ray scattering}
 
 \section{Previous attempts}
+
 \subsection{Simplex algorithm}
-\subsection{Inference through optimization}
+
+\index{Simplex algorithm}
+\index{Geometry reconstruction!Simplex algorithm}
+\citet{Brichta09} proposed the reconstruction of small triatomic molecules using a simplex algorithm. Unfortunately they only report on the reconstruction of molecular structures based on simulated data for carbon dioxide and formaldehyde. I could not use this algorithm to find the geometries of CO2 or OCS from real data.
+
+\subsection{Lookup table}
+\index{Lookup table}
+\index{Geometry reconstruction!Lookup table}
+
+\subsection{Convex optimization techniques}
+Much progress was made over the lookup table by treating the geometry reconstruction problem as a constrained nonlinear convex optimization such that MATLAB's \texttt{fmincon} function an be relied on. It relies on trust regions and uses an interior-point algorithm. This worked especially well in the case of triatomic molecules however four-atom systems proved incredibly difficult to tackle here. This was due to the exponential increase in the number of saddle points with dimensionality \marginpar{Recall that triatomic molecules have three degrees of freedom resulting in a problem of dimension 3 while four-atom systems have six. That is, $3N+6$ for an $N$-atom system.} making the problem highly non-convex and unsuitable for \texttt{fmincon}.
