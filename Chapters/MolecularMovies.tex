@@ -5,9 +5,9 @@ The idea that Coulomb explosion imaging could be used to produce so-called molec
 
 \subsection{Coulomb explosion imaging}
 
-\subsubsection{Momentum-space}
+\subsubsection{Molecular movies in momentum-space}
 
-\subsubsection{Position-space}
+\subsubsection{Geometry reconstruction}
 \index{Classical imaging formula}
 \index{Coulomb explosion imaging!Classical imaging formula}
 Surprisingly, an attempt was made to arrive at an analytical solution for calculating geometries from measured momentum data. \citet{Nagaya04} \marginpar{They seem to have worked hard to find an analytical solution but their unsaid conclusion seems to be that it is an intractable problem and their group went silent on this problem.} are able to derive so-called classical imaging formulas giving the position wavefunction squared for the Coulomb explosion of a diatomic molecule and a linear triatomic molecule (the cases of symmetric and asymmetric Coulomb explosion are treated).
@@ -39,6 +39,9 @@ A particularly impressive movie by \citet{Cheung12} showcases the process of RNA
 \subsection{Lookup table}
 \index{Lookup table}
 \index{Geometry reconstruction!Lookup table}
+In this approach, many Coulomb explosions are simulated for a wide variety of structures, and the resulting momentum vectors from each simulation are stored. Thus you have a mapping from molecular structures to momentum vectors. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse. This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
 
-\subsection{Convex optimization techniques}
+\subsection{Convex optimization methods}
 Much progress was made over the lookup table by treating the geometry reconstruction problem as a constrained nonlinear convex optimization such that MATLAB's \texttt{fmincon} function an be relied on. It relies on trust regions and uses an interior-point algorithm. This worked especially well in the case of triatomic molecules however four-atom systems proved incredibly difficult to tackle here. This was due to the exponential increase in the number of saddle points with dimensionality \marginpar{Recall that triatomic molecules have three degrees of freedom resulting in a problem of dimension 3 while four-atom systems have six. That is, $3N+6$ for an $N$-atom system.} making the problem highly non-convex and unsuitable for \texttt{fmincon}.
+
+\section{Current attempt: MMMGRUBS}
