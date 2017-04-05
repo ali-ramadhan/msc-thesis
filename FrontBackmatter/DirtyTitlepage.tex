@@ -1,13 +1,39 @@
 %*******************************************************
-% Little Dirty Titlepage
+% Thesis title page
 %*******************************************************
-\thispagestyle{empty}
-%\pdfbookmark[1]{Titel}{title}
-%*******************************************************
-\begin{center}
-    \spacedlowsmallcaps{\myName} \\ \medskip                        
-
-    \begingroup
-        \color{Maroon}\spacedallcaps{\myTitle}
-    \endgroup
-\end{center}        
+\begin{titlepage}
+  % if you want the titlepage to be centered, uncomment and fine-tune the line below (KOMA classes environment)
+  \begin{addmargin}[-1cm]{-3cm}
+    \begin{center}
+      \Large  
+      
+      \hfill
+      
+      \vfill
+      
+      \begingroup
+      \color{Maroon}{\Large \spacedallcaps{\myTitle}} \\ \bigskip
+      \endgroup
+      
+      by \\ \bigskip
+      
+      \spacedlowsmallcaps{\myName}
+      
+      \vfill
+      
+      A thesis \\
+      presented to the University of Waterloo \\
+      in fulfillment of the \\
+      thesis requirement for the degree of \\
+      Master of Science \\
+      in \\
+      Physics
+      
+      \vfill
+      
+      Waterloo, Ontario, Canada, 2017 \\
+      \copyright Ali Ramadhan 2017
+      
+    \end{center}  
+  \end{addmargin}       
+\end{titlepage}  

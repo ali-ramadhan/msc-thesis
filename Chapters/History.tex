@@ -1,9 +1,12 @@
-\chapter{Molecular Movies}\label{ch:MolecularMovies}
+\chapter{A brief history}\label{ch:history}
 
 \section{History and accomplishments}
 The idea that Coulomb explosion imaging could be used to produce so-called molecular movies has permeated the literature ever since the technique's emergence. The goal of observing 
 
 \subsection{Coulomb explosion imaging}
+CEI was first performed by \citet{Vager89} whereby the Coulomb explosion was initiated by passing the molecule through a thin carbon film at high velocities.
+
+There exist other methods of initiating CEI, among them thin foils, free-electron lasers, highly-charged ion impact, single X-ray photons from a synchrotron source.
 
 \subsubsection{Molecular movies in momentum-space}
 
@@ -28,20 +31,3 @@ Molecular movies are of course not only of interest in physics and chemistry as 
 
 A particularly impressive movie by \citet{Cheung12} showcases the process of RNA polymerase transcription and goes on for over six minutes.
 
-\section{Previous attempts}
-
-\subsection{Simplex algorithm}
-
-\index{Simplex algorithm}
-\index{Geometry reconstruction!Simplex algorithm}
-\citet{Brichta09} proposed the reconstruction of small triatomic molecules using a simplex algorithm. Unfortunately they only report on the reconstruction of molecular structures based on simulated data for carbon dioxide and formaldehyde. I could not use this algorithm to find the geometries of CO2 or OCS from real data.
-
-\subsection{Lookup table}
-\index{Lookup table}
-\index{Geometry reconstruction!Lookup table}
-In this approach, many Coulomb explosions are simulated for a wide variety of structures, and the resulting momentum vectors from each simulation are stored. Thus you have a mapping from molecular structures to momentum vectors. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse. This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
-
-\subsection{Convex optimization methods}
-Much progress was made over the lookup table by treating the geometry reconstruction problem as a constrained nonlinear convex optimization such that MATLAB's \texttt{fmincon} function an be relied on. It relies on trust regions and uses an interior-point algorithm. This worked especially well in the case of triatomic molecules however four-atom systems proved incredibly difficult to tackle here. This was due to the exponential increase in the number of saddle points with dimensionality \marginpar{Recall that triatomic molecules have three degrees of freedom resulting in a problem of dimension 3 while four-atom systems have six. That is, $3N+6$ for an $N$-atom system.} making the problem highly non-convex and unsuitable for \texttt{fmincon}.
-
-\section{Current attempt: MMMGRUBS}
