@@ -36,3 +36,11 @@ df = \sqrt{\sum_{i=1}^{n} \left( \frac{\partial f}{\partial x_i} dx_i \right)^2}
 \end{equation}
 
 \section{Simulating the Coulomb explosion}
+To simulate an explosion of a molecule containing $n$ atoms, we must solve the classical equations of motion for each ion right after the explosion. We choose to use Hamiltonian mechanics here to acquire a system of first-order differential equations which may be easily solved by numerical methods such as the ubiquitous fourth-order Runge-Kutta. Assuming a purely electromagnetic potential for each ion, the Hamiltonian of the molecular system is
+$$ \mathcal{H}(\mathbf{r}_i, \mathbf{p}_i, t) = \sum_{i=1}^n \frac{\mathbf{p}_i^2}{2m_i} + \frac{1}{4\pi\epsilon_0}\sum_{\substack{\lbrace i,j\rbrace\\ i \ne j}} \frac{q_iq_j}{|\mathbf{r}_i-\mathbf{r}_j|}$$
+where the second summation is over all $i,j$ pairs where $i \ne j$.
+
+Calculating Hamilton's equations for the system, we get
+$$ \dot{\mathbf{r}_i} = \frac{\partial \mathcal{H}}{\partial \mathbf{p}_i} = \frac{\mathbf{p}_i}{m_i} $$
+$$ \dot{\mathbf{p}_i} = \frac{\partial \mathcal{H}}{\partial \mathbf{r}_i} = \frac{1}{4\pi\epsilon_0}\sum_{i \ne j} \frac{\mathbf{r}_i - \mathbf{r}_j}{|\mathbf{r}_i - \mathbf{r}_j|^3} $$
+where $i$ is held fixed over the second summation.
