@@ -13,9 +13,9 @@ In pump-probe Coulomb explosion imaging (CEI) one ultrashort laser pulse is spli
 \section{Experimental apparatus}
 
 \section{Data analysis}
+
 \subsection{Time and position measurement}
 The position is then calculated using
-
 \begin{equation}
 x = \frac{Q_1 + Q_2}{Q_1 + Q_2 + Q_3 + Q_4} ,\quad
 y = \frac{Q_1 + Q_3}{Q_1 + Q_2 + Q_3 + Q_4}
@@ -24,18 +24,47 @@ y = \frac{Q_1 + Q_3}{Q_1 + Q_2 + Q_3 + Q_4}
 \subsection{Calculating the atomic fragments' momenta}
 The components of the three-dimensional momentum vector $\mathbf{p} = (p_x,p_y,p_z)$ for each atom are then calculated as
 
-\begin{equation}
+\begin{equation}\label{eq:CEImomenta}
 p_x = \frac{m(x-x_0)}{t} ,\;
 p_y = \frac{m(y-y_0)}{t} ,\;
 p_z = \frac{qV}{2\ell} \left( \frac{t_0^2 - t^2}{t} \right)
 \end{equation}
+where $m$ is the atom's mass, $(x,y)$ is the location the atom collided with the MCP detector, and $(x_0,y_0)$ is the location that the Coulomb explosion originated. The location $(0,0)$ corresponds to the physical center of the MCP detector. $q$ is the net charge of the atom, $V$ is the value of constant electric potential the atom is subjected to, and $\ell$ is the distance from the location of the Coulomb explosion to the detector. $t$ is measured time of flight (between Coulomb explosion and detection) of the atom and 
+\begin{equation}
+t_0 = \sqrt{\frac{2d\ell}{V} \left( \frac{m}{q} \right)}
+\end{equation}
+is the atom's time of flight assuming no external forces act on it during its trip to the detector.
 
 \subsection{Measurement uncertainty in the momenta}
-For any relation $f = f(x_1, x_2, \dots, x_n)$, assuming independent variables, the absolute uncertainty in $f$ is
-
+For any relation $f = f(x_1, x_2, \dots, x_n)$, assuming independent variables, the absolute uncertainty in $f$, denoted $\Delta f$, may be calculated as
 \begin{equation}
-df = \sqrt{\sum_{i=1}^{n} \left( \frac{\partial f}{\partial x_i} dx_i \right)^2}
+\Delta f = \sqrt{\sum_{i=1}^{n} \left( \frac{\partial f}{\partial x_i} \Delta x_i \right)^2}
 \end{equation}
+where $\Delta x_i$ is the uncertainty in the independent variable $x_i$.
+
+Using this we may calculate the uncertainty in the measured momentum values, which will we different for each component. In our case, $p_x = p_x(m,x,x_0,t)$ and $p_y = p_y(m,y,y_0,t)$, however, the uncertainty in the atomic mass $m$ is orders of magnitude smaller than the uncertainty in the other variables and so we will ignore its effects. Thus we get that
+\begin{subequations}
+  \begin{align}
+  (\Delta p_x)^2 &= \frac{\partial p_x}{\partial x}\Delta x + \frac{\partial p_x}{\partial x_0}\Delta x_0 + \frac{\partial p_x}{\partial t}\Delta t \\
+  (\Delta p_y)^2 &= \frac{\partial p_y}{\partial y}\Delta y + \frac{\partial p_y}{\partial y_0}\Delta y_0 + \frac{\partial p_y}{\partial t}\Delta t
+  \end{align}
+\end{subequations}
+where the partial derivatives can be calculated from \eqref{eq:CEImomenta} as
+\begin{subequations}
+  \begin{align}
+  \frac{\partial p_x}{\partial x} = \frac{m}{t} &,\quad \frac{\partial p_x}{\partial x_0} = \frac{m}{t} ,\quad \frac{\partial p_x}{\partial t} = -m\frac{x-x_0}{t^2}\\
+  \frac{\partial p_y}{\partial y} = \frac{m}{t} &,\quad \frac{\partial p_y}{\partial y_0} = \frac{m}{t} ,\quad \frac{\partial p_y}{\partial t} = -m\frac{y-y_0}{t^2}
+  \end{align}
+\end{subequations}
+and so
+\begin{subequations}
+  \begin{align}
+  \left( \frac{\Delta p_x}{p_x} \right)^2 &= \left( \frac{\Delta x}{x - x_0} \right)^2 + \left( \frac{\Delta x_0}{x - x_0} \right)^2 + \left( \frac{\Delta t}{t} \right)^2 \\
+  \left( \frac{\Delta p_y}{p_y} \right)^2 &= \left( \frac{\Delta y}{y - y_0} \right)^2 + \left( \frac{\Delta y_0}{y - y_0} \right)^2 + \left( \frac{\Delta t}{t} \right)^2
+  \end{align}
+\end{subequations}
+
+Repeating the process for $p_z = p_z(q,V,\ell,t_0,t)$ but ignoring the tiny uncertainties in $q$, $V$, and $\ell$, we get
 
 \section{Computationally simulating a Coulomb explosion}
 To simulate an explosion of a molecule containing $n$ atoms, we must solve the classical equations of motion for each ion right after the explosion. We choose to use Hamiltonian mechanics here to acquire a system of first-order differential equations which may be easily solved by numerical methods such as the ubiquitous fourth-order Runge-Kutta. Assuming a purely electromagnetic potential for each ion, the Hamiltonian of the molecular system is
@@ -49,4 +78,12 @@ where $i,j \in \lbrace 1,2,\dots, n \rbrace$ and so the second summation is over
   \frac{d\mathbf{p}_i}{dt} &= \frac{\partial \mathcal{H}}{\partial \mathbf{r}_i} = \frac{1}{4\pi\epsilon_0}\sum_{j, \; j \ne i} \frac{\mathbf{r}_i - \mathbf{r}_j}{|\mathbf{r}_i - \mathbf{r}_j|^3}
   \end{align}
 \end{subequations}
-where $i$ is held fixed over the second summation.
+where $i$ is held fixed over the second summation. With appropriate initial conditions this system of $6n$ scalar first-order ordinary differential equations may be easily solved using, for example, the classical fourth-order Runge-Kutta method for numerically solving ordinary differential equations. The atoms are assumed to be at rest so that $\mathbf{p}_i(t=0) = 0$, while the initial positions, $\mathbf{r}_i(t=0) = 0$, are chosen to correspond to the molecular geometry.
+
+One way to think of the problem being tackled in this thesis is: which initial geometry $\mathbf{r}_i(t=0) = 0$ results in the momentum values measured at the detector? The atoms are far enough apart after just a few nanoseconds that by the time they arrive at the detector, they feel almost no forces due to each other and their momenta attain asymptotic values which we can denote $\mathbf{p}_i(t\rightarrow\infty)$.
+
+\section{Conventions for geometries and momenta}
+
+\subsection{Describing molecular geometries by a Z-matrix}
+
+\subsection{A homemade convention to describe momentum vectors}
