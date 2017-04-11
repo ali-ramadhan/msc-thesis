@@ -1,6 +1,8 @@
 \chapter{Coulomb explosion imaging}\label{ch:CEI}
 
-\section{Experiment outline}
+\minitoc% Creating an actual minitoc
+
+\section{Outline of the experiment}
 
 \subsection{Pump-probe Coulomb explosion imaging}
 In pump-probe Coulomb explosion imaging (CEI) one ultrashort laser pulse is split into two pulses through the use an asymmetric beamsplitter. One of the pulses, the pump pulse, is usually much weaker than the other, the probe pulse. A time delay $\tau$ between the pulses is then created such that the pump pulse goes first and the probe pulse second. The job of the pump pulse will be to initiate some change in the molecule. One example could include an isomerization of the molecule. Thus the pump pulse ``pumps'' the molecule into some excited state. The job of the powerful probe pulse is to engulf the molecule in an intense enough laser field such that multiple electrons are stripped off of it. The molecule's individual atoms are left in a highly-charged state and begin to behave as individual point charges in a purely Coulombic potential. The entire process occurs in the presence of a constant electric field and so the positively-charged ions all accelerate upwards towards a time- and position-sensitive detector. Thus the probe pulse allows for the ``probing'' of the excited state.
@@ -9,7 +11,8 @@ In pump-probe Coulomb explosion imaging (CEI) one ultrashort laser pulse is spli
 
 \section{Experimental apparatus}
 
-\section{Time and position measurement}
+\section{Data analysis}
+\subsection{Time and position measurement}
 The position is then calculated using
 
 \begin{equation}
@@ -17,9 +20,7 @@ x = \frac{Q_1 + Q_2}{Q_1 + Q_2 + Q_3 + Q_4} ,\quad
 y = \frac{Q_1 + Q_3}{Q_1 + Q_2 + Q_3 + Q_4}
 \end{equation}
 
-% \subsubsection{Delay line anode}
-
-\section{Calculating atomic fragment momenta}
+\subsection{Calculating the atomic fragments' momenta}
 The components of the three-dimensional momentum vector $\mathbf{p} = (p_x,p_y,p_z)$ for each atom are then calculated as
 
 \begin{equation}
@@ -28,14 +29,14 @@ p_y = \frac{m(y-y_0)}{t} ,\;
 p_z = \frac{qV}{2\ell} \left( \frac{t_0^2 - t^2}{t} \right)
 \end{equation}
 
-\section{Uncertainty in momentum measurements}
+\subsection{Measurement uncertainty in the momenta}
 For any relation $f = f(x_1, x_2, \dots, x_n)$, assuming independent variables, the absolute uncertainty in $f$ is
 
 \begin{equation}
 df = \sqrt{\sum_{i=1}^{n} \left( \frac{\partial f}{\partial x_i} dx_i \right)^2}
 \end{equation}
 
-\section{Simulating the Coulomb explosion}
+\section{Computationally simulating a Coulomb explosion}
 To simulate an explosion of a molecule containing $n$ atoms, we must solve the classical equations of motion for each ion right after the explosion. We choose to use Hamiltonian mechanics here to acquire a system of first-order differential equations which may be easily solved by numerical methods such as the ubiquitous fourth-order Runge-Kutta. Assuming a purely electromagnetic potential for each ion, the Hamiltonian of the molecular system is
 \begin{equation}
 \mathcal{H}(\mathbf{r}_i, \mathbf{p}_i, t) = \sum_{i=1}^n \frac{\mathbf{p}_i^2}{2m_i} + \frac{1}{4\pi\epsilon_0}\sum_{\substack{\lbrace i,j\rbrace\\ i \ne j}} \frac{q_iq_j}{|\mathbf{r}_i-\mathbf{r}_j|}

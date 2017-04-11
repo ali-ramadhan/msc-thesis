@@ -10,9 +10,9 @@ The method involves shooting a molecule in a vacuum chamber with two laser pulse
 \section{Research problem}
 Determining these geometries is a computationally difficult task. Almost every study dodges the problem entirely and relies on the momentum vectors to infer information about the geometries. The momentum vectors carry a lot of information but that is certainly not the structural imaging promised by Coulomb explosion imaging that is talked about. It also does not capture all the dynamics possible. When geometry reconstruction is done, it is usually done in a hand wavy way that sidesteps the nuances of the problem and ignores uncertainty, rendering it unreliable. I am working on a rigorous method to perform the geometry reconstruction that may be used (and improved) by my group and others.
 
-\section{Approach}
+\section{Approach taken}
 We are only interested in the molecular geometry, i.e. the relative positions of the atoms, not the absolute position of every atom. This reduces the dimensionality of our problem from $3n$ to $3n-6$ in both the geometry $\mathbf{g}$ and momentum vector $\mathbf{p}$. The geometry ``vector'' $\mathbf{g} \in \mathbb{R}^{3n-6}$ contains the molecule's bond lengths and bond angles, and the momentum ``vector'' $\mathbf{p} \in \mathbb{R}^{3n-6}$is a concatenation of momentum values in a specific convention. They both do not transform like vectors.
 
-\section{Outline of this thesis}
+\section{Thesis outline}
 
 To find the initial geometry $\mathbf{g}_0$ that produced the measured asymptotic momentum $\mathbf{p}_\infty$, we make use of the fact that simulating the Coulomb explosion forward in time is easy. Let $\mathbf{p}(\mathbf{g}) : \mathbb{R}^{3n-6} \rightarrow \mathbb{R}^{3n-6}$ map an initial geometry $\mathbf{g}$ onto the asymptotic momentum vector $\mathbf{p}_\infty$ such a geometry produces upon Coulomb explosion. It simulates the explosion forwards in time by solving a set of $6n-12$ coupled first-order ODEs. Then casting this as an optimization problem, we seek the geometry $\mathbf{g}$ that minimizes the objective function $\left\| \mathbf{p}(\mathbf{g}) - \mathbf{p}_\infty \right\|_2^2$.
