@@ -23,24 +23,24 @@
 % listings floatperchapter subfig
 % ********************************************************************
 
+% *****************************************************************************
 % 2. Personal data and user ad-hoc commands
-\newcommand{\myTitle}{MMMGRUBS: Molecular motion movies and geometry reconstruction using Bayesian statistics\xspace}
+% *****************************************************************************
+\newcommand{\myTitle}{Molecular motion movies and geometry reconstruction using Bayesian statistics\xspace}
 \newcommand{\mySubtitle}{Hakuna matata?\xspace}
 \newcommand{\myDegree}{Master of Science (M.Sc.)\xspace}
 \newcommand{\myName}{Ali Ramadhan\xspace}
-\newcommand{\myProf}{Put name here\xspace}
+\newcommand{\myProf}{Joseph Sanderson\xspace}
 \newcommand{\myOtherProf}{Put name here\xspace}
 \newcommand{\mySupervisor}{Put name here\xspace}
-\newcommand{\myFaculty}{Put data here\xspace}
-\newcommand{\myDepartment}{Put data here\xspace}
-\newcommand{\myUni}{Put data here\xspace}
-\newcommand{\myLocation}{Saarbrücken\xspace}
+\newcommand{\myFaculty}{Faculty of Science\xspace}
+\newcommand{\myDepartment}{Department of Physics and Astronomy\xspace}
+\newcommand{\myUni}{University of Waterloo\xspace}
+\newcommand{\myLocation}{Waterloo, Ontario, Canada\xspace}
 \newcommand{\myTime}{\today\xspace}
 \newcommand{\myVersion}{version 4.2\xspace}
 
-% ********************************************************************
 % Setup, finetuning, and useful commands
-% ********************************************************************
 \newcounter{dummy} % necessary for correct hyperlinks (to index, bib, etc.)
 \newlength{\abcd} % for ab..z string length calculation
 \providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
@@ -59,21 +59,21 @@
 \usepackage{csquotes}
 \PassOptionsToPackage{%
   %backend=biber, %instead of bibtex
-	backend=bibtex8,bibencoding=ascii,%
-	language=auto,%
+	backend=bibtex8,bibencoding=ascii,
+	language=auto,
 	style=authoryear-comp,
   bibstyle=authoryear,
   firstinits=true,
   %dashed=false, % dashed: substitute rep. author with ---
   sorting=nyt,
   maxbibnames=10,
-  %backref=true,%
+  %backref=true,
   natbib=true % natbib compatibility mode (\citep and \citet still work)
 }{biblatex}
 
 \usepackage{biblatex}
 \renewbibmacro{in:}{}
-\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}}
+\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}} % Small caps for author names.
 
 %\PassOptionsToPackage{fleqn}{amsmath} % math environments and more by the AMS 
 \usepackage{amsmath}
@@ -146,7 +146,7 @@
 \pdfcompresslevel=9
 \pdfadjustspacing=1 
 \PassOptionsToPackage{pdftex}{graphicx}
-    \usepackage{graphicx}  
+    \usepackage{graphicx}
 
 % Hyperreferences
 \hypersetup{%
