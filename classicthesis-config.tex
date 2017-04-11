@@ -77,10 +77,6 @@
 
 %\PassOptionsToPackage{fleqn}{amsmath} % math environments and more by the AMS 
 \usepackage{amsmath}
-\usepackage{amsthm}
-
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{definition}{Definition}[chapter]
 
 % General useful packages
 \PassOptionsToPackage{T1}{fontenc} % T2A for cyrillics
@@ -240,7 +236,17 @@
 %\usepackage[default,osfigures]{opensans} % scale=0.95 
 %\usepackage[sfdefault]{FiraSans}
 
+% *****************************************************************************
+% 9. My own extra configuration.
+% *****************************************************************************
+
 % Use \sum symbol from Computer Modern (LaTeX default) math font.
 \DeclareSymbolFont{cmlargesymbols}{OMX}{cmex}{m}{n}
 \let\sum\relax
 \DeclareMathSymbol{\sum}{\mathop}{cmlargesymbols}{"50}
+
+% Theorems and definitions
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{definition}{Definition}[chapter]
+

@@ -2,9 +2,9 @@
 
 Having destroyed a molecule and measured the momentum of each of its atomic fragments, we are left with the inverse problem of inferring its structure. While explosions proceed in a deterministic fashion, that is structures map bijectively to momentum measurements, the converse is not true. Two very different structures may produce the same momentum measurements. To make matters worse, there is no analytic solution to the problem and as the molecule grows, the problem of finding its structure becomes increasingly high dimensional. To combat this problem we will require the use of various mathematical and statistical methods. I first discuss some results from the theory of inverse problems to shed some general insight on these problems. I then follow with a discussion of optimization methods which may be used to tackle the problem for very small molecules. However, for full imaging of larger polyatomic molecules with an analysis of measurement error, Bayesian inference using Markov chain Monte Carlo methods is the way to go, which I discuss in the last chapter of this part.
 
-\section{Lookup table}
+\section{Lookup tables: what are they good for?}
 \index{Lookup table}
 \index{Geometry reconstruction!Lookup table}
 In this approach, many Coulomb explosions are simulated for a wide variety of structures, and the resulting momentum vectors from each simulation are stored. Thus you have a mapping from molecular structures to momentum vectors. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse. This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
 
-\section{Results for OCS}
+\section{Implementation to reconstruct triatomic molecules}
