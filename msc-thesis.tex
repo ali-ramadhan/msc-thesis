@@ -21,18 +21,11 @@
 
 \input{classicthesis-config}
 
-\usepackage{imakeidx}
 \makeindex
-
-%\usepackage[version=4]{mhchem}
-
-\numberwithin{equation}{chapter}
 
 \addbibresource{Bibliographies/CEI.bib}
 \addbibresource{Bibliographies/LookupTable.bib}
 \addbibresource{Bibliographies/MolecularMovies.bib}
-
-%\hyphenation{put special hyphenation here}
 
 \begin{document}
 \frenchspacing
@@ -48,8 +41,7 @@
 %\include{FrontBackmatter/Titlepage}
 %\include{FrontBackmatter/Titleback}
 
-\cleardoublepage\include{FrontBackmatter/TechnicalAbstract}
-%\cleardoublepage\include{FrontBackmatter/PlainLanguageAbstract}
+\cleardoublepage\include{FrontBackmatter/Abstract}
 \cleardoublepage\include{FrontBackmatter/Acknowledgments}
 \cleardoublepage\include{FrontBackmatter/Dedication}
 
@@ -57,10 +49,10 @@
 \cleardoublepage\include{FrontBackmatter/Contents}
 
 \cleardoublepage\pagenumbering{arabic}
-%\setcounter{page}{90}
 \cleardoublepage % use here to avoid problems with pdfbookmark
 
 \include{Chapters/Introduction}
+
 \include{Chapters/History}
 \include{Chapters/CEI}
 

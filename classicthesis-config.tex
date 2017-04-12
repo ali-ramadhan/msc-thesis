@@ -10,7 +10,7 @@
 % below in order to deactivate the time-stamp on the pages
 % *****************************************************************************
 \PassOptionsToPackage{eulerchapternumbers,listings,
-  pdfspacing,%floatperchapter,%linedheaders,drafting%
+  pdfspacing,%floatperchapter,linedheaders,drafting
   subfig,beramono,parts}{classicthesis}
 
 % ********************************************************************
@@ -44,6 +44,7 @@
 \newcounter{dummy} % necessary for correct hyperlinks (to index, bib, etc.)
 \newlength{\abcd} % for ab..z string length calculation
 \providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+
 \newcommand{\ie}{i.\,e.}
 \newcommand{\Ie}{I.\,e.}
 \newcommand{\eg}{e.\,g.}
@@ -57,7 +58,7 @@
 \usepackage{babel}                  
 
 \usepackage{csquotes}
-\PassOptionsToPackage{%
+\PassOptionsToPackage{
   %backend=biber, %instead of bibtex
 	backend=bibtex8,bibencoding=ascii,
 	language=auto,
@@ -72,8 +73,6 @@
 }{biblatex}
 
 \usepackage{biblatex}
-\renewbibmacro{in:}{}
-\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}} % Small caps for author names.
 
 %\PassOptionsToPackage{fleqn}{amsmath} % math environments and more by the AMS 
 \usepackage{amsmath}
@@ -197,7 +196,7 @@
 			\renewcommand*{\itemautorefname}{Punkt}%
                 }%  
             % Fix to getting autorefs for subfigures right (thanks to Belinda Vogt for changing the definition)
-            \providecommand{\subfigureautorefname}{\figureautorefname}%             
+            \providecommand{\subfigureautorefname}{\figureautorefname}     
     }{\relax}
 \makeatother
 
@@ -245,6 +244,8 @@
 \let\sum\relax
 \DeclareMathSymbol{\sum}{\mathop}{cmlargesymbols}{"50}
 
+\numberwithin{equation}{chapter}
+
 % Theorems and definitions
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -253,3 +254,9 @@
 \usepackage{minitoc}
 \nomtcrule
 %\renewcommand{\mtifont}{\normalsize\textsc}
+
+\renewbibmacro{in:}{}
+\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}} % Small caps for author names.
+
+\usepackage{imakeidx}
+%\usepackage[version=4]{mhchem}
