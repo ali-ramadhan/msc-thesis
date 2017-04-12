@@ -1,17 +1,27 @@
-\chapter{Geometry reconstruction using a lookup table}\label{ch:lookupTable}
+\chapter{Geometry reconstruction by lookup table}\label{ch:lookupTable}
 
+\vspace{-1.5 em}
+\minitoc\hrule
+\vspace{1.5 em}
+
+\noindent
 We begin our attempts at reconstructing geometries by taking a very simple approach.
 
 \section{Lookup tables: what are they good for?}
-As the name would suggest, a lookup table catalogues a relationship between two sets such that anyone wishing to obtain the mapping between the sets may simply find the object of interest. Lookup tables tend to be more useful in one direction \citep{Maher01}.
+% Define lookup table
+As the name would suggest, a lookup table catalogues a relationship between two sets such that anyone wishing to obtain the mapping between the sets may simply find the object of interest. Lookup tables tend to be more useful in one direction.
 
-The most familiar lookup table may be the multiplication times table that every elementary school student is familiar with where sets of two integers are mapped to their product \citep{Hayashi97}. 
+% Short blurby history
+The most familiar lookup table may be the multiplication times table that every elementary school student is familiar where sets of two integers are mapped to their product. Lookup tables have been employed since antiquity and one of the earliest surviving examples is a 98-column multiplication table from 493 A.D. attributed to the Roman, Victorius of Aquitaine \citep{Maher01}. Before the advent of the calculator and for much of scientific history, extensive logarithm tables were used to look up their values to several decimal places and to speed up computations. The earliest such tables date back to the ancient greeks although they have since been lost, and the earliest surviving one is a sine table by the ancient Indian mathematician \={A}ryabha\d{t}a circa 499 C.E. \citep{Hayashi97}.
+
+% Some powerful applications? Why are they used?
+Of course since then lookup tables have found an enormous number of uses in computer science. Arrays are ubiquitous objects in procedural programming languages and so is the more general dictionary object, especially in Python. Sine tables are still stored in calculators for quick trigonometric computations using the CORDIC algorithm and 3D lookup tables are used in image processing to store colormaps. In each case the speed offered by a lookup table once it has been generated is the main reason for their use.
 
 % Implementation (+ extra convergence cube)
 \section{Implementation to reconstruct triatomic molecules}
 \index{Lookup table}
 \index{Geometry reconstruction!Lookup table}
-In this approach, many Coulomb explosions are simulated for a wide variety of structures, and the resulting momentum vectors from each simulation are stored. Thus you have a mapping from molecular structures to momentum vectors. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse. This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
+In this approach, many Coulomb explosions are simulated (see secton \ref{sec:simulating}) using a wide variety of molecular structures as the initial condition, and the resulting momentum vectors from each simulation are stored. Thus you have a mapping from molecular structures to momentum vectors. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse. This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
 
 \section{Reconstructions of carbon dioxide and carbonyl sulfide}
 
