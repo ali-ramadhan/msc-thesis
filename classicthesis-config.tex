@@ -67,6 +67,7 @@
   firstinits=true,
   %dashed=false, % dashed: substitute rep. author with ---
   sorting=nyt,
+  maxcitenames=3,
   maxbibnames=10,
   %backref=true,
   natbib=true % natbib compatibility mode (\citep and \citet still work)
@@ -256,7 +257,7 @@
 %\renewcommand{\mtifont}{\normalsize\textsc}
 
 \renewbibmacro{in:}{}
-\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}} % Small caps for author names.
+%\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}} % Small caps for author names.
 
 \usepackage{imakeidx}
 %\usepackage[version=4]{mhchem}

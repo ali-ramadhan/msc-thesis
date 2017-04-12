@@ -10,6 +10,7 @@
 % http://postcards.miede.de
 %
 % *****************************************************************************
+
 \RequirePackage{fix-cm} % fix some latex issues see: http://texdoc.net/texmf-dist/doc/latex/base/fixltx2e.pdf
 \documentclass[
   twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,% 
@@ -23,6 +24,7 @@
 
 \makeindex
 
+\addbibresource{Bibliographies/History.bib}
 \addbibresource{Bibliographies/CEI.bib}
 \addbibresource{Bibliographies/LookupTable.bib}
 \addbibresource{Bibliographies/MolecularMovies.bib}
@@ -65,6 +67,10 @@
 \appendix
 %\renewcommand{\thechapter}{\alph{chapter}}
 \cleardoublepage
+
+% Small caps for author names.
+% Moved here so it only applied to the actual bibliography, not the main text.
+\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}}
 
 \cleardoublepage\include{FrontBackmatter/Bibliography}
 %\cleardoublepage\include{FrontBackmatter/Declaration}
