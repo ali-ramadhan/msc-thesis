@@ -10,7 +10,7 @@ It is easy to get stuck in the ivory tower and get lost within the trees of scie
 
 \section{Atomism: an ancient question}
 
-\section{Seeing molecules: from scientific understanding to saving lives}
+\section{Seeing molecules and saving lives}
 
 \section{Molecular movies}
 Molecular movies are of course not only of interest in physics and chemistry as a means of probing fundamental processes, but also in the biological sciences where molecular structure play a crucial role in determining the function of biomolecules such as proteins. However, the molecules of interest there are much too large to be studied by any of the previous techniques. Thus molecular movies in the biological sciences tend to be annotated computer simulations amalgamated from multiple studies. That said, they are very impressive pieces of work.
@@ -25,8 +25,10 @@ The laser makes its entrance surprisingly early
 
 There do exist other methods of initiating CEI, for example, single photons from a synchrotron source, x-ray pulses from a free-electron laser, or electron collision.
 
+Interestingly, the first-ever mention of the term ``Coulomb explosion'' is from an unrelated study of the fine structure of helium by \citet{Novick55}.
+
 \subsection{Foil-forged images}
-CEI was first performed by \citet{Vager89} whereby the Coulomb explosion was initiated by passing a molecular beam through a thin ($\sim$\SI{30}{\angstrom}) aluminum film at high velocities ($\sim0.02c$). Their work was motivated by the opportunity of imaging non-classical molecular structures that more popular methods were incapble of seeing. They were also the first to suggest that measuring the velocity (or momentum) vectors of each fragment would be provide all the information required to describe the molecule's structure. However, they do not perform any geometry reconstruction and report their fragment ion densities in a coordinate system defined by the asymptotic velocity of each particle, and claim that it is a direct measurement of the square of the multidimensional wave function of a many-body system.
+
 
 \begin{figure}
   \centering
@@ -35,11 +37,30 @@ CEI was first performed by \citet{Vager89} whereby the Coulomb explosion was ini
   {Schematic of a foil-induced Coulomb explosion imaging experiment. From \citet{Herwig13}. Reprinted with permission from AAAS.}
 \end{figure}
 
+CEI was first performed by \citet{Vager89} whereby the Coulomb explosion was initiated by passing a molecular beam through a thin ($\sim$\SI{30}{\angstrom}) aluminum film at high velocities ($\sim0.02c$). Their work was motivated by the opportunity of imaging non-classical molecular structures that more popular methods were incapble of seeing. They were also the first to suggest that measuring the velocity (or momentum) vectors of each fragment would be provide all the information required to describe the molecule's structure. However, they do not perform any geometry reconstruction and report their fragment ion densities in a coordinate system defined by the asymptotic velocity of each particle, and claim that it is a direct measurement of the square of the multidimensional wave function of a many-body system.
+
+\begin{SCfigure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{gfx/VagerPseudoGeometry}
+  \caption[Reconstruction of C2H3+ following foil-induced dissociation.]
+  {Reconstruction of C2H3+ following foil-induced dissociation. From \citet{Vager89}. Reprinted with permission from AAAS.}
+\end{SCfigure}
+
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=\textwidth]{gfx/VagerPseudoGeometry}
+%  \caption[Reconstruction of C2H3+ following foil-induced dissociation.]
+%  {Reconstruction of C2H3+ following foil-induced dissociation. From \citet{Vager89}. Reprinted with permission from AAAS.}
+%\end{figure}
+
 One drawback of initiating Coulomb explosions using a thin foil is that a molecular beam must be prepared.
 
-\subsection{CEI by highly charged ion impact}
-\subsection{Laser-induced CEI}
-\index{Coulomb explosion imaging!History}
+\subsection{Fragmentation by highly charged ion impact}
+
+
+\subsection{Laser-induced dissociation}
+\subsubsection{Covariance mapping}
+\subsubsection{Ultrashort laser pulses}
 \citet{Legare05structure,Legare05dynamics} was the first to use ultrashort laser pulses to induce Coulomb explosion and report on molecular structures and dynamics. To obtain the structures, they assume the explosion proceeds under a purely Coulombic potential and use optimization methods to make guesses at the structure that most accurately reproduces the observed data consistent with minimizing a least-squares objective function. Unfortunately they provide very minimal information regarding their methods and there is a complete lack of discussion acknowledging the shortcomings of this method\footnotemark. Using 8 fs laser pulses they report on the structure of D2O and SO2 \citep{Legare05structure}. They also claim to have imaged vibrating D2+ and dissociating SO22+ and SO23+ however they provide no more than a couple of dissociation frames and infer the transient D2+ bond length from kinetic energy release ratios as a function of pump-probe time delay \citep{Legare05dynamics}.
 
 \footnotetext{The main shortcomings being degenerate solutions and the fact that they employ convex optimization methods to a problem that is not convex. It is not clear if they even knew about these issues.}
