@@ -103,13 +103,14 @@
 \newcommand{\myfloatalign}{\centering} % to be used with each float for alignment
 
 \usepackage{caption}
+%\captionsetup{font=small,labelformat=smallcaps} % format=hang,
+\captionsetup{font=small, format=plain} % format=hang,
 
 % Thanks to cgnieder and Claus Lahiri
 % http://tex.stackexchange.com/questions/69349/spacedlowsmallcaps-in-caption-label
 % [REMOVED DUE TO OTHER PROBLEMS, SEE ISSUE #82]    
 %\DeclareCaptionLabelFormat{smallcaps}{\bothIfFirst{#1}{~}\MakeTextLowercase{\textsc{#2}}}
-%\captionsetup{font=small,labelformat=smallcaps} % format=hang,
-\captionsetup{font=small} % format=hang,
+
 \usepackage{subfig}
 
 % *****************************************************************************
