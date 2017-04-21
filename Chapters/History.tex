@@ -32,7 +32,9 @@ In this section we will trace the history of CEI back to the 1970's where it sta
 
 \footnotetext{Much of the molecular dynamics are inferred in CEI from studying the distribution of the fragment momentum vectors (\eg through the use of Newton and Dalitz plots) and the distribution of kinetic energy carried away by each fragment. We will be focusing on the original aim of CEI, that is, to measure molecular structures.}
 
-Interestingly, the first-ever mention of the term ``Coulomb explosion'' comes from an unrelated study of the fine structure of helium by \citet{Novick55}. They measured the energy difference of the $2 \, ^2 S_{1/2}$ and $2 \, ^2 P_{1/2}$ states of ionized helium as a sensitive test of quantum electrodynamics.
+Interestingly, the first-ever mention of the term ``Coulomb explosion'' in the published literature comes from an unrelated study of the fine structure of singly ionized helium by \citet{Novick55}. They measured the energy difference of the $2 \, ^2 S_{1/2}$ and $2 \, ^2 P_{1/2}$ states of ionized helium as a sensitive test of quantum electrodynamics. Coulomb explosion (or space charge explosion) was the dominant ion removal mechanism which they accounted for in modeling the quenching rate\footnotemark of metastable $2 \, ^2 S_{1/2}$ ions by radio frequency radiation to describe the observed resonance lineshapes (spending two appendices on it).
+
+\footnotetext{The term was more popular in decades past but simply means the extinction rate or loss rate of metastable ions.}
 
 \subsection{Foil-forged images}
 
@@ -44,29 +46,42 @@ Interestingly, the first-ever mention of the term ``Coulomb explosion'' comes fr
   {Schematic of a foil-induced Coulomb explosion imaging experiment. From \citet{Herwig13}. Reprinted with permission from AAAS.}
 \end{figure}
 
-CEI was first performed by \citet{Vager89} whereby the Coulomb explosion was initiated by passing a molecular beam through a thin ($\sim$\SI{30}{\angstrom}) aluminum film at high velocities ($\sim0.02c$). Their work was motivated by the opportunity of imaging non-classical molecular structures that more popular methods were incapble of seeing. They were also the first to suggest that measuring the velocity (or momentum) vectors of each fragment would be provide all the information required to describe the molecule's structure. However, they do not perform any geometry reconstruction and report their fragment ion densities in a coordinate system defined by the asymptotic velocity of each particle, and claim that it is a direct measurement of the square of the multidimensional wave function of a many-body system.
+\citet{Gaillard78} used the foil-induced Coulomb explosion to image the structure of the \ch{H3+} molecular ion, showing that it is mainly exhibits an equalaterial triangular shape in three completely different experiments\footnotemark.
 
-\begin{SCfigure}
+\footnotetext{It is interesting to note that the experiment was repeated by separate teams at the Argonne National Laboratory, the Université Claude Bernard Lyon 1, and the Weizmann Institute of Science, then reported on in one manuscript.}
+
+\begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{gfx/VagerPseudoGeometry}
+  \includegraphics[width=\textwidth]{gfx/HydrogenTrimerReconstruction}
+  \caption[Reconstruction of \ch{H3+} following foil-induced dissociation.]
+  {Reconstruction of \ch{H3+} following foil-induced dissociation. From \citet{Gaillard78}. Reprinted with permission from AAAS.}
+\end{figure}
+
+CEI was first performed by \citet{Vager89} whereby the Coulomb explosion was initiated by passing a molecular beam through a thin ($\sim$\SI{30}{\angstrom}) aluminum film at high velocities ($\sim$$0.02c$). Their work was motivated by the opportunity of imaging non-classical molecular structures that more popular methods were incapble of seeing. They were also the first to suggest that measuring the velocity (or momentum) vectors of each fragment would be provide all the information required to describe the molecule's structure. Specifically for methane (\ch{CH4}), they state that the \ch{H-C-H} bond angles are preserved and that the potential energy of each \ch{C-H} pair is coverted to kinetic energy according to
+$$ \frac{4e^2}{|\mathbf{r}_C - \mathbf{r}_n|} = \frac{|\mathbf{V}_C - \mathbf{V}_n|^2}{2} $$
+such that measurements of the asymptotic vector velocities completely defines the initial geometry of the molecule.
+
+However, they do not perform any geometry reconstruction and report their fragment ion densities in a coordinate system defined by the asymptotic velocity of each particle, and claim that it is a direct measurement of the square of the multidimensional wave function of a many-body system.
+
+%\begin{SCfigure}
+%  \centering
+%  \includegraphics[width=0.5\textwidth]{gfx/VagerPseudoGeometry}
+%  \caption[Reconstruction of \ch{C2H3+} following foil-induced dissociation.]
+%  {Reconstruction of \ch{C2H3+} following foil-induced dissociation. From \citet{Vager89}. Reprinted with permission from AAAS.}
+%\end{SCfigure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{gfx/VagerPseudoGeometry}
   \caption[Reconstruction of \ch{C2H3+} following foil-induced dissociation.]
   {Reconstruction of \ch{C2H3+} following foil-induced dissociation. From \citet{Vager89}. Reprinted with permission from AAAS.}
-\end{SCfigure}
-
-%\begin{figure}
-%  \centering
-%  \includegraphics[width=\textwidth]{gfx/VagerPseudoGeometry}
-%  \caption[Reconstruction of C2H3+ following foil-induced dissociation.]
-%  {Reconstruction of C2H3+ following foil-induced dissociation. From \citet{Vager89}. Reprinted with permission from AAAS.}
-%\end{figure}
+\end{figure}
 
 One drawback of initiating Coulomb explosions using a thin foil is that a molecular beam must be prepared.
 
 \subsection{Fragmentation by highly charged ion impact}
 
 \subsection{Laser-induced dissociation}
-\subsubsection{Covariance mapping}
-\subsubsection{Ultrashort laser pulses}
 \citet{Legare05structure,Legare05dynamics} was the first to use ultrashort laser pulses to induce Coulomb explosion and report on molecular structures and dynamics. To obtain the structures, they assume the explosion proceeds under a purely Coulombic potential and use optimization methods to make guesses at the structure that most accurately reproduces the observed data consistent with minimizing a least-squares objective function. Unfortunately they provide very minimal information regarding their methods and there is a complete lack of discussion acknowledging the shortcomings of this method\footnotemark. Using 8 fs laser pulses they report on the structure of \ch{D2O} and \ch{SO2} \citep{Legare05structure}. They also claim to have imaged vibrating \ch{D2+} and dissociating \ch{SO2^{2+}} and \ch{SO2^{3}} however they provide no more than a couple of dissociation frames and infer the transient \ch{D2+} bond length from kinetic energy release ratios as a function of pump-probe time delay \citep{Legare05dynamics}.
 
 \footnotetext{The main shortcomings being degenerate solutions and the fact that they employ convex optimization methods to a problem that is not convex. It is not clear if they even knew about these issues.}
