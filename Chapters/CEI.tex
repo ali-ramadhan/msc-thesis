@@ -51,8 +51,16 @@ where $\Delta x_i$ is the uncertainty in the independent variable $x_i$.
 Using this we may calculate the uncertainty in the measured momentum values, which will we different for each component. In our case, $p_x = p_x(m,x,x_0,t)$ and $p_y = p_y(m,y,y_0,t)$, however, the uncertainty in the atomic mass $m$ is orders of magnitude smaller than the uncertainty in the other variables and so we will ignore its effects. Thus we get that
 \begin{subequations}
   \begin{align}
-  (\Delta p_x)^2 &= \frac{\partial p_x}{\partial x}\Delta x + \frac{\partial p_x}{\partial x_0}\Delta x_0 + \frac{\partial p_x}{\partial t}\Delta t \\
-  (\Delta p_y)^2 &= \frac{\partial p_y}{\partial y}\Delta y + \frac{\partial p_y}{\partial y_0}\Delta y_0 + \frac{\partial p_y}{\partial t}\Delta t
+  \Delta p_x &= \sqrt{
+    \left( \frac{\partial p_x}{\partial x}\Delta x \right)^2
+    + \left( \frac{\partial p_x}{\partial x_0}\Delta x_0 \right)^2
+    + \left(\frac{\partial p_x}{\partial t}\Delta t \right)^2
+   } \\
+  \Delta p_y &= \sqrt{
+    \left( \frac{\partial p_y}{\partial y}\Delta y \right)^2
+    + \left(\frac{\partial p_y}{\partial y_0}\Delta y_0 \right)^2
+    + \left(\frac{\partial p_y}{\partial t}\Delta t \right)^2
+  }
   \end{align}
 \end{subequations}
 where the partial derivatives can be calculated from \eqref{eq:CEImomenta} as
@@ -65,12 +73,24 @@ where the partial derivatives can be calculated from \eqref{eq:CEImomenta} as
 and so
 \begin{subequations}
   \begin{align}
-  \left( \frac{\Delta p_x}{p_x} \right)^2 &= \left( \frac{\Delta x}{x - x_0} \right)^2 + \left( \frac{\Delta x_0}{x - x_0} \right)^2 + \left( \frac{\Delta t}{t} \right)^2 \\
-  \left( \frac{\Delta p_y}{p_y} \right)^2 &= \left( \frac{\Delta y}{y - y_0} \right)^2 + \left( \frac{\Delta y_0}{y - y_0} \right)^2 + \left( \frac{\Delta t}{t} \right)^2
+  \Delta p_x &= p_x \sqrt{
+    \left( \frac{\Delta x}{x - x_0} \right)^2
+    + \left( \frac{\Delta x_0}{x - x_0} \right)^2
+    + \left( \frac{\Delta t}{t} \right)^2 } \\
+  \Delta p_y &= p_y \sqrt{
+    \left( \frac{\Delta y}{y - y_0} \right)^2
+    + \left( \frac{\Delta y_0}{y - y_0} \right)^2
+    + \left( \frac{\Delta t}{t} \right)^2 }
   \end{align}
 \end{subequations}
 
 Repeating the process for $p_z = p_z(q,V,\ell,t_0,t)$ but ignoring the tiny uncertainties in $q$, $V$, and $\ell$, we get
+\begin{equation}
+\Delta p_z = p_z \sqrt{
+  \left( \frac{2tt_0}{t_0^2 - t^2} \Delta t_0 \right)^2
+  + \left( \frac{t^2 + t_0^2}{t(t_0^2 - t^2)} \Delta t^2 \right)^2
+}
+\end{equation}
 
 \section{Computationally simulating a Coulomb explosion} \label{sec:simulating}
 To simulate an explosion of a molecule containing $n$ atoms, we must solve the classical equations of motion for each ion right after the explosion. We choose to use Hamiltonian mechanics here to acquire a system of first-order differential equations which may be easily solved by numerical methods such as the ubiquitous fourth-order Runge-Kutta. Assuming a purely electromagnetic potential for each ion, the Hamiltonian of the molecular system is
