@@ -48,16 +48,16 @@ CEI was first performed by passing a molecular beam containing the molecule of i
 \end{figure}
 
 The premise behind foil-induced CEI is that during this explosion, the atoms simply repel each other and do not rearrange, thus preserving the angles between them from the time they exit the foil to the time they are detected at a position and time-sensitive detector. As the potential energy of each pair of fragments $i,j$ is coverted to kinetic energy according to
-$$ \frac{4q_i q_j}{|\mathbf{r}_i - \mathbf{r}_j|} = \frac{\mu|\mathbf{V}_i - \mathbf{V}_j|^2}{2} $$
+\begin{equation}\label{eq:foilCEI}
+\frac{4q_i q_j}{|\mathbf{r}_i - \mathbf{r}_j|} = \frac{\mu|\mathbf{V}_i - \mathbf{V}_j|^2}{2}
+\end{equation}
 it suggests that measurement of the asymptotic vector velocities completely defines the initial geometry of the molecule \citep{Vager89}. Here $q_i$, $\mathbf{r}_i$, and $\mathbf{V}_i$ are the charge, position vector, and velocity vector of the atomic fragment $i$ while $\mu$ is the reduced mass of the two-body system of fragments $i,j$.
 
-Of course, there are some assumptions that must hold for a complete and accurate recovery of the initial geometry. It is important to understand when CEI works.
+Of course, there are some assumptions that must hold for a complete and accurate recovery of the initial geometry, which we shall discuss in section \ref{sec:CEIphysics}. However, just by inspection of the schematic in figure \ref{fig:foilExperiment} we can see that no rearrangement of the atoms must occur\footnotemark~ and that the molecular system must evolve on the Coulomb potential, which requires the rapid stripping of many electrons off the atom. Thus CEI becomes increasingly difficult to perform with larger molecules so it is best used to study smaller molecules. However, it is precisely these small molecules in the gas phase that need to be studied using CEI as they cannot be probed using other more established methods. Moreover, many smaller molecules may exhibit non-Coulombic behaviour unless placed into a highly charged state, which may be impossible depending on the apparatus in use. For foil-induced CEI in particular, a molecular beam must be prepared, and this may prohibit the study of many molecules that cannot be prepared as such.
 
-The earliest example of a molecular geometry recovered using CEI is reported by \citet{Gaillard78}. They used the foil-induced Coulomb explosion to image the structure of the \ch{H3+} molecular ion, showing that it is mainly exhibits an equalaterial triangular shape in three completely different experiments.\footnotemark ~Figure \ref{fig:hydrogenTrimer} gives a few examples of the geometries they recovered.
+\footnotetext{While this is the case for many smaller molecules, it is not true for some of the popular targets. For example, a triatomic molecule may dissociate into a single atom and a diatomic rotor, which rotates before dissociating into two atoms.}
 
-\footnotetext{It is interesting to note that the experiment was repeated by separate teams at the Argonne National Laboratory, the Université Claude Bernard Lyon 1, and the Weizmann Institute of Science, then reported on in one manuscript.}
-
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{gfx/HydrogenTrimerReconstruction}
   \caption[Reconstructions of exploded \ch{H3+} following foil-induced dissociation.]
@@ -65,13 +65,11 @@ The earliest example of a molecular geometry recovered using CEI is reported by 
   \label{fig:hydrogenTrimer}
 \end{figure}
 
-CEI was first performed by \citet{Vager89} whereby the Coulomb explosion was initiated by passing a molecular beam through a thin ($\sim$\SI{30}{\angstrom}) aluminum film at high velocities ($\sim$$0.02c$). Their work was motivated by the opportunity of imaging non-classical molecular structures that more popular methods were incapble of seeing. They were also the first to suggest that measuring the velocity (or momentum) vectors of each fragment would be provide all the information required to describe the molecule's structure. Specifically for methane (\ch{CH4}), they state that the \ch{H-C-H} bond angles are preserved and that the potential energy of each \ch{C-H} pair is coverted to kinetic energy according to
-\begin{equation}
-\frac{4e^2}{|\mathbf{r}_C - \mathbf{r}_n|} = \frac{\mu|\mathbf{V}_C - \mathbf{V}_n|^2}{2}
-\end{equation}
-such that measurements of the asymptotic vector velocities completely defines the initial geometry of the molecule.
+The earliest example of a molecular geometry recovered using CEI is reported by \citet{Gaillard78}. They used the foil-induced Coulomb explosion to image the structure of the \ch{H3+} molecular ion, showing that it is mainly exhibits an equalaterial triangular shape in three completely different experiments.\footnotemark ~Figure \ref{fig:hydrogenTrimer} gives a few examples of the geometries they recovered.
 
-However, they do not perform any geometry reconstruction and report their fragment ion densities in a coordinate system defined by the asymptotic velocity of each particle, and claim that it is a direct measurement of the square of the multidimensional wave function of a many-body system.
+\footnotetext{It is interesting to note that the experiment was repeated by three separate teams, then reported on coherently in one manuscript. Each team, having access to different equipment, produced separate pieces of data. It was the team in Rehovot, Israel that recorded the projections of the exploded ions while the others measured energy spectra and angular distributions.}
+
+A more popular CEI experiment was performed by \citet{Vager89} almost a decade later employing a $\sim$\SI{30}{\angstrom} aluminum film. Their work was motivated by the opportunity of imaging non-classical molecular structures that more popular methods were incapble of seeing. They were also the first to suggest that measuring the velocity (or momentum) vectors of each fragment would be provide all the information required to describe the molecule's structure. Figure \ref{fig:C2H3geometry} shows one reconstruction based on the measured velocity vectors.
 
 %\begin{SCfigure}
 %  \centering
@@ -80,18 +78,21 @@ However, they do not perform any geometry reconstruction and report their fragme
 %  {Reconstruction of \ch{C2H3+} following foil-induced dissociation. From \citet{Vager89}. Reprinted with permission from AAAS.}
 %\end{SCfigure}
 
-%\begin{figure}
-%  \centering
-%  \includegraphics[width=\textwidth]{gfx/VagerPseudoGeometry}
-%  \caption[Reconstruction of \ch{C2H3+} following foil-induced dissociation.]
-%  {Reconstruction of \ch{C2H3+} following foil-induced dissociation. From \citet{Vager89}. Reprinted with permission from AAAS.}
-%\end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{gfx/VagerPseudoGeometry}
+  \caption[Reconstruction of \ch{C2H3+} following foil-induced dissociation.]
+  {Reconstruction of \ch{C2H3+} following foil-induced dissociation. The densities of the fragment ions are plotted in a coordinate system defined by the final velocities of each particle (relative to the mean carbon-ion velocity). Assuming \eqref{eq:foilCEI} holds, this is an inference of the geometry, and quite a convincingly pretty one at that. The carbon ion densities were reduced by a factor of $5$ for display purposes. From \citet{Vager89}. Reprinted with permission from AAAS.}
+  \label{fig:C2H3geometry}
+\end{figure}
 
-One drawback of initiating Coulomb explosions using a thin foil is that a molecular beam must be prepared.
+However, they do not perform any geometry reconstruction and report their fragment ion densities in a coordinate system defined by the asymptotic velocity of each particle, and claim that it is a direct measurement of the square of the multidimensional wave function of a many-body system.
 
 \subsection{Fragmentation by highly charged ion impact}
 
 \subsection{Laser-induced dissociation}
+
+%\subsubsection*{Analytical solutions}
 \index{Classical imaging formula}
 \index{Coulomb explosion imaging!Classical imaging formula}
 Before taking a tour of the molecular geometries recovered using laser-induced CEI, it is worth mentioning that \citet{Nagaya04} have attempted to arrive at an analytical solution for calculating molecular geometries from measured momentum vectors. They were able to derive a ``classical imaging formula''
@@ -117,4 +118,4 @@ Using \SI{8}{\fs} laser pulses they report on the structure of \ch{D2O} and \ch{
 \footnotetext{There is nothing wrong with writing your own code here but nonconvex optimization algorithms are tricky to get right and the reliance should be on professional code.}
 
 \index{Lookup table}
-The best effort so far has probably been the one by \citet{Kunitski15} in which they use a lookup table approach to image the elusive Efimov state of the helium trimer.
+The best effort so far has probably been the one by \citet{Kunitski15} in which they use a lookup table approach to image the Efimov state of the helium trimer.
