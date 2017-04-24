@@ -23,10 +23,11 @@ Of course since then lookup tables have found an enormous number of uses in comp
 \index{Geometry reconstruction!Lookup table}
 In this approach, many Coulomb explosions are simulated (see secton \ref{sec:simulating}) using a wide variety of molecular structures as the initial condition, and the resulting momentum vectors from each simulation are stored. Thus you have a mapping from molecular structures to momentum vectors. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse. This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
 
+\subsection{Computational complexity}
+
 \section{Reconstructions of carbon dioxide and carbonyl sulfide}
 
-\section{Computational complexity}
-
-\section{Advantages, disadvantages and problems}
-
 \section{Lessons learnt}
+\subsection{Degenerate molecular structures}
+
+\section{Future directions}
