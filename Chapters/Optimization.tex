@@ -1,4 +1,4 @@
-\chapter{Geometry reconstruction as an optimization problem}\label{ch:optimization}
+\chapter{Geometry reconstruction using constrained nonlinear optimization}\label{ch:optimization}
 
 Much progress was made over the lookup table by treating the geometry reconstruction problem as a constrained nonlinear convex optimization such that MATLAB's \texttt{fmincon} function an be relied on. It relies on trust regions and uses an interior-point algorithm. This worked especially well in the case of triatomic molecules however four-atom systems proved incredibly difficult to tackle here. This was due to the exponential increase in the number of saddle points with dimensionality \footnotemark making the problem highly non-convex and unsuitable for \texttt{fmincon}.
 
@@ -12,6 +12,13 @@ Much progress was made over the lookup table by treating the geometry reconstruc
 
 \section{Current implementation}
 
-\section{Reconstructions of carbon dioxide and carbonyl sulfide}
+\section{Geometry reconstructions done by lookup table}
+\subsection{A symmetric triatomic molecule: carbon dioxide}
+\subsection{An asymmetric triatomic molecule: carbonyl sulfide}
+\subsection{A four-atom system: acetylene}
 
 \section{Lessons learnt}
+\subsection{The extreme importance of covariances and joint distributions}
+\subsection{Geometry reconstruction is highly sensitive to uncertainty in the momentum vectors}
+
+\section{Future directions}

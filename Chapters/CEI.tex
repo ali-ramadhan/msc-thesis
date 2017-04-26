@@ -93,6 +93,8 @@ Repeating the process for $p_z = p_z(q,V,\ell,t_0,t)$ but ignoring the tiny unce
 \end{equation}
 
 \section{Computationally simulating a Coulomb explosion} \label{sec:simulating}
+
+\subsection{A Hamiltonian mechanics approach}
 To simulate an explosion of a molecule containing $n$ atoms, we must solve the classical equations of motion for each ion right after the explosion. We choose to use Hamiltonian mechanics here to acquire a system of first-order differential equations which may be easily solved by numerical methods such as the ubiquitous fourth-order Runge-Kutta. Assuming a purely electromagnetic potential for each ion, the Hamiltonian of the molecular system is
 \begin{equation}
 \mathcal{H}(\mathbf{r}_i, \mathbf{p}_i, t) = \sum_{i=1}^n \frac{\mathbf{p}_i^2}{2m_i} + \frac{1}{4\pi\epsilon_0}\sum_{\substack{\lbrace i,j\rbrace\\ i \ne j}} \frac{q_iq_j}{|\mathbf{r}_i-\mathbf{r}_j|}
@@ -108,8 +110,10 @@ where $i$ is held fixed over the second summation. With appropriate initial cond
 
 One way to think of the problem being tackled in this thesis is: which initial geometry $\mathbf{r}_i(t=0) = 0$ results in the momentum values measured at the detector? The atoms are far enough apart after just a few nanoseconds that by the time they arrive at the detector, they feel almost no forces due to each other and their momenta attain asymptotic values which we can denote $\mathbf{p}_i(t\rightarrow\infty)$.
 
+\subsection{An example of two geometries producing the same momentum vectors}
+
 \section{Conventions for geometries and momenta}
-
+\subsection{Bent triatomic molecules}
+\subsection{Acetylene}
 \subsection{Describing molecular geometries by a Z-matrix}
-
-\subsection{A homemade convention to describe momentum vectors}
+\subsection{Describing momentum vectors by an ad hoc convention}
