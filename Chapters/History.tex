@@ -106,15 +106,27 @@ for the position wavefunction of a molecule in terms of its momentum distributio
 
 Due to the difficulty of recovering the molecular geometries, the structures and dynamics of small molecules are usually inferred from the kinetic energy spectra of the fragments and their momentum vector distributions (usually studied using Newton and Dalitz plots).
 
-\citet{Legare05structure,Legare05dynamics} were the first to use ultrashort laser pulses and CEI to report on molecular structures and dynamics. To obtain the structures, they assume the explosion system evolves under a purely Coulombic potential and use optimization methods\footnotemark~ to make guesses at the structure that most accurately reproduces the observed data consistent with minimizing a least-squares objective function.
+\citet{Legare05structure,Legare05dynamics} were the first to use ultrashort laser pulses and CEI to report on molecular structures and dynamics. To obtain the structures, they assume the explosion system evolves under a purely Coulombic potential and use optimization methods to make guesses at the structure that most accurately reproduces the observed data consistent with minimizing a least-squares objective function. Dissapointingly, they trivialize the solution to a couple of sentences and fail to report the optimization methods employed, sidestepping the nuances of the reconstruction process that we will discuss in chapters \ref{ch:lookupTable}--\ref{ch:bayesian}. The nuances include the existence, in some cases, of multiple molecular structures producing the same momentum vector distribution and the high sensitivity of the reconstructed initial geometry to uncertainties in the momentum vectors leading to very uncertain geometries in some cases. They also apply convex optimization methods to a problem that is not convex.
 
-\footnotetext{Dissapointingly, they trivialize the solution to a couple of sentences and fail to report the optimization methods employed, sidestepping the nuances of the reconstruction process that we will discuss in chapters \ref{ch:lookupTable}--\ref{ch:bayesian}. The nuances include the existence, in some cases, of multiple molecular structures producing the same momentum vector distribution and the high sensitivity of the reconstructed initial geometry to uncertainties in the momentum vectors leading to very uncertain geometries in some cases. They also apply convex optimization methods to a problem that is not convex.}
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{gfx/LegareSO2-232Structure}
+  \caption[Molecular structure of \ch{SO2} using the \ch{SO2^{7+}} charge state.]{Molecular structure of \ch{SO2} using the \ch{SO2^{7+}} charge state. From \citet{Legare05structure}. Reprinted with permission from APS.}
+  \label{fig:SO2-232structure}
+\end{figure}
 
 Using \SI{8}{\fs} laser pulses they report on the structure of \ch{D2O} and \ch{SO2} \citep{Legare05structure}. They also claim to have imaged vibrating \ch{D2+} and dissociating \ch{SO2^{2+}} and \ch{SO2^{3}} however they provide no more than a couple of dissociation frames and infer the transient \ch{D2+} bond length from kinetic energy release ratios as a function of pump-probe time delay \citep{Legare05dynamics}.
 
 \citet{Gagnon08} reported the reconstruction of dichloromethane (\ch{CH2Cl2}) using a home-made \footnotemark stochastic-based simulated annealing algorithm that globally optimizes the molecular spatial configuration. They discuss uncertainties but are only able to obtain the structure in five cases.
 
 \footnotetext{There is nothing wrong with writing your own code here but nonconvex optimization algorithms are tricky to get right and the reliance should be on professional code.}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{gfx/CH2Cl2Geometry}
+  \caption[Geometry of \ch{CH2Cl2}.]{Geometry of \ch{CH2Cl2}. From \citet{Gagnon08}. Reprinted with permission from IOP.}
+  \label{fig:CH2Cl2geometry}
+\end{figure}
 
 \index{Lookup table}
 The best effort so far has probably been the one by \citet{Kunitski15} in which they use a lookup table approach to image the Efimov state of the helium trimer.
