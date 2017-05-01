@@ -36,7 +36,7 @@ Interestingly, the first-ever mention of the term ``Coulomb explosion'' in the p
 
 \footnotetext{The term was more popular in decades past but simply means the extinction rate or loss rate of metastable ions.}
 
-\subsection{Foil-forged images}
+\subsection{Foil-induced dissociation}
 CEI was first performed by passing a molecular beam containing the molecule of interest through a thin atomic film. Figure \ref{fig:foilExperiment} shows a schematic of such an experiment. While in the solid film, the probability for Coulomb scattering of the individual atomic nuclei is small due to their small size and consequently small interaction cross-section. However, the electrons will be scattered to very wide angles due to their interaction with the many electron clouds in the film. This process rapidly ionizes the molecule, typically within the first few atomic layers or the first femtosecond. The now highly ionized molecule exits the foil and rapidly dissociates into its consituent atomic fragments which repel eachother under their mutual Coulomb repulsion in what is termed a ``Coulomb explosion''.
 
 \begin{figure}[H]
@@ -53,10 +53,6 @@ The premise behind foil-induced CEI is that during this explosion, the atoms sim
 \end{equation}
 it suggests that measurement of the asymptotic vector velocities completely defines the initial geometry of the molecule \citep{Vager89}. Here $q_i$, $\mathbf{r}_i$, and $\mathbf{V}_i$ are the charge, position vector, and velocity vector of the atomic fragment $i$ while $\mu$ is the reduced mass of the two-body system of fragments $i,j$.
 
-Of course, there are some assumptions that must hold for a complete and accurate recovery of the initial geometry, which we shall discuss in section \ref{sec:CEIphysics}. However, just by inspection of the schematic in figure \ref{fig:foilExperiment} we can see that no rearrangement of the atoms must occur\footnotemark~ and that the molecular system must evolve on the Coulomb potential, which requires the rapid stripping of many electrons off the atom. Thus CEI becomes increasingly difficult to perform with larger molecules so it is best used to study smaller molecules. However, it is precisely these small molecules in the gas phase that need to be studied using CEI as they cannot be probed using other more established methods. Moreover, many smaller molecules may exhibit non-Coulombic behaviour unless placed into a highly charged state, which may be impossible depending on the apparatus in use. For foil-induced CEI in particular, a molecular beam must be prepared, and this may prohibit the study of many molecules that cannot be prepared as such.
-
-\footnotetext{While this is the case for many smaller molecules, it is not true for some of the popular targets. For example, a triatomic molecule may dissociate into a single atom and a diatomic rotor, which rotates before dissociating into two atoms.}
-
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{gfx/HydrogenTrimerReconstruction}
@@ -69,14 +65,9 @@ The earliest example of a molecular geometry recovered using CEI is reported by 
 
 \footnotetext{It is interesting to note that the experiment was repeated by three separate teams, then reported on coherently in one manuscript. Each team, having access to different equipment, produced separate pieces of data. It was the team in Rehovot, Israel that recorded the projections of the exploded ions while the others measured energy spectra and angular distributions.}
 
-A more popular CEI experiment was performed by \citet{Vager89} almost a decade later employing a $\sim$\SI{30}{\angstrom} aluminum film. Their work was motivated by the opportunity of imaging non-classical molecular structures that more popular methods were incapble of seeing. They were also the first to suggest that measuring the velocity (or momentum) vectors of each fragment would be provide all the information required to describe the molecule's structure. Figure \ref{fig:C2H3geometry} shows one reconstruction based on the measured velocity vectors.
+It is unclear how the idea for such an imaging experiment came to be, however it worth noting that \citet{Gaillard78} and co-authors have been studying the effects of molecular beams passing through thin foils for quite some time, mainly at Argonne National Laboratory. See for example their studies of wake potentials generated behind charged particles as they pass through a solid \citep{Gemmell75, Vager76PRL} and their study of the dissociation of fast \ch{HeH+} ions traversing thin foils \citep{Vager76PRA}. It seems quite reasonable that studying the dissociation of small molecules and the angular distribution of the fragments would inspire researchers to attempt to infer molecular structures using this data.
 
-%\begin{SCfigure}
-%  \centering
-%  \includegraphics[width=0.5\textwidth]{gfx/VagerPseudoGeometry}
-%  \caption[Reconstruction of \ch{C2H3+} following foil-induced dissociation.]
-%  {Reconstruction of \ch{C2H3+} following foil-induced dissociation. From \citet{Vager89}. Reprinted with permission from AAAS.}
-%\end{SCfigure}
+A more popular CEI experiment was performed by \citet{Vager89} almost a decade later employing a $\sim$\SI{30}{\angstrom} aluminum film. Their work was motivated by the opportunity of imaging non-classical molecular structures that more popular methods were incapble of seeing. They were also the first to suggest that measuring the velocity (or momentum) vectors of each fragment would be provide all the information required to describe the molecule's structure. Figure \ref{fig:C2H3geometry} shows one reconstruction based on the measured velocity vectors.
 
 \begin{figure}
   \centering
@@ -88,10 +79,15 @@ A more popular CEI experiment was performed by \citet{Vager89} almost a decade l
 
 However, they do not perform any geometry reconstruction and report their fragment ion densities in a coordinate system defined by the asymptotic velocity of each particle, and claim that it is a direct measurement of the square of the multidimensional wave function of a many-body system.
 
-% Purpose: Audience can discuss why methods other than foil and laser aren't so good for imaging molecular geometries.
-\subsection{Other methods of inducing Coulomb explosions}
+The promise of recovering molecular geometries in this simple fashion seems quite empty after glancing at the published literature in the past few decades. While foil-induced CEI has found some uses and produced some interesting work in recent years\footnotemark~, for the purposes of studying molecular structures and dynamics, the ultrafast laser shortly thereafter became the tool of choice for CEI as we will discuss in section \ref{sec:laserCEI}. The reason for the scarcity of foil-induced CEI experiments in the published literature is mainly due to its limitations.
 
-\subsection{Laser-induced dissociation}
+\footnotetext{This includes imaging the rovibrational wave functions of \ch{H2-} and \ch{D2-} by studying the kinetic energy relased by the fragments \citep{Jordon-Thaden11, Herwig13PRA}, and imaging the absolute configuration of chiral molecules in the gas phase by studying the measured velocity vectors of the fragments with Newton plots \citep{Herwig13}.}
+
+Of course, there are some assumptions that must hold for a complete and accurate recovery of the initial geometry, which we shall discuss in section \ref{sec:CEIphysics}. However, just by inspection of the schematic in figure \ref{fig:foilExperiment} we can see that no rearrangement of the atoms must occur\footnotemark~ and that the molecular system must evolve on the Coulomb potential, which requires the rapid stripping of many electrons off the atom. Thus CEI becomes increasingly difficult to perform with larger molecules so it is best used to study smaller molecules. However, it is precisely these small molecules in the gas phase that need to be studied using CEI as they cannot be probed using other more established methods. Moreover, many smaller molecules may exhibit non-Coulombic behaviour unless placed into a highly charged state, which may be impossible depending on the apparatus in use. For foil-induced CEI in particular, a molecular beam must be prepared, and this may prohibit the study of many molecules that cannot be prepared as such.
+
+\footnotetext{While this is the case for many smaller molecules, it is not true for some of the popular targets. For example, a triatomic molecule may dissociate into a single atom and a diatomic rotor, which rotates before dissociating into two atoms.}
+
+\subsection{Imaging with ultrashort laser pulses}\label{sec:laserCEI}
 
 %\subsubsection*{Analytical solutions}
 \index{Classical imaging formula}
@@ -104,9 +100,11 @@ where
 \begin{equation}
 S(p) = |c(p)|^2 = \left| \int \Phi_C^*(p,r) T_\mathrm{ion}(r) \Psi(r) \; dr  \right|^2
 \end{equation}
-for the position wavefunction of a molecule in terms of its momentum distribution $S(p)$. They are able to derive a similar formula for the Coulomb explosion of a symmetric linear triatomic molecule, but the more general case of the asymmetric linear triatomic molecule proves much more formidable.\footnotemark ~They proceed to compare their ``classical'' reconstructions for the vibrational wavefunction of a helium trimer system to the predictions of the quantum theory, noting small discrepencies.
+for the position wavefunction of a molecule in terms of its momentum distribution $S(p)$. They are able to derive a similar formula for the Coulomb explosion of a symmetric linear triatomic molecule, but the more general case of the asymmetric linear triatomic molecule proves much more formidable.\footnotemark ~They proceed to compare their ``classical'' reconstructions for the vibrational wavefunction of a helium trimer system to the predictions of the quantum theory, noting small discrepencies. The bulk of their article focuses on the Coulomb explosion of asymmetric linear triatmoic molecules and derives a two-dimensional classical imaging formula in terms of hyperspherical coordinates. An extension to three dimensions for bent triatomic molecules is promised but could not be found in the published literature.
 
-\footnotetext{The bulk of their article focuses on the Coulomb explosion of asymmetric linear triatmoic molecules and derives a two-dimensional classical imaging formula in terms of hyperspherical coordinates. An extension to three dimensions for bent triatomic molecules is promised but could not be found in the published literature. While a highly commendable effort, their unsaid conclusion seems to be that this is an intractable problem as their research group seems to have gone silent on this problem and the only citations to this work are in the context of the difficulty of the problem.}
+\footnotetext{While a highly commendable effort, their unsaid conclusion seems to be that this is an intractable problem as their research group seems to have gone silent on this problem and the only citations to this work are in the context of the difficulty of the problem.}
+
+Due to the difficulty of recovering the molecular geometries, the structures and dynamics of small molecules are usually inferred from the kinetic energy spectra of the fragments and their momentum vector distributions (usually studied using Newton and Dalitz plots).
 
 \citet{Legare05structure,Legare05dynamics} were the first to use ultrashort laser pulses and CEI to report on molecular structures and dynamics. To obtain the structures, they assume the explosion system evolves under a purely Coulombic potential and use optimization methods\footnotemark~ to make guesses at the structure that most accurately reproduces the observed data consistent with minimizing a least-squares objective function.
 
@@ -120,3 +118,6 @@ Using \SI{8}{\fs} laser pulses they report on the structure of \ch{D2O} and \ch{
 
 \index{Lookup table}
 The best effort so far has probably been the one by \citet{Kunitski15} in which they use a lookup table approach to image the Efimov state of the helium trimer.
+
+% Purpose: Audience can discuss why methods other than foil and laser aren't so good for imaging molecular geometries.
+\subsection{Other methods of inducing Coulomb explosions}
