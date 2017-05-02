@@ -11,21 +11,64 @@
 
 \section{Outline of the experiment}
 
-\subsection{Pump-probe Coulomb explosion imaging}
+%\subsection{Pump-probe Coulomb explosion imaging}
 In pump-probe Coulomb explosion imaging (CEI) one ultrashort laser pulse is split into two pulses through the use an asymmetric beamsplitter. One of the pulses, the pump pulse, is usually much weaker than the other, the probe pulse. A time delay $\tau$ between the pulses is then created such that the pump pulse goes first and the probe pulse second. The job of the pump pulse will be to initiate some change in the molecule. One example could include an isomerization of the molecule. Thus the pump pulse ``pumps'' the molecule into some excited state. The job of the powerful probe pulse is to engulf the molecule in an intense enough laser field such that multiple electrons are stripped off of it. The molecule's individual atoms are left in a highly-charged state and begin to behave as individual point charges in a purely Coulombic potential. The entire process occurs in the presence of a constant electric field and so the positively-charged ions all accelerate upwards towards a time- and position-sensitive detector. Thus the probe pulse allows for the ``probing'' of the excited state.
 
-\subsection{Femtosecond Multiple Pulse Length Spectroscopy}
+%\subsection{Femtosecond Multiple Pulse Length Spectroscopy}
 
-\section{Experimental apparatus}
-
-\section{Data analysis}
+\section{Data measurement and analysis}
+The premise of CEI is simple enough for a quirky elevator pitch yet the collecton and analysis of data is a nuanced multi-step process as we are attempting to measure each single atomic fragment precisely. In this section we will go through the process of how the momentum vectors of each atomic fragment are measured. This will require some discussion regarding the apparatus, algorithms, and intricacies of the process, all of which are essential to understand exactly how the data is collected so that it can be analyzed appropriately. We will also quantify the uncertainty in those measurements, which will be essential in quantifying our uncertainty in the reconstructed geometries later on.
 
 \subsection{Time and position measurement}
-The position is then calculated using
-\begin{equation}
-x = \frac{Q_1 + Q_2}{Q_1 + Q_2 + Q_3 + Q_4} ,\quad
-y = \frac{Q_1 + Q_3}{Q_1 + Q_2 + Q_3 + Q_4}
+The time-of-flight of each atomic fragment and its position on the detector are required to calculate its momentum vector. The measurement of time and position is carried out by a two-stage apparatus feeding electrical signals into a data acquisition (DAQ) computer which analyzes the signals to determine time and position.
+
+The first part of the two-stage apparatus is a set of two multi-channel plates (MCP) placed in a chevron configuration.\footnotemark~ Figure \ref{fig:MCP} shows a schematic of an MCP and briefly describes its operation. The job of the MCP is to amplify the signal of a single charged particle enough such that it may be detected as an electrical signal by an oscilloscope, much like a photomultiplier tube. Thus the output of an MCP is a shower of charged particles, or rather a charged cloud. The charged cloud may be fed into a second MCP to further amplify the signal. A two-stage chevron MCP setup produces an amplification of approximately $10^5-10^6$ depending on the applied voltage $V_D$ across the channels.
+
+\footnotetext{The channels of an MCP are slanted, usually at a (bias) angle of $5\degree-15\degree$ to increase the probability that an incident particle collides with the channel wall. To further increase this probability, the second MCP is oriented such that its channels are slanted in the opposite direction forming a V-like (or chevron-like) channel configuration.}
+
+\begin{SCfigure}
+  \centering
+  \includegraphics[width=0.50\textwidth]{gfx/MCP}
+  \caption
+  [Schematic of a multi-channel plate (MCP).]
+  {Schematic of a multi-channel plate (MCP). The incident particle need not be an electron, and may in fact be any charged particle or even a high-energy photon. Once a charged particle is incident on an MCP and collides with a channel wall, multiple secondary electrons are emitted and accelerated up the channel due to the applied voltage $V_D$ setting up a potential gradient along the channel and replenishing the emitted electrons. Due to the angled channels, the emitted electrons follow parabolic trajectories hitting the other wall and continuing the amplification process until a large number of particles are emitted at channel output.}
+  \label{fig:MCP}
+\end{SCfigure}
+
+You may notice that while most of the MCP's surface is covered in channels, not all of it is, leading to non-perfect detection. Only 60\% of the area is open to incident particles, and if a particle is incident on the other 40\% then it is not detected. Thus the detection efficiency of a triple coincidence event is $(0.6)^3 \approx 0.2$ and so we see that detection effiency decreases rapidly with the number of fragments that must be detected, suggesting that larger molecules are more difficult to study. There do exist ``funnel'' MCPs with an open area ratio of 90\% that increase the detection efficiency.
+
+By itself this MCP setup is enough to provide time-of-flight information but to obtain position information, this charged cloud output is made incident on a ``modified backgammon with weighted capacitors'' anode or readout pad built as described by \citet{Veshapidze02}. Figure \ref{fig:MBWC} shows a schematic of such an anode and describes the position detection process.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{gfx/MBWC}
+  \caption
+  [Schematic of a symmetrized ``modified backgammon with weighted capacitors'' (MBWC) anode for position detection.]
+  {Schematic of a symmetrized ``modified backgammon with weighted capacitors'' (MBWC) anode for position detection. The avalanche of charged particles or charged cloud hits the anode and induces a charge on the anode. This charged is induced via the capacitive couplings from the feedback capacitors of the preamplifiers connected to the triangles. The lines on the anode are insulating gaps, splitting the anode into a series of triangles whose arrangement resemble that of the backgammon board game. The metal strips are capacitively coupled to the triangluar strips through the insulator. If the cloud lands on the right side of the anode, then a larger fraction of the induced charge will flow to $Q_3$ and $Q_4$. So we can see that $x=0$ corresponds to the left side of the anode, and $x=1$ to the right side. If the cloud lands further up the anode, then a larger fraction of the induced charge will flow through $Q_1$ and $Q_3$ so we see that $y=0$ corresponds to the bottom side of the anode and $y=1$ corresponds to the top side. It is worth noting that the sign of $Q_i$ depends on the sign of the induced charge, and thus on the sign of the incident charged particle. In CEI the charged particles are all ions so $Q_i$ is always positive. The design gets its name as it is a combination of two older designs, the ``backgammon'' (BG) and the ``weighted coupling capacitor'' (WCC) designs. \citet{Mizogawa92} provides a more detailed explanation of its operation.  Figure rom \citet{Mizogawa02}. Reprinted with permission from Elsevier.}
+  \label{fig:MBWC}
+\end{figure}
+
+These four signals are fed into an Ortec 142 preamplifier in energy output mode, essentially acting as an operational amplifier integrator. The integrated signal is then fed into a digital acquisition (DAQ) computer equipped with a four-channel oscilloscope. Every time a laser pulse is fired into the experiment, an electrical signal is sent to the oscilloscope as a trigger. The DAQ examines the four signals following a trigger and saves them if it sees evidence of charged particle detection.
+
+A particularly good example of a triple coincidence detection event can be seen in figure \ref{fig:tripleCoincidence} along with an analysis of what can be gleaned about the Coulomb explosion process just by inspection of the signals on the oscilloscope. As a side note, if too many atomic fragments arrive at the detector in a short enough time period, steps due to different molecules may get mixed. Thus it is important to keep the Coulomb explosion rate low (\SI{100}{\Hz} worked quite well). Another reason to keep the count rate low is that the signals need time to decay back down post-integration otherwise the signals will saturate the oscilloscope at \SI{200}{\mV}. The ringing artifacts on the signal are due to the response of the preamplifiers.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{gfx/TripleCoincidenceEvent}
+  \caption
+  [Spectrometer response during a triple coincidence event.]
+  {Spectrometer response during a triple coincidence event. This was taken during a CEI experiment studying the dynamics of \ch{CS2} at the Canadian Light Source. The fragmentation event showcased is the concerted breakup process \ch{CS2 $\rightarrow$ CS2^3+ $\rightarrow$ C^+ + S^+ + S^+}. As the carbon atom is lighter, the first step at \SI{500}{\ns} is the detection of the carbon atom. All four channels increase by roughly similar amounts hinting that the carbon atom was detected near the center of the detector by \eqref{eq:xy}. Then the second and third events belong to the two sulfur atoms, arriving later due to sulfur's larger atomic mass. If the molecule was aligned in a plane parallel to the detector, the two sulfur atoms would have remained at the same height throughout the Coulomb explosion and been detected at the same time, producing one step in the signal. However, it must have oriented vertically such that one sulfur atom was closer to the detector. During the Coulomb explosion, the closer atom will initially experience a kick towards the detector while the other sulfur atom will initially experience a kick away from the detector before being accelerated upwards due to the constant electric field. This results in one sulfur atom arriving earlier, and the other later. Looking at the individual signals, we see a significant increase in $Q_1$ and $Q_2$ at \SI{800}{\ns} suggesting that the first sulfur atom was on one side of the detector while the more significant increase in $Q_3$ and $Q_4$ at \SI{900}{\ns} suggest that the second sulfur atom was on the other side. This makes some intuitive sense as we expect the carbon atom to land somewhere near the middle and the two sulfurs to land on opposite sides of the detector. The oscilloscope cards sport an 8-bit bus and so the individual $Q_i$ channels were limited to \SI{200}{\mV} to increase position detection accuracy. I must admit that a nice and rich signal such as this one only makes up 1\% of all events, the majority being single or double coincidences.}
+  \label{fig:tripleCoincidence}
+\end{figure}
+
+Software can analyze the signals and determine the magnitude of each $Q_i$ signal. If the change in baseline before and after an event is denoted $Q_i'$ then the position of the electron is then calculated using
+\begin{equation}\label{eq:xy}
+x = \frac{Q_1' + Q_2'}
+         {Q_1' + Q_2' + Q_3' + Q_4'} ,\quad
+y = \frac{Q_1' + Q_3'}
+         {Q_1' + Q_2' + Q_3' + Q_4'}
 \end{equation}
+where $x,y \in [0,1]$ are fractional positions. Multiplying $x$ and $y$ by the dimensions of the MCP detector will yield the physical position of the cloud's centroid.
 
 \subsection{Calculating the atomic fragments' momenta}
 The components of the three-dimensional momentum vector $\mathbf{p} = (p_x,p_y,p_z)$ for each atom are then calculated as
@@ -110,7 +153,7 @@ where $i$ is held fixed over the second summation. With appropriate initial cond
 
 One way to think of the problem being tackled in this thesis is: which initial geometry $\mathbf{r}_i(t=0) = 0$ results in the momentum values measured at the detector? The atoms are far enough apart after just a few nanoseconds that by the time they arrive at the detector, they feel almost no forces due to each other and their momenta attain asymptotic values which we can denote $\mathbf{p}_i(t\rightarrow\infty)$.
 
-\subsection{An example of two geometries producing the same momentum vectors}
+\subsection{A sneak peak at degenerate geometries}
 
 \section{Conventions for geometries and momenta}
 \subsection{Bent triatomic molecules}
