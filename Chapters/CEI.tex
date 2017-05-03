@@ -71,6 +71,8 @@ y = \frac{Q_1' + Q_3'}
 where $x,y \in [0,1]$ are fractional positions. Multiplying $x$ and $y$ by the dimensions of the MCP detector will yield the physical position of the cloud's centroid.
 
 \subsection{Calculating the atomic fragments' momenta}
+Calculating the momentum vector of each atomic fragment is an elementary physics problem once we have the time and position measurements. Let us look at the $p_x$ and $p_y$ components first.
+
 The components of the three-dimensional momentum vector $\mathbf{p} = (p_x,p_y,p_z)$ for each atom are then calculated as
 
 \begin{equation}\label{eq:CEImomenta}
@@ -156,6 +158,8 @@ One way to think of the problem being tackled in this thesis is: which initial g
 \subsection{A sneak peak at degenerate geometries}
 
 \section{Conventions for geometries and momenta}
+While tackling the problem of geometry reconstruction, it will be crucial to choose a convention for describing the geometries and momentum vectors especially so that geometries and vector arrangements can be compared with ease. Even more importantly, it provides us with an opportunity to reduce the dimensionality of the problem from $3N$ to $3N-6$ for a molecular system with $N$ atoms. This stems from the fact that we only need to describe the relative position of each atom, not its absolute position. For example, a triatomic molecule can be described by two bond lengths and a bond angle, rather than three position vectors. Also, the exact same molecule can produce different momentum vectors after a Coulomb explosion depending on its initial orientation with respect to the detector. We must use a momentum convention to ensure a one-to-one mapping between geometries and measured momentum vectors.
+
 \subsection{Bent triatomic molecules}
 \subsection{Acetylene}
 \subsection{Describing molecular geometries by a Z-matrix}
