@@ -1,10 +1,12 @@
 % If problems with the headers: get headings in appendix etc. right
 %\markboth{\spacedlowsmallcaps{Appendix}}{\spacedlowsmallcaps{Appendix}}
 
-\chapter{Mathematical Optimization}
+\chapter{Mathematical Optimization}\label{appx:optimization}
+We will take a massively expedited tour of mathematical optimization with the aim of explaining the inner workings of the primal-dual interior point methods used for nonlinear optimization in chapter \ref{ch:optimization}. To understand how these methods operate, we will need to introduce some important concepts in optimization, namely the duality principle and the Karush-Kuhn-Tucker optimality conditions. This is prefaced with a brief introduction to the subject.
 
-\section{Introduction}
+No knowledge of mathematical optimization is required, however we will assume some background knowledge throughout this appendix, namely a familiarity with linear algebra, matrix algebra, vector calculus, and some elementary concepts in analysis.
 
+\section{Elementary concepts}
 The standard form of a (continuous) optimization problem is
 \begin{align} \label{eq:op}
   \mathrm{minimize}   \quad & f_0(x) \nonumber \\
@@ -17,6 +19,8 @@ where $f_0(x): \mathbb{R}^n \rightarrow \mathbb{R}$ is the \emph{objective funct
 \mathcal{D} = \bigcap_{i=1}^m \operatorname{dom} f_i \cap \bigcap_{i=1}^p \operatorname{dom} h_i \neq \emptyset
 \end{equation}
 and assume it is nonempty.
+
+In the context of our geometry reconstruction problem discussed in chapter \ref{ch:optimization}, $f_0(x) = |p(x)-p_\textrm{measured}|^2$ where $p(x)$ is the momentum vectors produced following Coulomb explosion of a molecular with structure $x$, and the inequality constraints $f_i(x) \leq 0$ encapsulate the box constraints that limit the geometries recovered to physically reasonable values.
 
 % If the objective function f is linear and the constrained space is a polytope, the problem is a linear programming problem, which may be solved using well-known linear programming techniques such as the simplex method.
 % If the objective function is concave (maximization problem), or convex (minimization problem) and the constraint set is convex, then the program is called convex and general methods from convex optimization can be used in most cases.
@@ -46,7 +50,7 @@ where $g: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$. The $\inf$ o
   The proof is trivial.
 \end{proof}
 
-The \emph{Lagrangian dual problem} is given as
+The \emph{Lagrangian dual problem} associated with \eqref{eq:op} is given as
 \begin{align} \label{eq:dualop}
 \mathrm{maximize}    \quad & g(\lambda, \nu) \nonumber \\
 \mathrm{subject\;to} \quad & \lambda \succeq 0
@@ -58,6 +62,7 @@ The \emph{Lagrangian dual problem} is given as
 \begin{proof}
   The proof is trivial.
 \end{proof}
+In some contexts involving both the dual problem \eqref{eq:dualop} and the original problem \eqref{eq:op}, the original problem is called the \emph{primal problem}.
 
 \section{Optimality conditions}
 The KKT conditions are analogous to the condition that the gradient must be zero at a minimum, modified to take constraints into account. The difference is that the KKT conditions hold for constrained problems.
@@ -69,5 +74,6 @@ The KKT conditions are analogous to the condition that the gradient must be zero
  \nabla f_0(x^\star) + \sum_{i=1}^m \lambda_i^\star \nabla f_i(x^\star)
   + \sum_{i=1}^p \nu_i^\star \nabla h_i(x^\star) & = 0, \; & i & \in {1,\dots,m} \nonumber
 \end{align}
+The first two conditions are simply the original constraints of the primal problem which must always be satisfied. The third condition is the dual problem constraints. The fourth condition is that of complementary slackness, and the fifth enforces stationarity.
 
-\section{Interior-point method}
+\section{Primal-dual interior point methods}
