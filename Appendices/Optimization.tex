@@ -3,41 +3,71 @@
 
 \chapter{Mathematical Optimization}
 
-\section{Linear optimization}
-\section{Convex optimization}
-\section{Nonlinear optimization}
+\section{Introduction}
+
+The standard form of a (continuous) optimization problem is
+\begin{align} \label{eq:op}
+  \mathrm{minimize}   \quad & f_0(x) \nonumber \\
+  \mathrm{subject\;to} \quad &
+    f_i(x) \leq 0, \; i \in \left\{1, \dots, m \right\}\\
+    & h_i(x) = 0, \; i \in \left\{1, \dots, p \right\} \nonumber
+\end{align}
+where $f_0(x): \mathbb{R}^n \rightarrow \mathbb{R}$ is the \emph{objective function} to be minimized over the variable $x \in \mathbb{R}^n$, $f_i(x) \leq 0$ are called the \emph{inequality constraints}, and $h_i(x) = 0$ are called the \emph{equality constraints}. We denote its domain by
+\begin{equation}
+\mathcal{D} = \bigcap_{i=1}^m \operatorname{dom} f_i \cap \bigcap_{i=1}^p \operatorname{dom} h_i \neq \emptyset
+\end{equation}
+and assume it is nonempty.
 
 % If the objective function f is linear and the constrained space is a polytope, the problem is a linear programming problem, which may be solved using well-known linear programming techniques such as the simplex method.
 % If the objective function is concave (maximization problem), or convex (minimization problem) and the constraint set is convex, then the program is called convex and general methods from convex optimization can be used in most cases.
 % If the objective function is quadratic and the constraints are linear, quadratic programming techniques are used.
 % If the objective function is a ratio of a concave and a convex function (in the maximization case) and the constraints are convex, then the problem can be transformed to a convex optimization problem using fractional programming techniques.
 
-Lorem ipsum at nusquam appellantur his, ut eos erant homero
-concludaturque. Albucius appellantur deterruisset id eam, vivendum
-partiendo dissentiet ei ius. Vis melius facilisis ea, sea id convenire
-referrentur, takimata adolescens ex duo. Ei harum argumentum per. Eam
-vidit exerci appetere ad, ut vel zzril intellegam interpretaris.
-\graffito{More dummy text.}
+\section{Duality}
+We define the \emph{Langrangian} associated with the optimization problem \eqref{eq:op} as
+\begin{equation}
+L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^m \lambda_i f_i(x)
+  + \sum_{i=1}^p \nu_i h_i(x)
+\end{equation}
+where $L: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$ and $\operatorname{dom} L = \mathcal{D} \times \mathbb{R}^m \times \mathbb{R}^p$. $\lambda_i$ is the Langrange multiplier associated with the inequality constraint $f_i(x) \leq 0$ and $\nu_i$ is the Langrange multiplier associated with the equality constraint $h_i(x) = 0$. Together, $\lambda \in \mathbb{R}^m$, and $\nu \in \mathbb{R}^p$, are called the \emph{dual variables} or \emph{Langrange multiplier vectors}.
 
-Theorems can easily be defined
+The \emph{Lagrangian dual function} is defined as the minimum value of the Lagrangian $L$ over $x$
+\begin{equation}
+g(\lambda, \nu) = \inf_{x \in \mathcal{D}} L(x, \lambda, \nu)
+  = \inf_{x \in \mathcal{D}} \left[ f_0(x) + \sum_{i=1}^m \lambda_i f_i(x)
+    + \sum_{i=1}^p \nu_i h_i(x) \right]
+\end{equation}
+where $g: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$. The $\inf$ operator refers to the \emph{infimum} operator.
 
-\begin{definition}
-  Let $f$ be a function whose derivative exists in every point, then $f$ is 
-  a continuous function.
-\end{definition}
-
-\begin{theorem}[Pythagorean theorem]
-  \label{pythagorean}
-  This is a theorema about right triangles and can be summarised in the next 
-  equation 
-  \[ x^2 + y^2 = z^2 \]
+\begin{theorem}
+  The Lagrangian dual yields a lower bound on the optimal value of the problem \eqref{eq:op} for $\lambda \succeq 0$ and any $\nu$.
 \end{theorem}
-
 \begin{proof}
-  The theorem can be proved algebraically using four copies of a right triangle with sides $a$, $b$, and $c$, arranged inside a square with side $c$ as in the top half of the diagram. The triangles are similar with area $\tfrac12ab$, while the small square has side $b-a$ and area $(b-a)^2$. The area of the large square is therefore
-  $$(b-a)^2+4\frac{ab}{2} = (b-a)^2+2ab = a^2+b^2$$  
-  But this is a square with side $c$ and area $c^2$, so $c^2 = a^2 + b^2$.
+  The proof is trivial.
 \end{proof}
 
-And a consequence of theorem \ref{pythagorean} is the statement in the next 
-corollary.
+The \emph{Lagrangian dual problem} is given as
+\begin{align} \label{eq:dualop}
+\mathrm{maximize}    \quad & g(\lambda, \nu) \nonumber \\
+\mathrm{subject\;to} \quad & \lambda \succeq 0
+\end{align}
+
+\begin{theorem}
+  The Lagrangian dual yields a lower bound on the optimal value of the problem \eqref{eq:op} for $\lambda \succeq 0$ and any $\nu$.
+\end{theorem}
+\begin{proof}
+  The proof is trivial.
+\end{proof}
+
+\section{Optimality conditions}
+The KKT conditions are analogous to the condition that the gradient must be zero at a minimum, modified to take constraints into account. The difference is that the KKT conditions hold for constrained problems.
+\begin{align} \label{eq:kkt}
+ f_i(x^\star) & \geq 0, \; & i & \in {1,\dots,m} \nonumber \\
+ h_i(x^\star) & = 0, \; & i & \in {1,\dots,p} \nonumber \\
+ \lambda_i^\star & \geq 0, \; & i & \in {1,\dots,m} \\
+ \lambda_i^\star f_i(x^\star) & = 0, \; & i & \in {1,\dots,m} \nonumber \\
+ \nabla f_0(x^\star) + \sum_{i=1}^m \lambda_i^\star \nabla f_i(x^\star)
+  + \sum_{i=1}^p \nu_i^\star \nabla h_i(x^\star) & = 0, \; & i & \in {1,\dots,m} \nonumber
+\end{align}
+
+\section{Interior-point method}
