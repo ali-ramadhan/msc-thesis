@@ -1,11 +1,18 @@
 \chapter{Geometry reconstruction using constrained nonlinear optimization}\label{ch:optimization}
 
+\vspace{-1.5 em}
+\begin{addmargin}[-0.5cm]{0cm}
+  \minitoc
+\end{addmargin}
+\hrule
+\vspace{1.5 em}
+
 Much progress was made over the lookup table by treating the geometry reconstruction problem as a constrained nonlinear convex optimization such that MATLAB's \texttt{fmincon} function an be relied on. It relies on trust regions and uses an interior-point algorithm. This worked especially well in the case of triatomic molecules however four-atom systems proved incredibly difficult to tackle here. This was due to the exponential increase in the number of saddle points with dimensionality \footnotemark making the problem highly non-convex and unsuitable for \texttt{fmincon}.
 
 \footnotetext{Recall that triatomic molecules have three degrees of freedom resulting in a problem of dimension 3 while four-atom systems have six. That is, $3N+6$ for an $N$-atom system.}
 
 \section{Optimization problems}
-\section{Previous work employing a simplex algorithm}
+\section{Previous attempt using the Nelder-Mead method}
 \index{Simplex algorithm}
 \index{Geometry reconstruction!Simplex algorithm}
 \citet{Brichta09} proposed the reconstruction of small triatomic molecules using a simplex algorithm. It should not be confused with the more famous simplex algorithm, also an optimization algorithm but for linear programming, taught in almost every introductory optimization course. The algorithm employed should really should be referred to as the Nelder-Mead method, downhill simplex method, or amoeba method to avoid confusion between the two.\footnotemark
