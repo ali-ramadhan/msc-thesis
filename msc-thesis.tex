@@ -64,9 +64,13 @@
 
 \include{Chapters/Conclusion}
 
+% TODO: Move appendices behind bibliography to fit UW guidelines?
 \appendix
 %\renewcommand{\thechapter}{\alph{chapter}}
 \cleardoublepage
+
+\include{Appendices/Optimization}
+\include{Appendices/Statistics}
 
 % Small caps for author names.
 % Moved here so it only applied to the actual bibliography, not the main text.
@@ -75,10 +79,6 @@
 \cleardoublepage\include{FrontBackmatter/Bibliography}
 %\cleardoublepage\include{FrontBackmatter/Declaration}
 %\cleardoublepage\include{FrontBackmatter/Colophon}
-
-\appendix
-\include{Appendices/Optimization}
-\include{Appendices/Statistics}
 
 \cleardoublepage
 \addcontentsline{toc}{chapter}{\textsc{index}}
