@@ -1,24 +1,26 @@
-%*******************************************************
-% Thesis title page
-%*******************************************************
 \pdfbookmark[1]{Thesis title page}{Thesis title page}
 \begin{titlepage}
   % if you want the titlepage to be centered, uncomment and fine-tune the line below (KOMA classes environment)
 %  \begin{addmargin}[-1cm]{-3cm}
     \begin{center}
-      %\Large  
+      \large  
       
       \hfill
-      
       \vfill
       
-      \begingroup
-      \color{Maroon}{\Large \spacedallcaps{\myTitle}} \\ \bigskip
-      \endgroup
+      \begin{spacing}{1.00}
+        {\LARGE \textsc{\myTitle} \\ \bigskip}
+      \end{spacing}
+
+      %{\color{Maroon}{\LARGE \textsc{\myTitle}} \\ \bigskip}
+      %\begin{addmargin}{-3cm}
+      %  \centering
+      %  {\Large \textsc{\myTitle}} \\ \bigskip
+      %\end{addmargin}
       
       by \\ \bigskip
       
-      \myName
+      {\Large \myName}
       %\spacedlowsmallcaps{\myName}
       
       \vfill
