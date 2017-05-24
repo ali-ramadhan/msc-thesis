@@ -1,6 +1,6 @@
 library(readr)
 OCS7fs <-
-  read_delim("D:/Google Drive/GHome/Lab/Geometry reconstruction/Momentu data/OCS 222 momenta/OCS_222_7fs_correct_order.txt", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
+  read_delim("D:/Google Drive/GHome/Lab/Geometry reconstruction/Momentum data/OCS 222 momenta/OCS_222_7fs_correct_order.txt", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
 
 drops <- c("X10")
 OCS7fs[ , !(names(OCS7fs) %in% drops)]
