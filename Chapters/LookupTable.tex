@@ -49,17 +49,20 @@ Of course since then lookup tables have found an enormous number of uses in comp
 \index{Geometry reconstruction!Lookup table}
 In this approach, many Coulomb explosions are simulated (see secton \ref{sec:simulating}) using a wide variety of molecular structures as the initial condition, and the resulting momentum vectors from each simulation are stored. Thus you have a mapping from molecular structures to momentum vectors. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse. This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
 
-\subsection{Computational complexity}
-
 \subsection{Using simulations to test accuracy}
+\subsection{Computational complexity}
 
 \section{Geometry reconstructions done by lookup table}
 \subsection{A symmetric triatomic molecule: carbon dioxide}
 \subsection{An asymmetric triatomic molecule: carbonyl sulfide}
 
-\section{Lessons learnt}
+\section{Conclusions and lessons learnt}
 \subsection{Precision is computationally expensive}
 \subsection{Difficulty in scaling to larger molecules}
 \subsection{Degenerate molecular structures}
 
-\section{Future directions}
+\section{Future usefulness}
+
+% Another warning box that zooming in doesn't actually help much. If you're
+% near a local minimum, you'll just zoom into that. A first go usually gives you ~ 2 sig figs of precision, anything more doesn't mean much as our momentum uncertainty is pretty high.
+% Warning awesomebox that the MATLAB code has not been vectorized.
