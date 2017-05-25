@@ -49,14 +49,23 @@ library(GGally)
 
 colnames(OCS7fs) <- c("Op_x", "Op_y", "Op_z", "Cp_x", "Cp_y", "Cp_z",
                       "Sp_x1", "Sp_y", "Sp_z")
+colnames(OCS7fsg) <- c("rCO", "rCS", "theta")
+OCS7fsg <- OCS7fsg[rowSums(OCS7fsg[, -1])>0, ]
 
 pdf('rplot.pdf')
 
+ggpairs(OCS7fsg, columns = c("rCO", "rCS", "theta"),
+        diag = list(continuous = wrap('barDiag', color = "#0076A1", fill = "#32AAB5")),
+        upper = list(continuous = wrap('density')),
+        lower = list(continuous = wrap('points', size = 0.5))) +
+  theme_few()
+  
+
 ggpairs(OCS7fs,
-        diag = list(continuous = wrap('densityDiag', color = "#0076A1", fill = "#32AAB5")),
+        diag = list(continuous = wrap('histDiag', color = "#0076A1", fill = "#32AAB5")),
         upper = list(continuous = wrap('density')),
         lower = list(continuous = wrap('points', size = 0.1))) +
-        #columnLabels = c("O p[x]", "2", "3", "4", "5", "6", "7", "8", "9")) +
+  # columnLabels = c("O p[x]", "2", "3", "4", "5", "6", "7", "8", "9")) +
   theme_few() +
   # scale_colour_brewer() +
   theme(axis.ticks=element_blank(),
@@ -199,4 +208,4 @@ g33 <- ggplot(CO2_theta_simplex_simulations, aes(x=X3, y=X6)) +
 multiplot(g11, g12, g13, g21, g22, g23, g31, g32, g33,
           layout=matrix(c(1,2,3,4,5,6,7,8,9), nrow=3, byrow=TRUE))
 
-# OCS calibration plots (from simplex simulations)
+# Lookup table reconstruction pair plots
