@@ -17,9 +17,7 @@ The idea of using a lookup table to speed up calculations is as old as mathemati
 
 \footnotetext{The Egyptian Mathematical Leather Roll and the Rhine Mathematical Papyrus were both brought to the British Museum in 1864 following 1858 excavations of the tombs of Sheikh Abd el-Qurna at Thebes.}
 
-An even more impressive lookup table is found in the extensive Rhind Mathematical Papyrus,\footnotemark~ which (seemingly) methodologically expresses the fractions $2/n$ for odd $n \in \lbrace 3, 5, \dots, 101 \rbrace$ as the sum of 2--4 unit fractions!
-
-\footnotetext{Test.}
+An even more impressive lookup table is found in the extensive Rhind Mathematical Papyrus, which (seemingly) methodologically expresses the fractions $2/n$ for odd $n \in \lbrace 3, 5, \dots, 101 \rbrace$ as the sum of 2--4 unit fractions!
 
 \begin{figure}
   \centering
@@ -54,7 +52,72 @@ The Nelder-Mead algorithm is an ad-hoc or heuristic algorithm for nonlinear opti
 
 \footnotetext{\citet{Wright10} provides a great discussion of the Nelder-Mead method, ending with a comment by John Nelder regarding his algorithm, ``Mathematicians hate it because you can’t prove convergence; engineers seem to love it because it often works.''}
 
+\subsection{Previous reconstructions}
 Unfortunately they only report on the reconstruction of molecular structures based on simulated data for carbon dioxide and formaldehyde. I could not use this algorithm to find the geometries of CO2 or OCS from real data.
+
+\pagebreak
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{gfx/SimplexJPhysB}
+  \caption[SimplexJPhysB.]
+  {SimplexJPhysB. Figure from \citet{Brichta07}.}
+  \label{fig:simplexJPhysB}
+\end{figure}
+\clearpage
+
+\pagebreak
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{gfx/SimplexPRL}
+  \caption[SimplexPRL.]
+  {SimplexPRL. Figure from \citet{Bocharova11}.}
+  \label{fig:simplexPRL}
+\end{figure}
+\clearpage
+
+\subsection{Inability to reliably reconstruct asymmetric triatomic geometries}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/CO2SimplexCalibrationPlots}
+  \caption[CO$_2$ simplex calibration plots.]
+  {CO$_2$ simplex calibration plots.}
+  \label{fig:CO2SimplexCalibrationPlots}
+\end{figure}
+\clearpage
+
+\pagebreak
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCSSimplexCalibrationPlots}
+  \caption[OCS simplex calibration plots.]
+  {OCS simplex calibration plots.}
+  \label{fig:OCSSimplexCalibrationPlots}
+\end{figure}
+\clearpage
+
+
+\pagebreak
+\section{Exploratory data analysis of our measurements}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCS2227fsMomentum}
+  \caption[OCS (2,2,2) 7fs momentum.]
+  {OCS (2,2,2) 7fs momentum.}
+  \label{fig:OCS2227fsMomentum}
+\end{figure}
+\clearpage
+
+\pagebreak
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCS2227fsMomentum_ggpairs}
+  \caption[OCS (2,2,2) 7fs momentum pair plots.]
+  {OCS (2,2,2) 7fs momentum pair plots.}
+  \label{fig:OCS2227fsMomentumPairPlots}
+\end{figure}
+\clearpage
 
 % Implementation (+ extra convergence cube)
 \section{Implementation}
@@ -66,13 +129,53 @@ In this approach, many Coulomb explosions are simulated (see secton \ref{sec:sim
 \subsection{Computational complexity}
 
 \section{Geometry reconstructions done by lookup table}
-\subsection{A symmetric triatomic molecule: carbon dioxide}
-\subsection{An asymmetric triatomic molecule: carbonyl sulfide}
+
+\pagebreak
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCS2227fsScatterKde}
+  \caption[OCS (2,2,2) 7fs scatter KDE.]
+  {OCS (2,2,2) 7fs scatter KDE.}
+  \label{fig:OCS2227fsScatterKde}
+\end{figure}
+\clearpage
+
+\pagebreak
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCS2227fsKdeKde}
+  \caption[OCS (2,2,2) 7fs KDE KDE.]
+  {OCS (2,2,2) 7fs KDE KDE.}
+  \label{fig:OCS2227fsKdeKde}
+\end{figure}
+\clearpage
+
+\pagebreak
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCS2227fsBothKde}
+  \caption[OCS (2,2,2) 7fs Both KDE.]
+  {OCS (2,2,2) 7fs Both KDE.}
+  \label{fig:OCS2227fsBothKde}
+\end{figure}
+\clearpage
 
 \section{Conclusions and lessons learnt}
 \subsection{Precision is computationally expensive}
 \subsection{Difficulty in scaling to larger molecules}
+
+\pagebreak
 \subsection{Degenerate molecular structures}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/DegenerateGeometryTrajectories.pdf}
+  \caption[Degenerate geometry trajectories.]
+  {Degenerate geometry trajectories.}
+  \label{fig:DegenerateGeometryTrajectories}
+\end{figure}
+\clearpage
 
 \section{Future usefulness}
 

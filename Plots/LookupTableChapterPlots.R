@@ -57,8 +57,8 @@ pdf('rplot.pdf')
 ggpairs(OCS7fsg, columns = c("rCO", "rCS", "theta"),
         diag = list(continuous = wrap('barDiag', color = "#0076A1", fill = "#32AAB5")),
         upper = list(continuous = wrap('density')),
-        lower = list(continuous = wrap('points', size = 0.5))) +
-  theme_few()
+        lower = list(continuous = wrap('points', size = 0.5)))#  +
+  # theme_minimal()
   
 
 ggpairs(OCS7fs,
