@@ -43,8 +43,21 @@ The most familiar lookup table may be the multiplication times table that every 
 % Some powerful applications? Why are they used?
 Of course since then lookup tables have found an enormous number of uses in computer science. Arrays are ubiquitous objects in procedural programming languages and so is the more general dictionary object, especially in Python. Sine tables are still stored in calculators for quick trigonometric computations using the CORDIC algorithm and 3D lookup tables are used in image processing to store colormaps. In each case the speed offered by a lookup table once it has been generated is the main reason for their use.
 
+\section{Previous attempt using the Nelder-Mead method}
+\index{Simplex algorithm}
+\index{Geometry reconstruction!Simplex algorithm}
+\citet{Brichta09} proposed the reconstruction of small triatomic molecules using a simplex algorithm. It should not be confused with the more famous simplex algorithm, also an optimization algorithm but for linear programming, taught in almost every introductory optimization course. The algorithm employed should really should be referred to as the Nelder-Mead method, downhill simplex method, or amoeba method to avoid confusion between the two.\footnotemark
+
+\footnotetext{We refer to it as the Nelder-Mead method for this chapter in concordance with Wikipedia.}
+
+The Nelder-Mead algorithm is an ad-hoc or heuristic algorithm for nonlinear optimization that can be used without computing derivatives of the objective function\footnotemark. It was first generalized to minimizing functions by \citet{Nelder65} based off ideas by \citet{Spendley62}. It has enjoyed widespread popularity due to its ease of implementation and intuitive inner workings but it is not appropriate to every problem. In fact, it is not guaranteed to converge and thus fails when applied to some problems. It can even converge to non-stationary points in some cases \citep{McKinnon98}. Later publications would sometimes introduce tweaks to the Nelder-Mead method that would improve its performance on a specific problem. Unfortunately, I believe geometry reconstruction is not an appropriate problem for the Nelder-Mead method.
+
+\footnotetext{\citet{Wright10} provides a great discussion of the Nelder-Mead method, ending with a comment by John Nelder regarding his algorithm, ``Mathematicians hate it because you can’t prove convergence; engineers seem to love it because it often works.''}
+
+Unfortunately they only report on the reconstruction of molecular structures based on simulated data for carbon dioxide and formaldehyde. I could not use this algorithm to find the geometries of CO2 or OCS from real data.
+
 % Implementation (+ extra convergence cube)
-\section{Implementation to reconstruct triatomic molecules}
+\section{Implementation}
 \index{Lookup table}
 \index{Geometry reconstruction!Lookup table}
 In this approach, many Coulomb explosions are simulated (see secton \ref{sec:simulating}) using a wide variety of molecular structures as the initial condition, and the resulting momentum vectors from each simulation are stored. Thus you have a mapping from molecular structures to momentum vectors. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse. This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
