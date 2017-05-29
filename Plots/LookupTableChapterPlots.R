@@ -32,8 +32,9 @@ ggplot(melted, aes(x=value)) +
     breaks = c(-5e-22, 0, 5e-22),
     label = c("-5", "0", "5")
   ) +
-  theme_few() +
-  theme(strip.text = element_text(size=12),
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"),
+        strip.text = element_text(size=12),
         axis.title.x = element_text(size=14),
         axis.text.x = element_text(size=11),
         axis.title.y = element_text(size=14),
@@ -134,73 +135,82 @@ CO2_theta_simplex_simulations <- read_csv("D:/Google Drive/GHome/Lab/Geometry re
 
 require(ggplot2)
 require(ggthemes)
-require(cowplot)
+library(hrbrthemes)
 
 g11 <- ggplot(CO2_r12_simplex_simulations, aes(x=X1, y=X4)) +
-  geom_abline(intercept = 0, slope = 1, color="#2D3184") +
+  geom_abline(intercept = 0, slope = 1, color="black") +
   geom_point(size=1.5, color="#0076A1") +
   xlab(expression(r[12]*" input ("*ring(A)*")")) +
   ylab(expression(r[12]*" output ("*ring(A)*")")) +
-  theme_few()
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 g12 <- ggplot(CO2_r12_simplex_simulations, aes(x=X1, y=X5)) +
-  # geom_hline(yintercept = 1.16, color="#2D3184") +
-  # geom_hline(yintercept = 1.56, color="#2D3184") +
+  geom_hline(yintercept = 1.16, color="black") +
+  # geom_hline(yintercept = 1.56, color="black") +
   geom_point(size=1.5, color="#0076A1") +
   xlab(expression(r[12]*" input ("*ring(A)*")")) +
   ylab(expression(r[23]*" output ("*ring(A)*")")) +
-  theme_few()
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 g13 <- ggplot(CO2_r12_simplex_simulations, aes(x=X1, y=X6)) +
-  geom_hline(yintercept = 180, color="#2D3184") +
+  geom_hline(yintercept = 180, color="black") +
   geom_point(size=1.5, color="#0076A1") +
   xlab(expression(r[12]*" input ("*ring(A)*")")) +
   ylab(expression(theta*" output (degrees)")) +
-  theme_few()
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 g21 <- ggplot(CO2_r23_simplex_simulations, aes(x=X2, y=X4)) +
-  geom_hline(yintercept = 1.16, color="#2D3184") +
+  geom_hline(yintercept = 1.16, color="black") +
   geom_point(size=1.5, color="#0076A1") +
   xlab(expression(r[23]*" input ("*ring(A)*")")) +
   ylab(expression(r[12]*" output ("*ring(A)*")")) +
-  theme_few()
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 g22 <- ggplot(CO2_r23_simplex_simulations, aes(x=X2, y=X5)) +
-  geom_abline(intercept = 0, slope = 1, color="#2D3184") +
+  geom_abline(intercept = 0, slope = 1, color="black") +
   geom_point(size=1.5, color="#0076A1") +
   xlab(expression(r[23]*" input ("*ring(A)*")")) +
   ylab(expression(r[23]*" output ("*ring(A)*")")) +
-  theme_few()
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 g23 <- ggplot(CO2_r23_simplex_simulations, aes(x=X2, y=X6)) +
-  geom_hline(yintercept = 180, color="#2D3184") +
+  geom_hline(yintercept = 180, color="black") +
   geom_point(size=1.5, color="#0076A1") +
   xlab(expression(r[23]*" input ("*ring(A)*")")) +
   ylab(expression(theta*" output (degrees)")) +
-  theme_few()
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 g31 <- ggplot(CO2_theta_simplex_simulations, aes(x=X3, y=X4)) +
-  geom_hline(yintercept = 1.16, color="#2D3184") +
+  geom_hline(yintercept = 1.16, color="black") +
   geom_point(size=1.5, color="#0076A1") +
   xlab(expression(theta*" intput (degrees)")) +
   ylab(expression(r[12]*" output ("*ring(A)*")")) +
-  theme_few()
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 g32 <- ggplot(CO2_theta_simplex_simulations, aes(x=X3, y=X5)) +
-  # geom_hline(yintercept = 1.16, color="#2D3184") +
-  geom_hline(yintercept = 1.56, color="#2D3184") +
+  geom_hline(yintercept = 1.16, color="black") +
+  # geom_hline(yintercept = 1.56, color="black") +
   geom_point(size=1.5, color="#0076A1") +
   xlab(expression(theta*" output (degrees)")) +
   ylab(expression(r[23]*" output ("*ring(A)*")")) +
-  theme_few()
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 g33 <- ggplot(CO2_theta_simplex_simulations, aes(x=X3, y=X6)) +
-  geom_abline(intercept = 0, slope = 1, color="#2D3184") +
-  geom_abline(intercept = 360, slope = -1, color="#2D3184") +
+  geom_abline(intercept = 0, slope = 1, color="black") +
+  # geom_abline(intercept = 360, slope = -1, color="black") +
   geom_point(size=1.5, color="#0076A1") +
   xlab(expression(r[23]*" input ("*ring(A)*")")) +
   ylab(expression(theta*" output (degrees)")) +
-  theme_few()
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 # require(cowplot)
 # plot_grid(g11, g12, g13, g21, g22, g23, g31, g32, g33)

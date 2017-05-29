@@ -6,7 +6,7 @@ import matplotlib.patches as mpatches
 import pandas as pd
 import seaborn as sns
 
-geometryFilename = 'OCS_222_7fs_geometries_0001-0500.txt'  # str(sys.argv[1])
+geometryFilename = 'OCS_222_7fs_LT_geometries.txt'  # str(sys.argv[1])
 
 geometries = np.loadtxt(geometryFilename)
 nGeometriesAll = geometries.shape[0]
@@ -82,18 +82,18 @@ sns.set(style="ticks", color_codes=True)
 
 # Plotting geometries.
 p = sns.JointGrid(x=df['xO'], y=df['yO'])
-# p.plot_joint(sns.kdeplot, cmap="Reds", shade=True, shade_lowest=False)
-p.plot_joint(plt.scatter, s=20, color='#7D0112')
+p.plot_joint(sns.kdeplot, cmap="Reds", shade=True, shade_lowest=False, bw='scott')
+p.plot_joint(plt.scatter, s=2, color='#7D0112', alpha=0.2)
 
 p.x = df['xC']
 p.y = df['yC']
-# p.plot_joint(sns.kdeplot, cmap="Greys", shade=True, shade_lowest=False)
-p.plot_joint(plt.scatter, s=20, color='#4B4B4B')
+p.plot_joint(sns.kdeplot, cmap="Greys", shade=True, shade_lowest=False, bw='scott')
+p.plot_joint(plt.scatter, s=2, color='#4B4B4B', alpha=0.2)
 
 p.x = df['xS']
 p.y = df['yS']
-# p.plot_joint(sns.kdeplot, cmap="YlGn", shade=True, shade_lowest=False)
-p.plot_joint(plt.scatter, s=20, color='#E99A2C')
+p.plot_joint(sns.kdeplot, cmap="YlOrBr", shade=True, shade_lowest=False, bw='scott')
+p.plot_joint(plt.scatter, s=2, color='#E99A2C', alpha=0.2)
 
 # Marginal distributions = kernel density estimate plots
 sns.kdeplot(df['xO'], ax=p.ax_marg_x, vertical=False, color='#7D0112', shade=True)
@@ -139,4 +139,3 @@ p.ax_marg_y.legend_.remove()
 # plt.ylim([-2, 2])
 
 plt.show()
-# g.savefig('carbon.pdf')
