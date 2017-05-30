@@ -45,7 +45,7 @@ Of course since then lookup tables have found an enormous number of uses in comp
 \index{Geometry reconstruction!Simplex algorithm}
 \citet{Brichta09} proposed the reconstruction of small triatomic molecules using a simplex algorithm. It should not be confused with the more famous simplex algorithm, also an optimization algorithm but for linear programming, taught in almost every introductory optimization course. The algorithm employed should really should be referred to as the Nelder-Mead method, downhill simplex method, or amoeba method to avoid confusion between the two.\footnotemark
 
-\footnotetext{We refer to it as the Nelder-Mead method for this chapter in concordance with Wikipedia.}
+\footnotetext{We refer to it as the Nelder-Mead method for this chapter in alignment with Wikipedia.}
 
 The Nelder-Mead algorithm is an ad-hoc or heuristic algorithm for nonlinear optimization that can be used without computing derivatives of the objective function\footnotemark. It was first generalized to minimizing functions by \citet{Nelder65} based off ideas by \citet{Spendley62}. It has enjoyed widespread popularity due to its ease of implementation and intuitive inner workings but it is not appropriate to every problem. In fact, it is not guaranteed to converge and thus fails when applied to some problems. It can even converge to non-stationary points in some cases \citep{McKinnon98}. Later publications would sometimes introduce tweaks to the Nelder-Mead method that would improve its performance on a specific problem. Unfortunately, I believe geometry reconstruction is not an appropriate problem for the Nelder-Mead method (see section \ref{ssec:simplexFail}).
 
@@ -58,9 +58,7 @@ Unfortunately, \citet{Brichta09} only report on the reconstruction of molecular 
   \centering
   \includegraphics[width=\textwidth]{gfx/SimplexJPhysB}
   \caption[Reconstructed \ch{CO2} geometries using the Nelder-Mead method.]
-  {Reconstructed \ch{CO2} geometries after Coulomb explosion by \SI{50}{\fs} laser pulses using the Nelder-Mead method for the (a) $(1,1,1)$, (b) $(1,2,1)$, (c) $(1,1,2)$, (d) $(1,2,2)$, (e) $(2,1,2)$, and (f) $(2,2,2)$ fragmentation channels. The carbon atom is placed at the origin with the higher charged oxygen atom in the +$x$-quadrant. The three circles represent the equilibrium or ground state geometry of \ch{CO2}. Each plot is reported to contain approximately $10^3$ events (or geometries), however it is hard to believe that (a) and (d) contain similar amounts of data. 
-    
-    Figure from \citet{Brichta07}.}
+  {Reconstructed \ch{CO2} geometries after Coulomb explosion by \SI{50}{\fs} laser pulses using the Nelder-Mead method for the (a) $(1,1,1)$, (b) $(1,2,1)$, (c) $(1,1,2)$, (d) $(1,2,2)$, (e) $(2,1,2)$, and (f) $(2,2,2)$ fragmentation channels. The carbon atom is placed at the origin with the higher charged oxygen atom in the +$x$-quadrant. The three circles represent the equilibrium or ground state geometry of \ch{CO2}, which is plotted as perfectly linear even though it should have a bond angle of \SI{172.5}{\degree} \citep{Siegmann02,Mathur92}. Each plot is reported to contain approximately $10^3$ events (or geometries), however it is hard to believe that (a) and (d) contain similar amounts of data. Figure from \citet{Brichta07}.}
   \label{fig:simplexJPhysB}
 \end{figure}
 
@@ -68,7 +66,9 @@ Unfortunately, \citet{Brichta09} only report on the reconstruction of molecular 
   \centering
   \includegraphics[width=0.5\textwidth]{gfx/SimplexPRL}
   \caption[Reconstructed \ch{CO2} in the $(2,2,2)$ charge state using the Nelder-Mead method.]
-  {Reconstructed \ch{CO2} geometries in the $(2,2,2)$ charge state after explosion by a \SI{7}{\fs} laser pulse using the Nelder-Mead method. They report a molecular geometry of $\langle r_\mathrm{CO} \rangle \approx \SI{1.3}{\angstrom}$, $\langle \theta_\mathrm{OCO} \rangle \approx 168\degree$ which is close the equilibrium geometry of $\langle r_\mathrm{CO} \rangle \approx \SI{1.16}{\angstrom}$, $\langle \theta_\mathrm{OCO} \rangle \approx 172\degree$. Figure from \citet{Bocharova11}.}
+  {Reconstructed \ch{CO2} geometries in the $(2,2,2)$ charge state after explosion by a \SI{7}{\fs} laser pulse using the Nelder-Mead method. Although unreported, the triangles presumably pinpoint the centroid (or average) position of each atom while the the 
+    
+    They report a molecular geometry of $\langle r_\mathrm{CO} \rangle \approx \SI{1.3}{\angstrom}$, $\langle \theta_\mathrm{OCO} \rangle \approx 168\degree$ which is close the equilibrium geometry of $\langle r_\mathrm{CO} \rangle \approx \SI{1.16}{\angstrom}$ \citep{ChemistryOfTheElements} and $\langle \theta_\mathrm{OCO} \rangle \approx 172\degree$ \citep{Siegmann02,Mathur92}. Figure from \citet{Bocharova11}.}
   \label{fig:simplexPRL}
 \end{SCfigure}
 
@@ -95,6 +95,8 @@ Simulated geometries are used for this analysis mainly because we can check exac
 A more thorough analysis should vary multiple parameters at once, however if the algorithm cannot reconstruct geometries that different from the ground-state by a single parameter.
 
 It should be noted that the Nelder-Mead algorithm, especially in our case, is quite sensitive to the geometries chosen to represent the initial simplex. Changing them could significantly impact the algorithm's ability to converge on the correct geometry. Of course, this does suggest that there may exist a set of initial geometries that significantly improve the algorithm's reliability, however, after many attempts I could not find such a set. Perhaps \citet{Brichta07} and \citet{Bocharova11} happened to find an optimal set of geometries, however no mention of it is made, casting doubts over their geometry reconstructions and any consequent conclusions. The neccessity of fine-tuning the Nelder-Mead method should immediately prompt the search for an improved method.
+
+% Simplex: Very sensitive to initial conditions. Probably cannot reproduce same results. If we change it to optimize theta lines, the others get out of whack.
 
 \pagebreak
 \section{Exploratory data analysis of our measurements}
@@ -150,7 +152,7 @@ It probably does not matter how geometries are plotted.
 
 \pagebreak
 \subsection{Degenerate molecular structures}
-
+We have previously hinted at the fact that due to the ill-posed nature of the geometry reconstruction inverse problem, multiple solutions may be posible. This feature actually does pop up for the OCS molecule and the lookup table is perhaps the best method of investigating these multiple solutions, which we will call degenerate geometries.
 
 \begin{figure}
   \centering
@@ -166,4 +168,3 @@ It probably does not matter how geometries are plotted.
 % Another warning box that zooming in doesn't actually help much. If you're
 % near a local minimum, you'll just zoom into that. A first go usually gives you ~ 2 sig figs of precision, anything more doesn't mean much as our momentum uncertainty is pretty high.
 % Warning awesomebox that the MATLAB code has not been vectorized.
-% Simplex: Very sensitive to initial conditions. Probably cannot reproduce same results. If we change it to optimize theta lines, the others get out of whack.
