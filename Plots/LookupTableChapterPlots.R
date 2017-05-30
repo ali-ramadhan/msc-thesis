@@ -1,19 +1,31 @@
+library(hrbrthemes)
+import_roboto_condensed()
+
+# Momentum data
 library(readr)
 OCS7fs <-
   read_delim("D:/Google Drive/GHome/Lab/Geometry reconstruction/Momentum data/OCS 222 momenta/OCS_222_7fs_correct_order.txt", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
+OCS7fs <-
+  read_delim("D:/Google Drive/GHome/Lab/Geometry reconstruction/Momentum data/OCS 222 momenta/OCS_222_30fs_correct_order.txt", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
+OCS7fs <-
+  read_delim("D:/Google Drive/GHome/Lab/Geometry reconstruction/Momentum data/OCS 222 momenta/OCS_222_60fs_correct_order.txt", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
+OCS7fs <-
+  read_delim("D:/Google Drive/GHome/Lab/Geometry reconstruction/Momentum data/OCS 222 momenta/OCS_222_100fs_correct_order.txt", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
+OCS7fs <-
+  read_delim("D:/Google Drive/GHome/Lab/Geometry reconstruction/Momentum data/OCS 222 momenta/OCS_222_200fs_correct_order.txt", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
 
 drops <- c("X10")
-OCS7fs[ , !(names(OCS7fs) %in% drops)]
+OCS7fs <- OCS7fs[ , !(names(OCS7fs) %in% drops)]
 
 colnames(OCS7fs) <- c("O p_x", "O p_y", "O p_z", "C p_x", "C p_y", "C p_z",
                       "S p_x", "S p_y", "S p_z")
+
+melted = melt(OCS7fs)
 
 # OCS 222 7fs momentum plots (3x3 grid)
 library(reshape2)
 library(ggplot2)
 library(ggthemes)
-
-melted = melt(OCS7fs)
 
 pdf('rplot.pdf')
 
@@ -50,31 +62,30 @@ library(GGally)
 
 colnames(OCS7fs) <- c("Op_x", "Op_y", "Op_z", "Cp_x", "Cp_y", "Cp_z",
                       "Sp_x1", "Sp_y", "Sp_z")
-colnames(OCS7fsg) <- c("rCO", "rCS", "theta")
-OCS7fsg <- OCS7fsg[rowSums(OCS7fsg[, -1])>0, ]
 
 pdf('rplot.pdf')
 
-ggpairs(OCS7fsg, columns = c("rCO", "rCS", "theta"),
-        diag = list(continuous = wrap('barDiag', color = "#0076A1", fill = "#32AAB5")),
-        upper = list(continuous = wrap('density')),
-        lower = list(continuous = wrap('points', size = 0.5)))#  +
-  # theme_minimal()
-  
-
 ggpairs(OCS7fs,
-        diag = list(continuous = wrap('histDiag', color = "#0076A1", fill = "#32AAB5")),
+        diag = list(continuous = wrap('densityDiag', color = "#0076A1", fill = "#32AAB5")),
         upper = list(continuous = wrap('density')),
         lower = list(continuous = wrap('points', size = 0.1))) +
-  # columnLabels = c("O p[x]", "2", "3", "4", "5", "6", "7", "8", "9")) +
   theme_few() +
-  # scale_colour_brewer() +
-  theme(axis.ticks=element_blank(),
+  theme(text=element_text(family="Roboto Condensed"),
+        axis.ticks=element_blank(),
         axis.line=element_blank(), 
         axis.text=element_blank(), 
         panel.grid.major= element_blank())
 
 dev.off()
+
+colnames(OCS7fsg) <- c("rCO", "rCS", "theta")
+OCS7fsg <- OCS7fsg[rowSums(OCS7fsg[, -1])>0, ]
+
+ggpairs(OCS7fsg, columns = c("rCO", "rCS", "theta"),
+        diag = list(continuous = wrap('barDiag', color = "#0076A1", fill = "#32AAB5")),
+        upper = list(continuous = wrap('density')),
+        lower = list(continuous = wrap('points', size = 0.5)))#  +
+# theme_minimal()
 
 # Multiple plot function
 #
