@@ -6,7 +6,13 @@ import matplotlib.patches as mpatches
 import pandas as pd
 import seaborn as sns
 
-geometryFilename = 'OCS_222_7fs_LT_geometries.txt'  # str(sys.argv[1])
+# geometryFilename = 'OCS_222_7fs_LT_geometries.txt'
+# geometryFilename = 'OCS_222_30fs_LT_geometries.txt'
+# geometryFilename = 'OCS_222_60fs_LT_geometries.txt'
+geometryFilename = 'OCS_222_100fs_LT_geometries.txt'
+# geometryFilename = 'OCS_222_200fs_LT_geometries.txt'
+
+print('geometryFilename = {:s}'.format(geometryFilename))
 
 geometries = np.loadtxt(geometryFilename)
 nGeometriesAll = geometries.shape[0]
@@ -15,7 +21,7 @@ nGeometriesAll = geometries.shape[0]
 geometries = geometries[~np.all(geometries == 0.0, axis=1)]
 
 nGeometries = geometries.shape[0]
-print('g={:d}, g_zero={:d}'.format(nGeometriesAll, nGeometriesAll-nGeometries))
+print('g={:d}, g_zero={:d}, g_good={:d}'.format(nGeometriesAll, nGeometriesAll-nGeometries, nGeometries))
 
 r12 = geometries[:, 0]
 r23 = geometries[:, 1]
@@ -125,11 +131,45 @@ c_patch = mpatches.Patch(color='#4B4B4B', label='carbon')
 s_patch = mpatches.Patch(color='#E99A2C', label='sulfur')
 plt.legend(handles=[o_patch, c_patch, s_patch])
 
-p.x = [xO_mean, xC_mean, xS_mean]
-p.y = [yO_mean, yC_mean, yS_mean]
-p.plot_joint(plt.scatter, marker='x', color='black', s=50)
-plt.plot([xO_mean, xC_mean], [yO_mean, yC_mean], linewidth=1, color='black')
-plt.plot([xC_mean, xS_mean], [yC_mean, yS_mean], linewidth=1, color='black')
+# Plot "average geometry" using centroid positions.
+# p.x = [xO_mean, xC_mean, xS_mean]
+# p.y = [yO_mean, yC_mean, yS_mean]
+# p.plot_joint(plt.scatter, marker='x', color='black', s=50)
+# plt.plot([xO_mean, xC_mean], [yO_mean, yC_mean], linewidth=1, color='black')
+# plt.plot([xC_mean, xS_mean], [yC_mean, yS_mean], linewidth=1, color='black')
+
+# 7 fs
+# xO_modal, yO_modal = -2.121, 0.019
+# xC_modal, yC_modal = -0.384, -0.091
+# xS_modal, yS_modal = 1.188, 0.010
+
+# 30 fs
+# xO_modal, yO_modal = -2.594, 0.022
+# xC_modal, yC_modal = -0.2727, -0.127
+# xS_modal, yS_modal = 1.459, 0.0113
+
+# 60 fs
+# xO_modal, yO_modal = -2.814, 0.0453
+# xC_modal, yC_modal = -0.3958, -0.1304
+# xS_modal, yS_modal = 1.545, 0.0196
+
+# 100 fs
+xO_modal, yO_modal = -3.007, 0.0349
+xC_modal, yC_modal = -0.499, -0.1671
+xS_modal, yS_modal = 1.651, 0.0120
+
+# 200 fs
+# xO_modal, yO_modal = -3.479, 0.0635
+# xC_modal, yC_modal = -0.3239, -0.1618
+# xS_modal, yS_modal = 1.908, 0.0145
+
+# Plot "modal geometry" or "most likely geometry" at the peaks of the bivariate KDE.
+# Coordinates were taken using the built-in plot viewer. Calculating them would have been too much work (see above).
+p.x = [xO_modal, xC_modal, xS_modal]
+p.y = [yO_modal, yC_modal, yS_modal]
+# p.plot_joint(plt.scatter, marker='o', color='black', s=50)
+plt.plot([xO_modal, xC_modal], [yO_modal, yC_modal], linewidth=1, color='black', alpha=0.5)
+plt.plot([xC_modal, xS_modal], [yC_modal, yS_modal], linewidth=1, color='black', alpha=0.5)
 
 plt.xlabel('$x$ (angstroms)')
 plt.ylabel('$y$ (angstroms)')
@@ -137,5 +177,34 @@ p.ax_marg_x.legend_.remove()
 p.ax_marg_y.legend_.remove()
 # plt.xlim([-4.1, 2.2])
 # plt.ylim([-2, 2])
+
+# Calculate and print average and modal geometries.
+O = np.array([xO_mean, yO_mean])
+C = np.array([xC_mean, yC_mean])
+S = np.array([xS_mean, yS_mean])
+
+CO = O - C
+CS = S - C
+rCO = np.sqrt(np.linalg.norm(CO))
+rCS = np.sqrt(np.linalg.norm(CS))
+
+theta = np.rad2deg(np.arccos(np.dot(CO, CS)/rCO**2/rCS**2))
+
+print('Average geometry:')
+print('rCO = {:f} A, rCS = {:f} A, theta = {:f} deg'.format(rCO, rCS, theta))
+
+O = np.array([xO_modal, yO_modal])
+C = np.array([xC_modal, yC_modal])
+S = np.array([xS_modal, yS_modal])
+
+CO = O - C
+CS = S - C
+rCO = np.sqrt(np.linalg.norm(CO))
+rCS = np.sqrt(np.linalg.norm(CS))
+
+theta = np.rad2deg(np.arccos(np.dot(CO, CS)/rCO**2/rCS**2))
+
+print('Modal or "most likely" geometry:')
+print('rCO = {:f} A, rCS = {:f} A, theta = {:f} deg'.format(rCO, rCS, theta))
 
 plt.show()
