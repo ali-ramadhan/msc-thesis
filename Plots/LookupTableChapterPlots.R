@@ -1,5 +1,8 @@
 library(hrbrthemes)
+library(extrafont)
 import_roboto_condensed()
+windowsFonts()
+font_import()
 
 # Momentum data
 library(readr)
@@ -74,7 +77,8 @@ ggpairs(OCS7fs,
         axis.ticks=element_blank(),
         axis.line=element_blank(), 
         axis.text=element_blank(), 
-        panel.grid.major= element_blank())
+        panel.grid.major= element_blank(),
+        panel.spacing=grid::unit(0,"lines"))
 
 dev.off()
 
