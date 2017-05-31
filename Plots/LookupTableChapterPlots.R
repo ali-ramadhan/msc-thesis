@@ -25,6 +25,17 @@ colnames(OCS7fs) <- c("O p_x", "O p_y", "O p_z", "C p_x", "C p_y", "C p_z",
 
 melted = melt(OCS7fs)
 
+# Lookup table geometries
+OCS7fsg <- read_csv("D:/Google Drive/GHome/Lab/MSc thesis figures/OCS_222_7fs_LT_geometries.csv", col_names = FALSE)
+OCS7fsg <- read_csv("D:/Google Drive/GHome/Lab/MSc thesis figures/OCS_222_30fs_LT_geometries.csv", col_names = FALSE)
+OCS7fsg <- read_csv("D:/Google Drive/GHome/Lab/MSc thesis figures/OCS_222_60fs_LT_geometries.csv", col_names = FALSE)
+OCS7fsg <- read_csv("D:/Google Drive/GHome/Lab/MSc thesis figures/OCS_222_100fs_LT_geometries.csv", col_names = FALSE)
+OCS7fsg <- read_csv("D:/Google Drive/GHome/Lab/MSc thesis figures/OCS_222_200fs_LT_geometries.csv", col_names = FALSE)
+
+OCS7fsg <- OCS7fsg[ , 1:3]
+colnames(OCS7fsg) <- c("rCO", "rCS", "theta")
+OCS7fsg <- OCS7fsg[rowSums(OCS7fsg[, -1])>0, ]
+
 # OCS 222 7fs momentum plots (3x3 grid)
 library(reshape2)
 library(ggplot2)
@@ -58,7 +69,7 @@ ggplot(melted, aes(x=value)) +
 
 dev.off()
 
-# OCS 222 7fs momentum pair plots (9x9 grid)
+# OCS 222 7fs momentum pair plots (9x9 pair plot)
 library(ggplot2)
 library(ggthemes)
 library(GGally)
@@ -82,14 +93,16 @@ ggpairs(OCS7fs,
 
 dev.off()
 
-colnames(OCS7fsg) <- c("rCO", "rCS", "theta")
-OCS7fsg <- OCS7fsg[rowSums(OCS7fsg[, -1])>0, ]
+# Molecular geometry parameter distributions (3x3 pair plot)
+OCS7fsg[,1] <- OCS7fsg[,1]/1e-10
+OCS7fsg[,2] <- OCS7fsg[,2]/1e-10
 
 ggpairs(OCS7fsg, columns = c("rCO", "rCS", "theta"),
         diag = list(continuous = wrap('barDiag', color = "#0076A1", fill = "#32AAB5")),
         upper = list(continuous = wrap('density')),
-        lower = list(continuous = wrap('points', size = 0.5)))#  +
-# theme_minimal()
+        lower = list(continuous = wrap('points', size = 0.5))) +
+  theme_grey() +
+  theme(text=element_text(family="Roboto Condensed"))
 
 # Multiple plot function
 #
