@@ -104,18 +104,19 @@ It should be noted that the Nelder-Mead algorithm, especially in our case, is qu
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS2227fsMomentum}
-  \caption[OCS (2,2,2) 7fs momentum.]
-  {OCS (2,2,2) 7fs momentum.}
+  \caption[OCS (2,2,2) 7fs momentum distributions.]
+  {OCS (2,2,2) \SI{7}{\fs} momentum distributions. Distributions for each atom's momentum components measured after Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. We can infer some basic dynamics from these plots. For example, we see that the carbon and sulfur atoms tend to fly off with high velocity in the $x$-direction while the oxygen atom flies off with little velocity in the $x$-direction. As conversation of momentum must hold, the $p_x$ components must sum to zero suggesting that the carbon and sulfur tend to fly off in opposite $x$-directions. The other distributions do not tell us much except for the slight asymmetry in the carbon and sulfur's $p_z$ distributions. To inspect this 9-dimensional distribution in more detail we look to figure \ref{fig:OCS2227fsMomentumPairPlots}. Kernel density estimates (with a Gaussian kernel) are used to estimate the probability density function of each momentum component. Such estimates are inherently not as accurate at estimating bimodal distributions thus the carbon and sulfur's $p_x$ estimates appear oversmoothed.}
   \label{fig:OCS2227fsMomentum}
 \end{figure}
 \clearpage
 
 \pagebreak
+The pairs plot is a grid of scatterplots showing the bivariate relationships between all pairs of variables in a multivariate dataset.
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS2227fsMomentumPairPlots}
-  \caption[OCS (2,2,2) 7fs momentum pair plots.]
-  {OCS (2,2,2) 7fs momentum pair plots.}
+  \caption[OCS (2,2,2) 7fs momentum pairs plot.]
+  {OCS (2,2,2) 7fs momentum pairs plot. Pairs plot showing the bivariate relationship between each atom's momentum components measured after Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. On the diagonal, kernel density estimates (with a Gaussian kernel) of the momentum component designated by the label at the top of the column and end of the row are given. Below the diagonal, scatter plots show the relationship between the momentum components belonging to that row and column. Above the diagonal, the same relationship is given using a contour plot instead.}
   \label{fig:OCS2227fsMomentumPairPlots}
 \end{figure}
 \clearpage
@@ -137,8 +138,8 @@ It is important that we do not simulate geometries that are already contained in
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS2227fsLTGeometry}
-  \caption[OCS (2,2,2) 7fs lookup table geometry.]
-  {OCS (2,2,2) 7fs lookup table geometry.}
+  \caption[OCS (2,2,2) \SI{7}{\fs} lookup table geometry.]
+  {OCS (2,2,2) \SI{7}{\fs} lookup table geometry.}
   \label{fig:OCS2227fsLTGeometry}
 \end{figure}
 
