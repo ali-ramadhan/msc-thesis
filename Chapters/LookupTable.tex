@@ -73,9 +73,13 @@ Unfortunately, \citet{Brichta09} only report on the reconstruction of molecular 
   \label{fig:simplexPRL}
 \end{SCfigure}
 
-\subsection{Inability to reliably reconstruct asymmetric triatomic geometries} \label{ssec:simplexFail}
+\subsection{Inability to reliably reconstruct triatomic molecules} \label{ssec:simplexFail}
+
+In attempting to apply the Nelder-Mead method to a the problem of geometry reconstruction, we found the results to vary greatly depending on the set of geometries chosen to form the initial simplex. To investigate this worrying aspect of the algorithm, we decided to see whether it could reconstruct simulated geometries. That is, we would chose a molecular geometry and use it to simulate a Coulomb explosion (see section \ref{sec:simulating}) and compute the resulting asymptotic momentum vectors. These momentum vectors are then fed into the Nelder-Mead algorithm to see whether it could recover the molecular geometry we started off with.
 
 Simulated geometries are used for this analysis mainly because we can check exactly how far off the algorithm is from the correct solution. The simulated geometry only experiences the Coulomb force and so a solution is guaranteed by our classical simulation as no quantum mechanical effects occur. Simulated geometries are thus the easiest geometries to reconstruct and serious doubts regarding an algorithm's utility must be raised if it cannot reconstruct them. We do not know the geometries \textit{a priori} when reconstructing real geometries and so we need a trustworthy reconstruction algorithm in order to trust any geometries it produces.
+
+What we found confirmed the unreliable nature of the Nelder-Mead method for reconstructing molecular geometries. We attempted to reconstruct molecular structures for \ch{CO2} and \ch{OCS}, both in the $(2,2,2)$ fragmentation channel. Starting from their equilibrium geometries we varied one parameter at a time to test whether the Nelder-Mead method could recover the geometry. Figure \ref{fig:CO2SimplexCalibrationPlots} shows the reconstruction results for \ch{CO2} $(2,2,2)$ and figure \ref{fig:OCSSimplexCalibrationPlots} shows the same for \ch{OCS} $(2,2,2)$.
 
 \begin{figure}
   \centering
@@ -89,30 +93,43 @@ Simulated geometries are used for this analysis mainly because we can check exac
   \centering
   \includegraphics[width=\textwidth]{Plots/OCSSimplexCalibrationPlots}
   \caption[Testing the Nelder-Mead method's ability to reconstruct \ch{OCS} (2,2,2) geometries.]
-  {Testing the Nelder-Mead method's ability to reconstruct \ch{OCS} (2,2,2) geometries by starting with the ground-state geometry of \ch{CO2} and varying each parameter one-by-one. In the first row, the \ch{C-O} bond length ($r{\textnormal{CO}}\equiv r_{12}$) was varied to create an ``input geometry'' which underwent a simulated Coulomb explosion. The resulting momentum vectors from the explosion were fed into the Nelder-Mead algorithm which converged to a geomety, the ``output geometry''. The \ch{C-S} bond length ($r{\textnormal{CS}}\equiv r_{23}$) and the bond angle $\theta$ were varied in the second and third rows respectively. Solid black lines indicate the expected output geometry, so deviations indicate a failure on the algorithm's ability to reconstruct the geometry. We see that the algorithm can accurately reconstruct the geometry when a single bond length is varied but performs worse and worse as the molecular bends, even slightly.}
+  {Testing the Nelder-Mead method's ability to reconstruct \ch{OCS} (2,2,2) geometries by starting with the ground-state geometry of \ch{CO2} and varying each parameter one-by-one. In the first row, the \ch{C-O} bond length ($r_\textrm{CO}\equiv r_{12}$) was varied to create an ``input geometry'' which underwent a simulated Coulomb explosion. The resulting momentum vectors from the explosion were fed into the Nelder-Mead algorithm which converged to a geomety, the ``output geometry''. The \ch{C-S} bond length ($r_\textrm{CS}\equiv r_{23}$) and the bond angle $\theta$ were varied in the second and third rows respectively. Solid black lines indicate the expected output geometry, so deviations indicate a failure on the algorithm's ability to reconstruct the geometry. We see that the algorithm can accurately reconstruct the geometry when a single bond length is varied but performs worse and worse as the molecule bends, even slightly.}
   \label{fig:OCSSimplexCalibrationPlots}
 \end{figure}
 
-A more thorough analysis should vary multiple parameters at once, however if the algorithm cannot reconstruct geometries that different from the ground-state by a single parameter.
+The Nelder-Mead method successfully retrives the bond lengths for the majority of cases but not the bond angles. In the case of \ch{CO2} it seems to completely fail at retreiving the geometry once the bond angle falls below approximately $176\degree$. For \ch{OCS}, retrieved geometries get worse and worse as the molecule bends, even slightly.
 
-It should be noted that the Nelder-Mead algorithm, especially in our case, is quite sensitive to the geometries chosen to represent the initial simplex. Changing them could significantly impact the algorithm's ability to converge on the correct geometry. Of course, this does suggest that there may exist a set of initial geometries that significantly improve the algorithm's reliability, however, after many attempts I could not find such a set. Perhaps \citet{Brichta07} and \citet{Bocharova11} happened to find an optimal set of geometries, however no mention of it is made, casting doubts over their geometry reconstructions and any consequent conclusions. The neccessity of fine-tuning the Nelder-Mead method should immediately prompt the search for an improved method.
+A more thorough analysis should vary multiple parameters at once to more fully explore the state space of the problem, however if the algorithm cannot even reconstruct geometries that different from the equilibrium state by a single parameter as we have done, then the results of a more thorough analysis will probably be even more worrying. We already have enough information to distrust the Nelder-Mead method and begin searching for a new approach.
 
-% Simplex: Very sensitive to initial conditions. Probably cannot reproduce same results. If we change it to optimize theta lines, the others get out of whack.
+It should be noted that the Nelder-Mead algorithm, especially in our case, is quite sensitive to the geometries chosen to represent the initial simplex. Changing them could significantly impact the algorithm's ability to converge on the correct geometry. Of course, this does suggest that there may exist a set of initial geometries that significantly improve the algorithm's reliability, however, after many attempts I could not find such a set. Some choices improved the retreival of bond angles at the cost of diminished retreival of the bond lengths. The initial simplex used to produce figures \ref{fig:CO2SimplexCalibrationPlots} and \ref{fig:OCSSimplexCalibrationPlots} was chosen to maximize the number of successful reconstructions for very straight molecules which constitute the majority of cases, however molecules with bond angles $\theta < 175\degree$ are very common and so even with this choice, we are very unsure about the accuracy of a majority of reconstructions.
 
-\pagebreak
-\section{Exploratory data analysis of our measurements}
+% TODO: Include my initial simplex.
+
+Perhaps \citet{Brichta07} and \citet{Bocharova11} happened to find an optimal set of geometries to form their inital simplex used to produce figures \ref{fig:simplexJPhysB} and \ref{fig:simplexPRL}, however no mention of it is made, casting some doubt over their geometry reconstructions and any consequent conclusions in their respective works. The neccessity of fine-tuning the Nelder-Mead method should immediately prompt the search for an improved method.
+
+\section{Exploratory data analysis of the momentum measurements}
+Before we attempt to reconstruct geometries based on the momentum vectors measured, it would be a good idea to inspect and analyze the raw data first. Such an analysis will help us identify any issues with the data and really we should be making sense of the raw data before attempting to analyze it further. Such an analysis is typically termed exploratory data analysis, first promoted by \citet{Tukey77}.
+
+For each Coulomb explosion event, our measurements for \ch{OCS} include a momentum vector $(p_x, p_y, p_z)$ for each atom or fragment. Thus each event involves the measurement of $9$ scalars, ultimately forming a $9$-dimensional multivariate dataset with some structure, mainly imposed by the condition that momentum must be conserved along each physical axis in the reference frame of the molecule, that is the center-of-momentum (COM) frame for us.
+
+For this section we will look at the momentum vectors measured for \ch{OCS} in the $(2,2,2)$ fragmentation channel following Coulomb explosion by a \SI{7}{\fs} laser pulse, with all measurements kept in the lab frame. This allows us to inspect the raw data before it is transformed to the COM frame with the added benefit that it allows for the inspection of any instrumental or systematic errors. Qualitatively, the data looks quite similar in the two frames, but the geometry reconstruction can only be done in the COM frame as the simulation assumes that the molecule starts from rest such that momentum is always conserved as the molecular systems undergoes a Coulomb explosion.
+
+In figure \ref{fig:OCS2227fsMomentum} we plot histograms for each atom's momentum components and overlay the histograms with kernel density estimates (using a Gaussian kernel) to estimate the probability density function of each momentum component. Glancing at the distributions, they seem to make sense qualitatively with some pecularities as discussed in the caption. 
+
+This analysis should be done for each data set collected. So for us, it should be repeated for the 30, 60, 100, and \SI{200}{\fs} data sets which we include in appendix \ref{appx:supplementaryFigures} as figures \ref{fig:OCS22230fsMomentum}--\ref{fig:OCS222200fsMomentum}.
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS2227fsMomentum}
   \caption[OCS (2,2,2) 7fs momentum distributions.]
-  {OCS (2,2,2) \SI{7}{\fs} momentum distributions. Distributions for each atom's momentum components measured after Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. We can infer some basic dynamics from these plots. For example, we see that the carbon and sulfur atoms tend to fly off with high velocity in the $x$-direction while the oxygen atom flies off with little velocity in the $x$-direction. As conversation of momentum must hold, the $p_x$ components must sum to zero suggesting that the carbon and sulfur tend to fly off in opposite $x$-directions. The other distributions do not tell us much except for the slight asymmetry in the carbon and sulfur's $p_z$ distributions. To inspect this 9-dimensional distribution in more detail we look to figure \ref{fig:OCS2227fsMomentumPairPlots}. Kernel density estimates (with a Gaussian kernel) are used to estimate the probability density function of each momentum component. Such estimates are inherently not as accurate at estimating bimodal distributions thus the carbon and sulfur's $p_x$ estimates appear oversmoothed.}
+  {OCS (2,2,2) \SI{7}{\fs} momentum distributions. Distributions for each atom's momentum components measured after Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel (in the lab frame). We can infer some basic dynamics from these plots. For example, we see that the carbon and sulfur atoms tend to fly off with high velocity in the $x$-direction while the oxygen atom flies off with little velocity in the $x$-direction. As conversation of momentum must hold, the $p_x$ components must sum to zero suggesting that the carbon and sulfur tend to fly off in opposite $x$-directions. The other distributions do not tell us much except for the slight asymmetry in the carbon and sulfur's $p_z$ distributions. We also notice that the momentum distribution is rather isotropic in the $y$ and $z$ directions but is bimodal in the $x$ direction, suggesting that the laser pulse's electric field was polarized in the $x$-axis. To inspect this 9-dimensional distribution in more detail we look to figure \ref{fig:OCS2227fsMomentumPairPlots}. Kernel density estimates (with a Gaussian kernel) are used to estimate the probability density function of each momentum component. Such estimates are inherently not as accurate at estimating bimodal distributions thus the carbon and sulfur's $p_x$ estimates appear oversmoothed.}
   \label{fig:OCS2227fsMomentum}
 \end{figure}
-\clearpage
 
-\pagebreak
-The pairs plot is a grid of scatterplots showing the bivariate relationships between all pairs of variables in a multivariate dataset.
+While figure \ref{fig:OCS2227fsMomentum} gives us some insight into the measurements, we are looking at a multidimensional data set and might want to look at correlations between each measurement. We do this using a pairs plot, which is a grid of scatterplots showing the bivariate relationships between all pairs of variables in a multivariate dataset. The pairs plot was first introduced by \citet{Hartigan75}, however we use the more modern and generalized version introduced by \citet{Emerson13} as they provide an open-source implementation in the form of an R package.
+
+Figure \ref{fig:OCS2227fsMomentumPairPlots} uses a pairs plot to showcase the relationship between ever pair of variables in our dataset. Due to the $9$-dimensional nature of our dataset, we end up with a $9\times9$ grid of plots with some redundancy. The diagonal repeats the kernel density estimates shown in figure \ref{fig:OCS2227fsMomentum} but they are quite useful as a reference here. Below the diagonal are the scatter plots, however due to the high density of points, contour plots are employed to showcase the same relationship above the diagonal. So only 36 scatter plots are required but this format provides us with greater insight of our dataset.
+
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS2227fsMomentumPairPlots}
@@ -120,7 +137,8 @@ The pairs plot is a grid of scatterplots showing the bivariate relationships bet
   {OCS (2,2,2) 7fs momentum pairs plot. Pairs plot showing the bivariate relationship between each atom's momentum components measured after Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. On the diagonal, kernel density estimates (with a Gaussian kernel) of the momentum component designated by the label at the top of the column and end of the row are given. Below the diagonal, scatter plots show the relationship between the momentum components belonging to that row and column. Above the diagonal, the same relationship is given using a contour plot instead.}
   \label{fig:OCS2227fsMomentumPairPlots}
 \end{figure}
-\clearpage
+
+Pairs plots for the 30, 60, 100, and \SI{200}{\fs} data sets are included in appendix \ref{appx:supplementaryFigures} as figures \ref{fig:OCS22230fsMomentumPairPlots}--\ref{fig:OCS222200fsMomentumPairPlots}.
 
 % Implementation (+ extra convergence cube)
 \section{Implementation}
