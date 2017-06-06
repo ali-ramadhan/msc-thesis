@@ -140,11 +140,16 @@ Figure \ref{fig:OCS2227fsMomentumPairPlots} uses a pairs plot to showcase the re
 
 Pairs plots for the 30, 60, 100, and \SI{200}{\fs} data sets are included in appendix \ref{appx:supplementaryFigures} as figures \ref{fig:OCS22230fsMomentumPairPlots}--\ref{fig:OCS222200fsMomentumPairPlots}.
 
-% Implementation (+ extra convergence cube)
 \section{Implementation}
 \index{Lookup table}
 \index{Geometry reconstruction!Lookup table}
-In this approach, many Coulomb explosions are simulated (see secton \ref{sec:simulating}) using a wide variety of molecular structures as the initial condition, and the resulting momentum vectors from each simulation are stored. Thus you have a mapping from molecular structures to momentum vectors. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse. This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
+The idea behind using a lookup table is quite simple: many Coulomb explosions are simulated (see secton \ref{sec:simulating}) using a wide variety of molecular structures as the initial condition, and the resulting momentum vectors from each simulation are stored. This creates a mapping from molecular structures to momentum vectors. Each molecular geometry and its corresponding post-explosion momentum vectors can be stored in a single row consisting of $9$ entries, $3$ to describe the molecular geometry of a triatomic molecule and $6$ to describe the momentum vectors (see section \ref{sec:conventions}). While only $3$ scalars are enough to describe the momentum vectors produced by a simulated Coulomb explosion (the last momentum vector can be calculated from the others using conservation of momentum), we store all $6$ to allow for comparison with real momentum data where throwing out some components seems somewhat sketchy. Thus by storing the results from many simulations, we end up with a lookup table. To determine the structure belonging to a certain set of observed momentum vectors, you simply read the table in reverse and find the momentum vectors that most closely match the observed set, that is minimize the $2$-norm between the sets of vectors.
+
+This approach is simple to implement, very quick by design, and front-loads the computation which may be desirable for large data sets. However, of course, it has an exponential time and space complexity $\mathcal{O}(e^{3N-6})$ where $N$ is the number of atoms.
+
+One way to increase the potential accuracy of this method is to 
+
+For these reasons, the lookup table was abandoned rather quickly in favor of a mathematical optimization approach.
 
 \subsection{Using simulations to test accuracy}
 It is important that we do not simulate geometries that are already contained in the lookup table.
