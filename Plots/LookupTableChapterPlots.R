@@ -20,6 +20,9 @@ OCS7fs <-
 drops <- c("X10")
 OCS7fs <- OCS7fs[ , !(names(OCS7fs) %in% drops)]
 
+proper_cols <- c(4, 5, 6, 1, 2, 3, 7, 8, 9)
+OCS7fs <- OCS7fs[,proper_cols]
+
 colnames(OCS7fs) <- c("O p_x", "O p_y", "O p_z", "C p_x", "C p_y", "C p_z",
                       "S p_x", "S p_y", "S p_z")
 
@@ -41,7 +44,7 @@ library(reshape2)
 library(ggplot2)
 library(ggthemes)
 
-pdf('rplot.pdf')
+# pdf('rplot.pdf')
 
 ggplot(melted, aes(x=value)) +
   facet_wrap(~variable, nrow=3) +
@@ -67,7 +70,7 @@ ggplot(melted, aes(x=value)) +
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank())
 
-dev.off()
+# dev.off()
 
 # OCS 222 7fs momentum pair plots (9x9 pair plot)
 library(ggplot2)
