@@ -154,28 +154,27 @@ For these reasons, the lookup table was abandoned rather quickly in favor of a m
 \subsection{Using simulations to test accuracy}
 It is important that we do not simulate geometries that are already contained in the lookup table.
 
-\subsection{Computational complexity}
-
 \section{Geometry reconstructions done by lookup table}
 
 \pagebreak
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS2227fsLTGeometry}
-  \caption[OCS (2,2,2) \SI{7}{\fs} lookup table geometry.]
-  {OCS (2,2,2) \SI{7}{\fs} lookup table geometry.}
+  \caption[OCS (2,2,2) \SI{7}{\fs} geometry reconstruction by lookup table.]
+  {OCS (2,2,2) \SI{7}{\fs} lookup table geometry. A scatter plot showing the molecular geometry of \ch{OCS} following Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. Each individual geometry is represented by three points, one for each atomic fragment. Geometries are plotted such that the molecule's center of mass is at the origin to showcase the variance in each atomic fragment's position. Bivariate kernel density estimates (with a Gaussian kernel), plotted as shaded-in contours, are used to estimate the the probability density of each atomic fragment's position. Solid black lines are drawn between the peaks of each atomic fragment's kernel density estimate to illustrate the modal geometry or most likely geometry. Along the top axis, marginal distributions show the probability density of each  atomic fragment's position along the $x$-axis and the same is done for the $y$-axis along the right. The modal geometry is calculated to be $r_\mathrm{CO} = \SI{1.32}{\angstrom}$, $r_\mathrm{CS} = \SI{1.26}{\angstrom}$, $ \theta_\mathrm{OCS} = 172.7\degree$ while the average geometry of $r_\mathrm{CO} = \SI{1.39}{\angstrom}$, $r_\mathrm{CS} = \SI{1.27}{\angstrom}$, $ \theta_\mathrm{OCS} = 171.6\degree$ is slightly larger due to outliers. In chapter \ref{ch:optimization} we will see that plotting geometries in this manner, while intuitive and satisfying, can be very misleading.}
   \label{fig:OCS2227fsLTGeometry}
 \end{figure}
 
-It probably does not matter how geometries are plotted. 
+The calculated modal and average geometries are quite worrying.
 
-\clearpage
+A critical issue is quantifying how much uncertainty there is in determining these molecular geometries. This is a complicated problem we attempt to tackle in chapter \ref{ch:bayesian}.
+
+It probably does not matter how geometries are plotted. In chapter \ref{ch:optimization} we will see that plotting geometries in this manner, while intuitive and satisfying, can be very misleading. This is because the ensemble of geometries reconstructed seems to make physical sense while most of the individual geometries reconstructed do not.
 
 \section{Conclusions and lessons learnt}
 \subsection{Precision is computationally expensive}
 \subsection{Difficulty in scaling to larger molecules}
 
-\pagebreak
 \subsection{Degenerate molecular structures}
 We have previously hinted at the fact that due to the ill-posed nature of the geometry reconstruction inverse problem, multiple solutions may be posible. This feature actually does pop up for the OCS molecule and the lookup table is perhaps the best method of investigating these multiple solutions, which we will call degenerate geometries.
 
