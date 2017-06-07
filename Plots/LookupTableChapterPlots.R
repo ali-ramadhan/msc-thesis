@@ -78,7 +78,7 @@ library(ggthemes)
 library(GGally)
 
 colnames(OCS7fs) <- c("Op_x", "Op_y", "Op_z", "Cp_x", "Cp_y", "Cp_z",
-                      "Sp_x1", "Sp_y", "Sp_z")
+                      "Sp_x", "Sp_y", "Sp_z")
 
 pdf('rplot.pdf')
 
