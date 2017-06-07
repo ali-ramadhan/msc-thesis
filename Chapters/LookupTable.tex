@@ -198,6 +198,45 @@ The calculated modal and average geometries are quite worrying.
 
 A critical issue is quantifying how much uncertainty there is in these molecular geometries. This is a complicated problem we attempt to tackle in chapter \ref{ch:bayesian}.
 
+\begin{table}
+  \myfloatalign
+  \centering
+  \begin{tabularx}{0.875\textwidth}{cccc}
+    \toprule
+    Pulse width (\SI{}{\fs}) & Geometries & Reconstructions & Success \\
+    \midrule
+    7 & 795 & 584 & 73\% \\
+    30 & 1000 & 518 & 52\% \\
+    60 & 358 & 154 & 43\% \\
+    100 & 531 & 226 & 43\% \\
+    200 & 500 & 190 & 38\% \\
+    \bottomrule
+  \end{tabularx}
+  \caption[Autem timeam deleniti usu id]
+  {Autem timeam deleniti usu id.}
+  \label{tab:example}
+\end{table}
+
+\begin{table}
+  \myfloatalign
+  \centering
+  \begin{tabularx}{0.9\textwidth}{ccccccc}
+    \toprule
+    & \multicolumn{3}{c}{Modal geometry} & \multicolumn{3}{c}{Average geometry} \\
+    Pulse width (fs) & $r_\mathrm{CO}$ & $r_\mathrm{CS}$ & $\theta_\mathrm{OCS}$ & $r_\mathrm{CO}$ & $r_\mathrm{CS}$ & $\theta_\mathrm{OCS}$ \\
+    \midrule
+    7 & 1.32 & 1.26 & 172.7 & 1.39 & 1.27 & 171.6 \\
+    30 & 1.53 & 1.32 & 171.7 & 1.58 & 1.43 & 170.3 \\
+    60 & 1.56 & 1.40 & 171.4 & 1.60 & 1.47 & 170.4 \\
+    100 & 1.59 & 1.47 & 170.6 & 1.65 & 1.57 & 169.12 \\
+    200 & 1.78 & 1.49 & 171.4 & 1.76 & 1.65 & 163.2 \\
+    \bottomrule
+  \end{tabularx}
+  \caption[Autem timeam deleniti usu id]
+  {Autem timeam deleniti usu id.}
+  \label{tab:example2}
+\end{table}
+
 \section{Conclusions and lessons learnt}
 \subsection{Precision is computationally expensive}
 \subsection{Difficulty in scaling to larger molecules}
