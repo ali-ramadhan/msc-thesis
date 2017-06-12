@@ -194,9 +194,11 @@ Here we have plotted the geometries by placing the center of mass at the origin,
 
 An arugment could be made for each visualization method, however in the end it probably does not matter how the geometries are plotted. In chapter \ref{ch:optimization} we will see that plotting geometries in this manner alone, while intuitive and satisfying, can be very misleading in that it can be used to hide unphysical data and make it appear agreeable. This is because the ensemble of geometries reconstructed seems to make physical sense while most of the individual geometries reconstructed do not upon further inspection. We do not know much about the individual geometries from such a plot as we do not know which points are correlated with each other.
 
-The calculated modal and average geometries are quite worrying.
+The calculated modal and average geometries are quite worrying. % Now, I'm not saying they're right or wrong, just that I don't trust them.
 
 A critical issue is quantifying how much uncertainty there is in these molecular geometries. This is a complicated problem we attempt to tackle in chapter \ref{ch:bayesian}.
+
+We can repeat this analysis for the other laser pulse widths (\SIlist{30;60;100;200}{\fs}). In table \ref{table:lookupTableSuccess} we tabulate the number of geometries we were able to successfully reconstruct, which descreases as the pulse length increases indicating a greater difficulty in reconstructing geometries. The longer the laser pulse, the more time the molecule has to distort its structure in response to the laser's intense electric field, reducing the validity of the assumption that the molecule evolves along a purely classical Coulomb potential.
 
 \begin{table}
   \myfloatalign
@@ -212,10 +214,12 @@ A critical issue is quantifying how much uncertainty there is in these molecular
     200 & 500 & 190 & 38\% \\
     \bottomrule
   \end{tabularx}
-  \caption[Autem timeam deleniti usu id]
-  {Autem timeam deleniti usu id.}
-  \label{tab:example}
+  \caption[Statistics for geometry reconstruction by lookup table.]
+  {Statistics for geometry reconstruction by lookup table.}
+  \label{table:lookupTableSuccess}
 \end{table}
+
+Of particular interest might be the average or modal (most likely) geometries recovered, which we tabulate in table \ref{table:lookupTableGeometries}.
 
 \begin{table}
   \myfloatalign
@@ -232,10 +236,12 @@ A critical issue is quantifying how much uncertainty there is in these molecular
     200 & 1.78 & 1.49 & 171.4 & 1.76 & 1.65 & 163.2 \\
     \bottomrule
   \end{tabularx}
-  \caption[Autem timeam deleniti usu id]
-  {Autem timeam deleniti usu id.}
-  \label{tab:example2}
+  \caption[Average and modal geometries reconstructed using a lookup table.]
+  {Average and modal geometries reconstructed using a lookup table.}
+  \label{table:lookupTableGeometries}
 \end{table}
+
+To conserve space, the geometry reconstructions for Coulomb explosion by \SIlist{30;60;100;200}{\fs} laser pulses are provided in appendix \ref{appx:supplementaryFigures}, figures \ref{fig:OCS22230fsLTGeometry}--\ref{fig:OCS222200fsLTGeometry}.
 
 \section{Conclusions and lessons learnt}
 \subsection{Precision is computationally expensive}

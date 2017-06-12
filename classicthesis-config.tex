@@ -259,7 +259,6 @@
 %\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}} % Small caps for author names.
 
 \usepackage{imakeidx}
-\usepackage[binary-units=true]{siunitx}
 \usepackage{sidecap}
 %\usepackage[version=4]{mhchem}
 \usepackage{chemformula}
@@ -270,3 +269,7 @@
 
 % to automatically ensure floats do not go into the next section.
 \usepackage[section]{placeins}
+
+% Unit typesetting
+\usepackage[binary-units=true]{siunitx}
+\sisetup{list-final-separator = {, and }}
