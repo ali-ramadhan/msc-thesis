@@ -22,7 +22,7 @@ It is easy to get stuck in the ivory tower and get lost within the trees of scie
 \end{figure}
 \clearpage
 
-\section{Physical principles}\label{sec:CEIphysics}
+\section{Physical principles and experimental outline}\label{sec:CEIphysics}
 
 %\subsection{Pump-probe Coulomb explosion imaging}
 In pump-probe Coulomb explosion imaging (CEI) one ultrashort laser pulse is split into two pulses through the use an asymmetric beamsplitter. One of the pulses, the pump pulse, is usually much weaker than the other, the probe pulse. A time delay $\tau$ between the pulses is then created such that the pump pulse goes first and the probe pulse second. The job of the pump pulse will be to initiate some change in the molecule. One example could include an isomerization of the molecule. Thus the pump pulse ``pumps'' the molecule into some excited state. The job of the powerful probe pulse is to engulf the molecule in an intense enough laser field such that multiple electrons are stripped off of it. The molecule's individual atoms are left in a highly-charged state and begin to behave as individual point charges in a purely Coulombic potential. The entire process occurs in the presence of a constant electric field and so the positively-charged ions all accelerate upwards towards a time- and position-sensitive detector. Thus the probe pulse allows for the ``probing'' of the excited state.
@@ -274,35 +274,7 @@ Repeating the process for $p_z = p_z(q,V,\ell,t_0,t)$ but ignoring the tiny unce
 }
 \end{equation}
 
-\section{Traditional analysis methods}
-
-\pagebreak
-\subsection{Kinetic energy release spectra}
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{gfx/KERExample}
-  \caption[KER example.]
-  {KER example.}
-  \label{fig:KERExample}
-\end{figure}
-\clearpage
-
-\pagebreak
-\subsection{Dalitz plots}
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{gfx/DalitzExample}
-  \caption[Dalitz example.]
-  {Dalitz example.}
-  \label{fig:dalitzExample}
-\end{figure}
-\clearpage
-
-\subsection{Newton plots}
-
 \section{Computationally simulating a Coulomb explosion} \label{sec:simulating}
-
-\subsection{A Hamiltonian mechanics approach}
 To simulate an explosion of a molecule containing $n$ atoms, we must solve the classical equations of motion for each ion right after the explosion. We choose to use Hamiltonian mechanics here to acquire a system of first-order differential equations which may be easily solved by numerical methods such as the ubiquitous fourth-order Runge-Kutta. Assuming a purely electromagnetic potential for each ion, the Hamiltonian of the molecular system is
 \begin{equation}
 \mathcal{H}(\mathbf{r}_i, \mathbf{p}_i, t) = \sum_{i=1}^n \frac{\mathbf{p}_i^2}{2m_i} + \frac{1}{4\pi\epsilon_0}\sum_{\substack{\lbrace i,j\rbrace\\ i \ne j}} \frac{q_iq_j}{|\mathbf{r}_i-\mathbf{r}_j|}
@@ -318,12 +290,9 @@ where $i$ is held fixed over the second summation. With appropriate initial cond
 
 One way to think of the problem being tackled in this thesis is: which initial geometry $\mathbf{r}_i(t=0) = 0$ results in the momentum values measured at the detector? The atoms are far enough apart after just a few nanoseconds that by the time they arrive at the detector, they feel almost no forces due to each other and their momenta attain asymptotic values which we can denote $\mathbf{p}_i(t\rightarrow\infty)$.
 
-\subsection{A sneak peak at degenerate geometries}
-
-\section{Conventions for geometries and momenta} \label{sec:conventions}
+\section{Dimensionality reducing conventions for describing geometries and momenta} \label{sec:conventions}
 While tackling the problem of geometry reconstruction, it will be crucial to choose a convention for describing the geometries and momentum vectors especially so that geometries and vector arrangements can be compared with ease. Even more importantly, it provides us with an opportunity to reduce the dimensionality of the problem from $3N$ to $3N-6$ for a molecular system with $N$ atoms. This stems from the fact that we only need to describe the relative position of each atom, not its absolute position. For example, a triatomic molecule can be described by two bond lengths and a bond angle, rather than three position vectors. Also, the exact same molecule can produce different momentum vectors after a Coulomb explosion depending on its initial orientation with respect to the detector. We must use a momentum convention to ensure a one-to-one mapping between geometries and measured momentum vectors.
 
-\subsection{Bent triatomic molecules}
-\subsection{Acetylene}
-\subsection{Describing molecular geometries by a Z-matrix}
-\subsection{A convention for describing momentum vector arrangements}
+\subsection{Triatomic molecules}
+\subsection{Describing larger molecular geometries by a Z-matrix}
+\subsection{A general convention for describing momentum vector arrangements}
