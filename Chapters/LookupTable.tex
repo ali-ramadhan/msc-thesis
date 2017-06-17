@@ -149,7 +149,7 @@ The idea behind using a lookup table is quite simple: many Coulomb explosions ar
 
 Each molecular geometry and its corresponding post-explosion momentum vectors can be stored in a single row consisting of $9$ entries, $3$ to describe the molecular geometry of a triatomic molecule and $6$ to describe the momentum vectors. While only $3$ scalars are enough to describe the momentum vectors produced by a simulated Coulomb explosion (the last momentum vector can be calculated from the others using conservation of momentum, see section \ref{sec:conventions}), we store all $6$. This is to allow for comparison with real momentum data where throwing out some component measurements may skew the reconstruction, especially if these specific components happened to carry a large uncertainty. We are a little unsure of the consequences of only using a subset of our measurements and so we feel uncomfortable doing it. 
 
-A technical detail that is important to mention is the reason for keeping bond lengths in units of picometers and bond angles in degrees. The bond lengths and angles differ numerically by approximately 12 orders of magnitude and so this was done to keep the parameters all on the same order of magnitude, mainly to avoid potential numerical instabilities and to make data analysis and plotting more convinient. This becomes especially important for the next approach in chapter \ref{ch:bayesian}. Equivalently, we could have chosen angstroms (\SI{}{\angstrom}) and radians.
+A technical detail that is important to mention is the reason for keeping bond lengths in units of picometers and bond angles in degrees. The bond lengths and angles differ numerically by approximately 12 orders of magnitude and so this was done to keep the parameters all on the same order of magnitude, mainly to avoid potential numerical instabilities and to make data analysis and plotting more convinient. This becomes especially important for optimization approach we take in chapter \ref{ch:optimization}. Equivalently, we could have chosen angstroms (\SI{}{\angstrom}) and radians.
 
 A quick, naive argument would suggest that this approach is simple to implement, fast, and precise as the expensive task of simulating many geometries is done only once then stored. Searching through the lookup table to find a match takes linear time $\mathcal{O}(n)$ where $n$ is the number of table entries,\footnotemark~ and the precision is set when simulating the many geometries ($\SI{0.05}{\angstrom}$ and $\SI{0.25}{\angstrom}$ in our case). However, one major problem we will see in section \ref{ssec:LTspace} is that the space requirements scale worse than exponentially with the size of the molecule and precision required. Even worse, this approach assumes that the true geometry is in the vicinity of the geometry found using the lookup table. This is equivalent to assuming that every local minimum is a global minimum (or that this is a convex optimization problem), which we will find out is not true due to the presence of degenerate geometries (section \ref{ssec:degenerateGeometries}) and later, saddle points that increase exponentially in number with the dimension of the problem ($3N-6$ for a molecule with $N$ atoms).
 
@@ -196,7 +196,7 @@ An arugment could be made for each visualization method, however in the end it p
 
 The calculated modal and average geometries are quite worrying. % Now, I'm not saying they're right or wrong, just that I don't trust them.
 
-A critical issue is quantifying how much uncertainty there is in these molecular geometries. This is a complicated problem we attempt to tackle in chapter \ref{ch:bayesian}.
+A critical issue is quantifying how much uncertainty there is in these molecular geometries. This is a complicated problem we attempt to tackle in chapter \ref{ch:uncertainty}.
 
 We can repeat this analysis for the other laser pulse widths (\SIlist{30;60;100;200}{\fs}). In table \ref{table:lookupTableSuccess} we tabulate the number of geometries we were able to successfully reconstruct, which descreases as the pulse length increases indicating a greater difficulty in reconstructing geometries. The longer the laser pulse, the more time the molecule has to distort its structure in response to the laser's intense electric field, reducing the validity of the assumption that the molecule evolves along a purely classical Coulomb potential.
 
@@ -243,22 +243,35 @@ Of particular interest might be the average or modal (most likely) geometries re
 
 To conserve space, the geometry reconstructions for Coulomb explosion by \SIlist{30;60;100;200}{\fs} laser pulses are provided in appendix \ref{appx:supplementaryFigures}, figures \ref{fig:OCS22230fsLTGeometry}--\ref{fig:OCS222200fsLTGeometry}.
 
-\section{Conclusions and lessons learnt}
-\subsection{Precision is computationally expensive}
-\subsection{Difficulty in scaling to larger molecules}
-
-\subsection{Degenerate molecular structures}
-We have previously hinted at the fact that due to the ill-posed nature of the geometry reconstruction inverse problem, multiple solutions may be posible. This feature actually does pop up for the OCS molecule and the lookup table is perhaps the best method of investigating these multiple solutions, which we will call degenerate geometries.
+\section{Degenerate molecular structures (or solutions)}
+We have previously hinted at the fact that due to the ill-posed nature of the geometry reconstruction inverse problem, multiple solutions may be posible. This feature actually does pop up for the OCS molecule and the lookup table provides some insight into these multiple solutions, which we will call degenerate geometries.
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{Plots/DegenerateGeometryTrajectories.pdf}
   \caption[Atomic trajectories in position and momentum-space, and kinetic energy, of two degenerate molecular geometries undergoing a Coulomb explosion.]
-  {Atomic trajectories in position and momentum-space, and kinetic energy, for the oxygen, carbon, and sulfur atoms of two degenerate \ch{OCS} molecular geometries in the $(2,2,2)$ charge state undergoing a Coulomb explosion staring from rest. The plots on the left correspond to an \ch{OCS} molecule with $r_\textrm{CO} = \SI{1.8949}{\angstrom}$, $r_\textrm{CS} = \SI{1.2990}{\angstrom}$, and $\theta_\mathrm{OCO} = \SI{160.601}{\degree}$ while the plots on the right correspond to an \ch{OCS} molecule with $r_\textrm{CO} = \SI{2.486}{\angstrom}$, $r_\textrm{CS} = \SI{1.0755}{\angstrom}$, and $\theta_\mathrm{OCO} = \SI{164.568}{\degree}$. The molecular geometries are quite different yet when they undergo a Coulomb explosion, they produce the exact same set of momentum vectors once rotated into our convention (see section \ref{sec:conventions}). Well, we can make the difference (or $2$-norm) between the two sets of momentum vectors arbitrarily small with increased precision. Thus we call these two molecular geometries \emph{degenerate}. We see that the molecular dynamics are a little different yet in both cases, all three atoms emerge with the exact same kinetic energy.}
+  {Atomic trajectories in position and momentum-space, and kinetic energy, for the oxygen, carbon, and sulfur atoms of two degenerate \ch{OCS} molecular geometries in the $(2,2,2)$ charge state undergoing a Coulomb explosion staring from rest. The plots on the left correspond to an \ch{OCS} molecule with $r_\textrm{CO} = \SI{1.8949}{\angstrom}$, $r_\textrm{CS} = \SI{1.2990}{\angstrom}$, and $\theta_\mathrm{OCO} = \SI{160.601}{\degree}$ while the plots on the right correspond to an \ch{OCS} molecule with $r_\textrm{CO} = \SI{2.486}{\angstrom}$, $r_\textrm{CS} = \SI{1.0755}{\angstrom}$, and $\theta_\mathrm{OCO} = \SI{164.568}{\degree}$. The molecular geometries are quite different yet when they undergo a Coulomb explosion, they produce the exact same set of momentum vectors once rotated into our convention (see section \ref{sec:conventions}). Well, we can make the difference (or $2$-norm) between the two sets of momentum vectors arbitrarily small with increased precision in describing the geometries. Thus we call these two molecular geometries \emph{degenerate}. We see that the molecular dynamics are a little different yet in both cases, all three atoms emerge with the exact same kinetic energy.}
   \label{fig:DegenerateGeometryTrajectories}
 \end{figure}
 
+\section{Conclusions}
+
+\subsection{Lessons learnt}
+
+\begin{description}
+  \item [Degenerate geometries exist]
+  \item [Inability to precisely reconstruct geometries] Using just the vanilla lookup table you are limited to recovering molecular geometries contained in the lookup table. Due to storage space restrictions, the lookup table is provides coarse resolution by neccessity and thus 
+  \item [Precise reconstructions are computationally expensive]
+  \item [Inability to differentiate between global and local minima]
+  \item [Inability to scale to larger molecules] As discussed in section \ref{ssec:LTspace}, trying to use the lookup table to reconstruct molecules containing even as little as 4 atoms requires prohibitive amounts of storage space ($\SI{>100}{\tera\byte}$) to store the lookup table. This may be circumvented by fixing some molecular parameters if they vary very little but this trick won't get you far at all.
+\end{description}
+
 \subsection{Future usefulness}
+
+\begin{description}
+  \item [Finding an initial or first-order solution]
+  \item [Finding degenerate regions of phase space quickly]
+\end{description}
 
 % Another warning box that zooming in doesn't actually help much. If you're
 % near a local minimum, you'll just zoom into that. A first go usually gives you ~ 2 sig figs of precision, anything more doesn't mean much as our momentum uncertainty is pretty high.
