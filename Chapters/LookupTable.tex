@@ -19,7 +19,7 @@ The idea of using a lookup table to speed up calculations is as old as mathemati
 
 An even more impressive lookup table is found in the extensive Rhind Mathematical Papyrus, which (seemingly) methodologically expresses the fractions $2/n$ for odd $n \in \lbrace 3, 5, \dots, 101 \rbrace$ as the sum of 2--4 unit fractions! \citet{Gillings82} reports extensively on this table and the several dozen problems posed and solved on the papyrus, making extensive use of the table. The same table, verbatim, has found to be in use by scribes more than a millenium after its creation suggesting that it was of great utility. To this day, scholars argue about exactly how the scribes knew to construct the table and what methods they used \citep{Gillings74,Abdulaziz08}. \citet{Neugebauer45} reports on mathematical cuneiform texts used by the ancient Babylonians during similar time periods.\footnotemark~ Apparently, we are far from being the first to utilize a lookup table to speed up calculations.
 
-\footnotetext{Other historical lookup tables of importance include a 98-column Roman multiplication table from 493 A.D. \citep{Maher01} and an ancient Indian sine table circa 499 C.E. \citep{Hayashi97}.}
+\footnotetext{Other lookup tables of historical importance include a 98-column Roman multiplication table from 493 A.D. \citep{Maher01} and an ancient Indian sine table circa 499 C.E. \citep{Hayashi97}.}
 
 % The most familiar lookup table may be the multiplication times table that every elementary school student is familiar where sets of two integers are mapped to their product. Lookup tables have been employed since antiquity and one of the earliest surviving examples is a 98-column multiplication table from 493 A.D. attributed to the Roman, Victorius of Aquitaine \citep{Maher01}. Before the advent of the calculator and for much of scientific history, extensive logarithm tables were used to look up their values to several decimal places and to speed up computations. The earliest such tables date back to the ancient greeks although they have since been lost, and the earliest surviving one is a sine table by the ancient Indian mathematician \={A}ryabha\d{t}a circa 499 C.E. \citep{Hayashi97}.
 
@@ -143,6 +143,8 @@ One immediate disadvantage of such an approach is that you are limited to recove
 \subsection{Using simulations to test accuracy}
 It is important that we do not simulate geometries that are already contained in the lookup table.
 
+% TODO: Find these plots!
+
 \section{Geometry reconstructions done by lookup table} \label{ssec:degenerateGeometries}
 
 For all its disadvantages, the lookup table can be used to recover \ch{OCS} geometries.
@@ -242,8 +244,10 @@ We have previously hinted at the fact that due to the ill-posed nature of the ge
 
 \emph{Finding an initial or first-order solution or initial guess}---As the lookup table may quickly find coarse-grained geometries, the recovered geometry may be used as an initial guess or first-order solution for another algorithm. \\
 
+\noindent
 \emph{Visualizing the objective function for a specific set of momentum vectors}---Such a plot would assign a scalar error value to every point in phase space, allowing us to quickly visualize the objective function. This would visualize the location of degenerate geometries and provide some insight into the nature of the objective function. For example, if it is smooth and convex with a single global minimum, it would suggest that geometry reconstruction in that particular case is computationally easy. However, a jagged and discontinuous function with multiple minima and saddle points would suggest that geometry reconstruction is much more difficult. For triatomic molecules the $3$-dimensional objective function may be visualized using colormapped volumetric slices or contour slices. Unfortunately this becomes unfeasible for larger molecules due both the size of the lookup table and the difficulty of visualizing an $n$-dimensional scalar function ($n>3$). Instead of generating a lookup table, the objective function can be plotted dynamically (by simulating a Coulomb explosion at every point of interest) if the resolution is reduced. Fixing certain parameters would reduce the dimensionality of the objective function, allowing $2$-dimensional slices of it to be easily visualized. Or one could look towards methods of visualizing high-dimensional scalar functions. \\
 
+\noindent
 \emph{Finding degenerate regions of phase space quickly}---At least for triatomic molecules, where generating and storing a lookup table is feasible, it may be quickly searched to determine whether a set of measured momentum vectors correspond to just one geometry, or multiple degenerate geometries. 
 
 % Another warning box that zooming in doesn't actually help much. If you're
