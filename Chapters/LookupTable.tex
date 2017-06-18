@@ -264,26 +264,23 @@ We have previously hinted at the fact that due to the ill-posed nature of the ge
 \end{figure}
 
 \section{Conclusions}
-\begin{description}
-  \item [Geometries may be reconstructed using a lookup table] We find this approach more reliable and robust that the Nelder-Mead (simplex) method approach employed by \citet{Brichta09}, and it has provided us with some additional insight into the problem of reconstructing geometries especially regarding the existence and nature of degenerate geometries. This makes the lookup table potentially useful for future investigations and reconstructions. However, the method posesses multiple flaws that leave a lot to be desired, motivating the need for another method.
-\end{description}
+\emph{Geometries may be reconstructed using a lookup table}---We find this approach more reliable and robust that the Nelder-Mead (simplex) method approach employed by \citet{Brichta09}, and it has provided us with some additional insight into the problem of reconstructing geometries especially regarding the existence and nature of degenerate geometries. This makes the lookup table potentially useful for future investigations and reconstructions. However, the method posesses multiple flaws that leave a lot to be desired, motivating the need for another method.
 
 \subsection{Lessons learnt}
-\begin{description}
-  \item [Degenerate geometries exist] A major lesson learnt
-  \item [Inability to precisely reconstruct geometries] Using just the vanilla lookup table you are limited to recovering molecular geometries contained in the lookup table. Due to storage space restrictions, the lookup table is provides coarse resolution by neccessity and thus 
-  \item [Precise reconstructions using the lookup table are computationally expensive]
-  \item [Inability to differentiate between global and local minima]
-  \item [Inability to scale to larger molecules] As discussed in section \ref{ssec:LTspace}, trying to use the lookup table to reconstruct molecules containing even as little as 4 atoms requires prohibitive amounts of storage space ($\SI{>100}{\tera\byte}$) to store the lookup table. This may be circumvented by fixing some molecular parameters if they vary very little but this trick won't get you far at all.
-\end{description}
+\emph{Degenerate geometries exist}---A major lesson learnt. \\
+\emph{Inability to precisely reconstruct geometries}---Using just the vanilla lookup table you are limited to recovering molecular geometries contained in the lookup table. Due to storage space restrictions, the lookup table is provides coarse resolution by neccessity and thus \\
+
+\emph{Precise reconstructions using the lookup table are computationally expensive}---Lol.
+\emph{Inability to differentiate between global and local minima}---Lulz.
+\emph{Inability to scale to larger molecules}---As discussed in section \ref{ssec:LTspace}, trying to use the lookup table to reconstruct molecules containing even as little as 4 atoms requires prohibitive amounts of storage space ($\SI{>100}{\tera\byte}$) to store the lookup table. This may be circumvented by fixing some molecular parameters if they vary very little but this trick won't get you far at all.
 
 \subsection{Future applications}
 
-\begin{description}
-  \item [Finding an initial or first-order solution] As the lookup table may quickly find coarse-grained geometries, the recovered geometry may be used as an initial guess for another algorithm 
-  \item [Visualizing the objective function for a specific set of momentum vectors] Such a plot would assign a scalar error value to every point in phase space, allowing us to quickly visualize the objective function. This would visualize the location of degenerate geometries and provide some insight into the nature of the objective function. For example, if it is smooth and convex with a single global minimum, it would suggest that geometry reconstruction in that particular case is computationally easy. However, a jagged and discontinuous function with multiple minima and saddle points would suggest that geometry reconstruction is much more difficult. For triatomic molecules the $3$-dimensional objective function may be visualized using colormapped volumetric slices or contour slices. Unfortunately this becomes unfeasible for larger molecules due both the size of the lookup table and the difficulty of visualizing an $n$-dimensional scalar function ($n>3$). Instead of generating a lookup table, the objective function can be plotted dynamically (by simulating a Coulomb explosion at every point of interest) if the resolution is reduced. Fixing certain parameters would reduce the dimensionality of the objective function, allowing $2$-dimensional slices of it to be easily visualized. Or one could look towards methods of visualizing high-dimensional scalar functions.
-  \item [Finding degenerate regions of phase space quickly] At least for triatomic molecules, where generating and storing a lookup table is feasible, it may be quickly searched to determine whether a set of measured momentum vectors correspond to just one geometry, or multiple degenerate geometries. 
-\end{description}
+\emph{Finding an initial or first-order solution or initial guess}---As the lookup table may quickly find coarse-grained geometries, the recovered geometry may be used as an initial guess or first-order solution for another algorithm. \\
+
+\emph{Visualizing the objective function for a specific set of momentum vectors}---Such a plot would assign a scalar error value to every point in phase space, allowing us to quickly visualize the objective function. This would visualize the location of degenerate geometries and provide some insight into the nature of the objective function. For example, if it is smooth and convex with a single global minimum, it would suggest that geometry reconstruction in that particular case is computationally easy. However, a jagged and discontinuous function with multiple minima and saddle points would suggest that geometry reconstruction is much more difficult. For triatomic molecules the $3$-dimensional objective function may be visualized using colormapped volumetric slices or contour slices. Unfortunately this becomes unfeasible for larger molecules due both the size of the lookup table and the difficulty of visualizing an $n$-dimensional scalar function ($n>3$). Instead of generating a lookup table, the objective function can be plotted dynamically (by simulating a Coulomb explosion at every point of interest) if the resolution is reduced. Fixing certain parameters would reduce the dimensionality of the objective function, allowing $2$-dimensional slices of it to be easily visualized. Or one could look towards methods of visualizing high-dimensional scalar functions. \\
+
+\emph{Finding degenerate regions of phase space quickly}---At least for triatomic molecules, where generating and storing a lookup table is feasible, it may be quickly searched to determine whether a set of measured momentum vectors correspond to just one geometry, or multiple degenerate geometries. 
 
 % Another warning box that zooming in doesn't actually help much. If you're
 % near a local minimum, you'll just zoom into that. A first go usually gives you ~ 2 sig figs of precision, anything more doesn't mean much as our momentum uncertainty is pretty high.
