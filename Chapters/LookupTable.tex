@@ -234,10 +234,16 @@ We have previously hinted at the fact that due to the ill-posed nature of the ge
 
 \subsection{Lessons learnt}
 \emph{Degenerate geometries exist}---A major lesson learnt. \\
+
+\noindent
 \emph{Inability to precisely reconstruct geometries}---Using just the vanilla lookup table you are limited to recovering molecular geometries contained in the lookup table. Due to storage space restrictions, the lookup table is provides coarse resolution by neccessity and thus \\
 
-\emph{Precise reconstructions using the lookup table are computationally expensive}---Lol.
-\emph{Inability to differentiate between global and local minima}---Lulz.
+\emph{Precise reconstructions using the lookup table are computationally expensive}---Lol. \\
+
+\noindent
+\emph{Inability to differentiate between global and local minima}---Lulz. \\
+
+\noindent
 \emph{Inability to scale to larger molecules}---As discussed in section \ref{ssec:LTspace}, trying to use the lookup table to reconstruct molecules containing even as little as 4 atoms requires prohibitive amounts of storage space ($\SI{>100}{\tera\byte}$) to store the lookup table. This may be circumvented by fixing some molecular parameters if they vary very little but this trick won't get you far at all.
 
 \subsection{Future applications}
