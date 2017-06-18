@@ -33,7 +33,7 @@ Apparently, we are far from being the first to utilize a lookup table to speed u
   \centering
   \includegraphics[width=\textwidth]{gfx/EMLR}
   \caption[Photograph of columns 3 and 4 of the Egyptian Mathematical Leather Roll.]
-  {Photograph of columns 3 and 4 of the Egyptian Mathematical Leather Roll. Columns 3 and 4 are duplicates of columns 1 and 2. For example, row 9 of column 3 translates to $\displaystyle \frac{1}{50}\frac{1}{30}\frac{1}{150}\frac{1}{400} \quad \mathrm{it \; is} \quad \frac{1}{16}$ in modern notation where addition is implied. Figure \ref{fig:EMLRschematic} is a schematic of the table photographed here. Figure from \citet{Glanville27} which is accompanied by a translation.}
+  {Photograph of columns 3 (right) and 4 (left) of the Egyptian Mathematical Leather Roll. Columns 3 and 4 are duplicates of columns 1 and 2. For example, row 9 of column 3 translates to $\displaystyle \frac{1}{50}\frac{1}{30}\frac{1}{150}\frac{1}{400} \quad\quad \frac{1}{16}$ in modern fraction notation where addition is implied. Figure \ref{fig:EMLRschematic} is a schematic of the table photographed here. Figure from \citet{Glanville27} which is accompanied by a translation of the hieroglyphics.}
   \label{fig:EMLR}
 \end{figure}
 
@@ -41,7 +41,7 @@ Apparently, we are far from being the first to utilize a lookup table to speed u
   \centering
   \includegraphics[width=\textwidth]{gfx/EMLRschematic}
   \caption[Schematic of columns 1 and 2 of the Egyptian Mathematical Leather Roll.]
-  {Schematic of columns 1 and 2 of the Egyptian Mathematical Leather Roll. Columns 3 and 4 are duplicates of columns 1 and 2. Figure \ref{fig:EMLR} is a photograph of the table outlined here. Figure from \citet{Glanville27} which is accompanied by a translation.}
+  {Schematic of columns 1 and 2 of the Egyptian Mathematical Leather Roll. Columns 3 and 4 are duplicates of columns 1 and 2. For example, row 1 of column 1 translates to $\displaystyle \frac{1}{10}\frac{1}{40} \quad\quad \frac{1}{8}$ in modern fraction notation where addition is implied. Figure \ref{fig:EMLR} is a photograph of the table outlined here. From \citet{Glanville27} which is accompanied by a translation of the hieroglyphics.}
   \label{fig:EMLRschematic}
 \end{figure}
 
@@ -50,11 +50,11 @@ Apparently, we are far from being the first to utilize a lookup table to speed u
 \section{Previous attempt using the Nelder-Mead method}
 \index{Simplex algorithm}
 \index{Geometry reconstruction!Simplex algorithm}
-\citet{Brichta09} proposed the reconstruction of small triatomic molecules using a simplex algorithm. It should not be confused with the more famous simplex algorithm, also an optimization algorithm but for linear programming, taught in almost every introductory optimization course. The algorithm employed should really should be referred to as the Nelder-Mead method, downhill simplex method, or amoeba method to avoid confusion between the two.\footnotemark
+\citet{Brichta09} proposed the reconstruction of small triatomic molecules using a ``simplex'' algorithm. It should not be confused with the much better known simplex algorithm by George Dantzig, also an optimization algorithm but for linear programming, taught in almost every introductory optimization course. The algorithm employed should really should be referred to as the Nelder-Mead method, downhill simplex method, or amoeba method to avoid confusion between the two.\footnotemark
 
-\footnotetext{We refer to it as the Nelder-Mead method for this chapter in alignment with Wikipedia.}
+\footnotetext{We refer to it as the Nelder-Mead method for this chapter, as Wikipedia does. It seems that Dantzig's simplex algorithm finds more use in fields such as optimization, operations research, and economics while the Nelder-Mead simplex method has been historically popular in science and engineering due to it's ability to run on microcomputers.}
 
-The Nelder-Mead algorithm is an ad-hoc or heuristic algorithm for nonlinear optimization that can be used without computing derivatives of the objective function\footnotemark. It was first generalized to minimizing functions by \citet{Nelder65} based off ideas by \citet{Spendley62}. It has enjoyed widespread popularity due to its ease of implementation and intuitive inner workings but it is not appropriate to every problem. In fact, it is not guaranteed to converge and thus fails when applied to some problems. It can even converge to non-stationary points in some cases \citep{McKinnon98}. Later publications would sometimes introduce tweaks to the Nelder-Mead method that would improve its performance on a specific problem. Unfortunately, I believe geometry reconstruction is not an appropriate problem for the Nelder-Mead method (see section \ref{ssec:simplexFail}).
+The Nelder-Mead algorithm is an ad-hoc or heuristic algorithm for nonlinear optimization that can be used without computing derivatives of the objective function\footnotemark. It was first generalized to minimizing functions by \citet{Nelder65} based off ideas by \citet{Spendley62}. It has enjoyed widespread popularity due to its ease of implementation and intuitive inner workings but it is not appropriate to every problem. In fact, it is not guaranteed to converge except for strictly convex problems in 1 and 2-dimensions \citep{Lagarias98} and thus fails when applied to some problems. It can even converge to non-stationary points in some cases \citep{McKinnon98}. Later publications would sometimes introduce modifications to the Nelder-Mead method that would improve its performance on a specific problem \citet{Wright10}. Unfortunately, I believe geometry reconstruction is not an appropriate problem for the Nelder-Mead method as we will very soon see in section \ref{ssec:simplexFail}.
 
 \footnotetext{\citet{Wright10} provides a great discussion of the Nelder-Mead method, ending with a comment by John Nelder regarding his algorithm, ``Mathematicians hate it because you can’t prove convergence; engineers seem to love it because it often works.'' \citet[section 10.4]{NumericalRecipes} describes the algorithm in detail and provides a well-commented C++ implementation.}
 
