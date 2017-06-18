@@ -249,6 +249,14 @@ We have previously hinted at the fact that due to the ill-posed nature of the ge
 
 \begin{figure}
   \centering
+  \includegraphics[width=\textwidth]{Plots/rainbow}
+  \caption[Rainbow plot.]
+  {Rainbow plot. Best 200 matches. Each point is colored according to. This same information may be plotted using colormapped volumetric slices or contour slices however due to the angled distribution formed by the spatial sets and the significance of only one or two data points, it becomes very difficult to visually locate the local minima even with angled slices. Another visualization method may be to use convex hulls or alpha shapes to visualize the shape of the set of points}
+  \label{fig:rainbow}
+\end{figure}
+
+\begin{figure}
+  \centering
   \includegraphics[width=\textwidth]{Plots/DegenerateGeometryTrajectories.pdf}
   \caption[Atomic trajectories in position and momentum-space, and kinetic energy, of two degenerate molecular geometries undergoing a Coulomb explosion.]
   {Atomic trajectories in position and momentum-space, and kinetic energy, for the oxygen, carbon, and sulfur atoms of two degenerate \ch{OCS} molecular geometries in the $(2,2,2)$ charge state undergoing a Coulomb explosion staring from rest. The plots on the left correspond to an \ch{OCS} molecule with $r_\textrm{CO} = \SI{1.8949}{\angstrom}$, $r_\textrm{CS} = \SI{1.2990}{\angstrom}$, and $\theta_\mathrm{OCO} = \SI{160.601}{\degree}$ while the plots on the right correspond to an \ch{OCS} molecule with $r_\textrm{CO} = \SI{2.486}{\angstrom}$, $r_\textrm{CS} = \SI{1.0755}{\angstrom}$, and $\theta_\mathrm{OCO} = \SI{164.568}{\degree}$. The molecular geometries are quite different yet when they undergo a Coulomb explosion, they produce the exact same set of momentum vectors once rotated into our convention (see section \ref{sec:conventions}). Well, we can make the difference (or $2$-norm) between the two sets of momentum vectors arbitrarily small with increased precision in describing the geometries. Thus we call these two molecular geometries \emph{degenerate}. We see that the molecular dynamics are a little different yet in both cases, all three atoms emerge with the exact same kinetic energy.}
