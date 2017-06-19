@@ -176,15 +176,18 @@ With the knowledge that the lookup table can be somewhat trusted, we should use 
   \label{fig:OCS2227fsLTGeometry}
 \end{figure}
 
-Here we have plotted the geometries by placing the center of mass at the origin, giving us three probability distributions, one for each atomic fragment which allows us to see the variance in each atomic fragment's position. We could have placed the carbon at the center resulting in just two distributions, one for each of the terminal atoms much like \citet{Brichta07} did in figure \ref{fig:simplexJPhysB} however we felt that this approach provides less information. \cite{Bocharova11}, in figure \ref{fig:simplexPRL}, plot the geometries with a terminal oxygen at a fixed position along the $x$-axis and include a one-dimensional marginal distribution of the oxygen's position along the $x$-axis, which is an improvement but we feel that it provides less information again.  We used the same visualization method as \citet{Legare05structure} (see figure \ref{fig:SO2-232structure}) who revert to a plot like the one by \citet{Bocharova11} in their later work for reasons unknown \citep{Legare05dynamics}.
+Here we have plotted the geometries by placing the center of mass at the origin, giving us three probability distributions, one for each atomic fragment which allows us to see the variance in each atomic fragment's position. We could have placed the carbon at the center resulting in just two distributions, one for each of the terminal atoms much like \citet{Brichta07} did in figure \ref{fig:simplexJPhysB} however we felt that this approach provides less information. \cite{Bocharova11}, in figure \ref{fig:simplexPRL}, plot the geometries with a terminal oxygen at a fixed position along the $x$-axis and include a one-dimensional marginal distribution of the oxygen's position along the $x$-axis, which is an improvement but we feel that it still provides less information.  We use the same visualization method as \citet{Legare05structure} (see figure \ref{fig:SO2-232structure}) who revert to a plot like the one by \citet{Bocharova11} in their later work for reasons unknown \citep{Legare05dynamics}.
 
-An arugment could be made for each visualization method, however in the end it probably does not matter how the geometries are plotted. In chapter \ref{ch:optimization} we will see that plotting geometries in this manner alone, while intuitive and satisfying, can be very misleading in that it can be used to hide unphysical data and make it appear agreeable. This is because the ensemble of geometries reconstructed seems to make physical sense while most of the individual geometries reconstructed do not upon further inspection. We do not know much about the individual geometries from such a plot as we do not know which points are correlated with each other.
+An arugment could be made for each visualization method, however in the end it probably does not matter how the geometries are plotted. In chapter \ref{ch:optimization} we will see that plotting geometries in this manner alone, while intuitive and satisfying, can be very misleading in that it can be used to hide unphysical data and make it appear agreeable. This is because the ensemble of geometries reconstructed seems to make physical sense while most of the individual geometries reconstructed do not upon further inspection. We do not know much about the individual geometries from such a plot as we do not know which points are correlated with which.
 
-The calculated modal and average geometries are quite worrying. % Now, I'm not saying they're right or wrong, just that I don't trust them.
+% TODO: Any explanation for this?
+The calculated modal and average geometries may appear quite worrying as they suggest a stretching of the \ch{C-O} bond and a compression of the \ch{C-S} bond. % Now, I'm not saying they're right or wrong, just that I don't trust them.
 
-A critical issue is quantifying how much uncertainty there is in these molecular geometries. This is a complicated problem we attempt to tackle in chapter \ref{ch:uncertainty}.
+A critical issue worth investigating is quantifying how much uncertainty there is in these molecular geometries. This is a complicated problem we will tackle in chapter \ref{ch:uncertainty}.
 
 We can repeat this analysis for the other laser pulse widths (\SIlist{30;60;100;200}{\fs}). In table \ref{table:lookupTableSuccess} we tabulate the number of geometries we were able to successfully reconstruct, which descreases as the pulse length increases indicating a greater difficulty in reconstructing geometries. The longer the laser pulse, the more time the molecule has to distort its structure in response to the laser's intense electric field, reducing the validity of the assumption that the molecule evolves along a purely classical Coulomb potential.
+
+To conserve space, the geometry reconstructions for Coulomb explosion by \SIlist{30;60;100;200}{\fs} laser pulses are provided in appendix \ref{appx:supplementaryFigures}, figures \ref{fig:OCS22230fsLTGeometry}--\ref{fig:OCS222200fsLTGeometry}.
 
 \begin{table}
   \myfloatalign
@@ -205,7 +208,7 @@ We can repeat this analysis for the other laser pulse widths (\SIlist{30;60;100;
   \label{table:lookupTableSuccess}
 \end{table}
 
-Of particular interest might be the average or modal (most likely) geometries recovered, which we tabulate in table \ref{table:lookupTableGeometries}.
+Of particular interest might be the average and modal (most likely) geometries recovered, which we tabulate in table \ref{table:lookupTableGeometries}.
 
 \begin{table}
   \myfloatalign
