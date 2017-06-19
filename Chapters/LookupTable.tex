@@ -77,7 +77,7 @@ Unfortunately, \citet{Brichta09} only report on the reconstruction of molecular 
   \label{fig:simplexPRL}
 \end{figure}
 
-\subsection{Inability to reliably reconstruct triatomic molecules} \label{ssec:simplexFail}
+\subsection{Inability to reliably reconstruct molecules} \label{ssec:simplexFail}
 
 When we initially attempted to apply the Nelder-Mead simplex method to the problem of geometry reconstruction ourselves, we found the results to vary greatly depending on the set of geometries chosen to form the initial simplex, required by the algorithm as an input parameter, similar to an initial guess. The majority of reconstructed geometries did not make physical sense, such as having one bond length be several times longer than the other. To investigate this worrying aspect of the algorithm, we decided to see whether it could reconstruct simulated geometries. That is, we would chose a molecular geometry and use it to simulate a Coulomb explosion (see section \ref{sec:simulating}) and compute the resulting asymptotic momentum vectors. These momentum vectors are then fed into the Nelder-Mead algorithm to see whether it could recover the molecular geometry we initially picked.
 
