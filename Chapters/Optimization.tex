@@ -1,0 +1,109 @@
+\chapter{Geometry reconstruction using constrained nonlinear optimization}\label{ch:optimization}
+
+\vspace{-1.5 em}
+\begin{addmargin}[-0.5cm]{0cm}
+  \minitoc
+\end{addmargin}
+\hrule
+\vspace{1.5 em}
+
+Much progress was made over the lookup table by treating the geometry reconstruction problem as a constrained nonlinear convex optimization such that MATLAB's \texttt{fmincon} function an be relied on. It relies on trust regions and uses an interior-point algorithm. This worked especially well in the case of triatomic molecules however four-atom systems proved incredibly difficult to tackle here. This was due to the exponential increase in the number of saddle points with dimensionality \footnotemark making the problem highly non-convex and unsuitable for \texttt{fmincon}.
+
+\footnotetext{Recall that triatomic molecules have three degrees of freedom resulting in a problem of dimension 3 while four-atom systems have six. That is, $3N+6$ for an $N$-atom system.}
+
+\section{Mathematical optimization}
+
+We will take a massively expedited tour of mathematical optimization with the aim of explaining the inner workings of the primal-dual interior point methods used for nonlinear constrained optimization in this chapter. To understand how these methods operate, we will need to introduce some important concepts in optimization, namely the duality principle and the Karush-Kuhn-Tucker (KKT) optimality conditions. This is prefaced with a brief introduction to the subject.
+
+No knowledge of mathematical optimization is required, however we will assume some background knowledge throughout this appendix, namely a familiarity with linear algebra, matrix algebra, vector calculus, and some elementary concepts in analysis.
+
+\subsection{Elementary concepts}
+The standard form of a (continuous) optimization problem is
+\begin{align} \label{eq:op}
+\mathrm{minimize}   \quad & f_0(x) \nonumber \\
+\mathrm{subject\;to} \quad &
+f_i(x) \leq 0, \; i \in \left\{1, \dots, m \right\}\\
+& h_i(x) = 0, \; i \in \left\{1, \dots, p \right\} \nonumber
+\end{align}
+where $f_0(x): \mathbb{R}^n \rightarrow \mathbb{R}$ is the \emph{objective function} to be minimized over the variable $x \in \mathbb{R}^n$, $f_i(x) \leq 0$ are called the \emph{inequality constraints}, and $h_i(x) = 0$ are called the \emph{equality constraints}. We denote its domain by
+\begin{equation}
+\mathcal{D} = \bigcap_{i=1}^m \operatorname{dom} f_i \cap \bigcap_{i=1}^p \operatorname{dom} h_i \neq \emptyset
+\end{equation}
+and assume it is nonempty.
+
+In the context of our geometry reconstruction problem discussed in chapter \ref{ch:optimization}, $f_0(x) = |p(x)-p_\textrm{measured}|^2$ where $p(x)$ is the momentum vectors produced following Coulomb explosion of a molecular with structure $x$, and the inequality constraints $f_i(x) \leq 0$ encapsulate the box constraints that limit the geometries recovered to physically reasonable values.
+
+% If the objective function f is linear and the constrained space is a polytope, the problem is a linear programming problem, which may be solved using well-known linear programming techniques such as the simplex method.
+% If the objective function is concave (maximization problem), or convex (minimization problem) and the constraint set is convex, then the program is called convex and general methods from convex optimization can be used in most cases.
+% If the objective function is quadratic and the constraints are linear, quadratic programming techniques are used.
+% If the objective function is a ratio of a concave and a convex function (in the maximization case) and the constraints are convex, then the problem can be transformed to a convex optimization problem using fractional programming techniques.
+
+\subsection{Duality}
+We define the \emph{Langrangian} associated with the optimization problem \eqref{eq:op} as
+\begin{equation}
+L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^m \lambda_i f_i(x)
++ \sum_{i=1}^p \nu_i h_i(x)
+\end{equation}
+where $L: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$ and $\operatorname{dom} L = \mathcal{D} \times \mathbb{R}^m \times \mathbb{R}^p$. $\lambda_i$ is the Langrange multiplier associated with the inequality constraint $f_i(x) \leq 0$ and $\nu_i$ is the Langrange multiplier associated with the equality constraint $h_i(x) = 0$. Together, $\lambda \in \mathbb{R}^m$, and $\nu \in \mathbb{R}^p$, are called the \emph{dual variables} or \emph{Langrange multiplier vectors}.
+
+The \emph{Lagrangian dual function} is defined as the minimum value of the Lagrangian $L$ over $x$
+\begin{equation}
+g(\lambda, \nu) = \inf_{x \in \mathcal{D}} L(x, \lambda, \nu)
+= \inf_{x \in \mathcal{D}} \left[ f_0(x) + \sum_{i=1}^m \lambda_i f_i(x)
++ \sum_{i=1}^p \nu_i h_i(x) \right]
+\end{equation}
+where $g: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$. The $\inf$ operator refers to the \emph{infimum} operator.
+
+\begin{theorem}
+  The Lagrangian dual yields a lower bound on the optimal value of the problem \eqref{eq:op} for $\lambda \succeq 0$ and any $\nu$.
+\end{theorem}
+\begin{proof}
+  The proof is trivial.
+\end{proof}
+
+The \emph{Lagrangian dual problem} associated with \eqref{eq:op} is given as
+\begin{align} \label{eq:dualop}
+\mathrm{maximize}    \quad & g(\lambda, \nu) \nonumber \\
+\mathrm{subject\;to} \quad & \lambda \succeq 0
+\end{align}
+
+\begin{theorem}
+  The Lagrangian dual yields a lower bound on the optimal value of the problem \eqref{eq:op} for $\lambda \succeq 0$ and any $\nu$.
+\end{theorem}
+\begin{proof}
+  The proof is trivial.
+\end{proof}
+In some contexts involving both the dual problem \eqref{eq:dualop} and the original problem \eqref{eq:op}, the original problem is called the \emph{primal problem}.
+
+\subsection{Optimality conditions}
+The KKT conditions are analogous to the condition that the gradient must be zero at a minimum, modified to take constraints into account. The difference is that the KKT conditions hold for constrained problems.
+\begin{align} \label{eq:kkt}
+f_i(x^\star) & \geq 0, \; & i & \in {1,\dots,m} \nonumber \\
+h_i(x^\star) & = 0, \; & i & \in {1,\dots,p} \nonumber \\
+\lambda_i^\star & \geq 0, \; & i & \in {1,\dots,m} \\
+\lambda_i^\star f_i(x^\star) & = 0, \; & i & \in {1,\dots,m} \nonumber \\
+\nabla f_0(x^\star) + \sum_{i=1}^m \lambda_i^\star \nabla f_i(x^\star)
++ \sum_{i=1}^p \nu_i^\star \nabla h_i(x^\star) & = 0, \; & i & \in {1,\dots,m} \nonumber
+\end{align}
+The first two conditions are simply the original constraints of the primal problem which must always be satisfied. The third condition is the dual problem constraints. The fourth condition is that of complementary slackness, and the fifth enforces stationarity.
+
+\subsection{Trust regions}
+
+\subsection{Primal-dual interior point methods}
+\subsubsection{Barrier function}
+\subsubsection{Direct Newton step}
+\subsubsection{Trust region step}
+
+\subsection{Curse of dimensionality and possible solutions}
+
+\section{Current implementation}
+
+\section{Geometry reconstructions}
+
+\section{Conclusions and lessons learnt}
+\emph{The importance of covariances and joint distributions}---
+
+\emph{Geometry reconstruction is highly sensitive to uncertainty in the momentum vectors}---
+
+\subsection{Future directions}
+% Ref curse of dimensionality, maybe look to other optimization algorithms, e.g. the high dimensionality saddle point avoiding one.
