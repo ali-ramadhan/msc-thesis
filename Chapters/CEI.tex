@@ -233,13 +233,13 @@ t_0 = \sqrt{\frac{2d\ell}{V} \left( \frac{m}{q} \right)}
 is the atom's time of flight assuming no external forces act on it during its trip to the detector.
 
 \subsection{Measurement uncertainty in the momenta}
-For any relation $f = f(x_1, x_2, \dots, x_n)$, assuming independent variables, the absolute uncertainty in $f$, denoted $\Delta f$, may be calculated as
-\begin{equation}
+For any relation $f = f(x_1, x_2, \dots, x_n)$, assuming independent variables (neglecting correlations), the standard deviation (or absolute uncertainty) in a quantity $f$, which we denote $\Delta f$, may be calculated using the variance formula \citep{Ku1966}, which has been very popular among physical scientists,
+\begin{equation} \label{eq:varianceFormula}
 \Delta f = \sqrt{\sum_{i=1}^{n} \left( \frac{\partial f}{\partial x_i} \Delta x_i \right)^2}
 \end{equation}
-where $\Delta x_i$ is the uncertainty in the independent variable $x_i$.
+where $\Delta x_i$ is the standard deviation in the independent variable $x_i$ and where the partial derivatives $\partial f/\partial x_i$ are evaluated at the mean of $x_i$. This formula relies on the linear characteristic of the gradient of $f$ and so it's a good estimate for the standard deviation of $f$ as long as the standard deviations $\Delta x_i$ are small compared to the partial derivatives. As it employs a truncated Taylor series, it may even be a biased estimate in some cases. Much can be said about which formula to use in the propagation of uncertainty, and expository articles on the subject have been written by \citet{Birge39} and \citet{Ku1966}, the latter of which provides a derivation of \eqref{eq:varianceFormula}. In our case, we will not attempt to make accurate nor precise calculations of any uncertainty, we are simply interested in making rough estimates of the uncertainties on the measured momentum vectors to make rough estimates on the uncertainty of reconstructed geometries in chapter \ref{ch:uncertainty}.
 
-Using this we may calculate the uncertainty in the measured momentum values, which will we different for each component. In our case, $p_x = p_x(m,x,x_0,t)$ and $p_y = p_y(m,y,y_0,t)$, however, the uncertainty in the atomic mass $m$ is orders of magnitude smaller than the uncertainty in the other variables and so we will ignore its effects. Thus we get that
+Using \eqref{eq:varianceFormula} we may calculate the uncertainty in the measured momentum values, which will we different for each component. In our case, $p_x = p_x(m,x,x_0,t)$ and $p_y = p_y(m,y,y_0,t)$, however, the uncertainty in the atomic mass $m$ is orders of magnitude smaller than the uncertainty in the other variables and so we will ignore its effects. Thus we get that
 \begin{subequations}
   \begin{align}
   \Delta p_x &= \sqrt{
