@@ -15,7 +15,7 @@ Much progress was made over the lookup table by treating the geometry reconstruc
 
 We will take a massively expedited tour of mathematical optimization with the aim of explaining the inner workings of the primal-dual interior point methods used for nonlinear constrained optimization in this chapter. To understand how these methods operate, we will need to introduce some important concepts in optimization, namely the duality principle and the Karush-Kuhn-Tucker (KKT) optimality conditions. This is prefaced with a brief introduction to the subject.
 
-No knowledge of mathematical optimization is required, however we will assume some background knowledge throughout this appendix, namely a familiarity with linear algebra, matrix algebra, vector calculus, and some elementary concepts in analysis.
+No knowledge of mathematical optimization is required, however we will assume some background knowledge throughout this appendix, namely a familiarity with linear algebra, matrix algebra, vector calculus, and some elementary concepts in analysis. \citet{Boyd04} provides an excellent introduction to mathematical optimization, particularly convex optimization, and their freely-available textbook is accompanied by video lectures and lecture slides. However, our problem is nonconvex and so we turn to \citet{Nocedal06} who discuss the more advanced interior-point methods suitable for nonconvex optimization with great clarity.
 
 \subsection{Elementary concepts}
 The standard form of a (continuous) optimization problem is
@@ -31,20 +31,23 @@ where $f_0(x): \mathbb{R}^n \rightarrow \mathbb{R}$ is the \emph{objective funct
 \end{equation}
 and assume it is nonempty.
 
-In the context of our geometry reconstruction problem discussed in chapter \ref{ch:optimization}, $f_0(x) = |p(x)-p_\textrm{measured}|^2$ where $p(x)$ is the momentum vectors produced following Coulomb explosion of a molecular with structure $x$, and the inequality constraints $f_i(x) \leq 0$ encapsulate the box constraints that limit the geometries recovered to physically reasonable values.
+Optimization problems can be classified based on the nature of the objective function and constraints, with each class having their own algorithms. Perhaps the simplest commonly encountered class is \emph{linear programs} where the objective function and constraints are linear, that is $f_0, \dots, f_m, h_1, \dots, h_p$ all satisfy $f_i(\alpha x + \beta y) = \alpha f_i(x) + \beta f_i(y)$ for all $x,y \in \mathbb{R}^n$ and $\alpha, \beta \in \mathbb{R}$. Although no analytical solution exists, efficient algorithms with computation time $\mathcal{O}(n^2m)$ exist to find solutions, such as George Dantzig's simplex method (the one more famous than Nelder-Mead's simplex method discussed in section \ref{sec:nelderMead}).
 
-% If the objective function f is linear and the constrained space is a polytope, the problem is a linear programming problem, which may be solved using well-known linear programming techniques such as the simplex method.
-% If the objective function is concave (maximization problem), or convex (minimization problem) and the constraint set is convex, then the program is called convex and general methods from convex optimization can be used in most cases.
-% If the objective function is quadratic and the constraints are linear, quadratic programming techniques are used.
-% If the objective function is a ratio of a concave and a convex function (in the maximization case) and the constraints are convex, then the problem can be transformed to a convex optimization problem using fractional programming techniques.
+\emph{Convex optimization problems} are a superset of linear programs and have constraint functions that satisfy $f_i(\alpha x + \beta y) \le \alpha f_i(x) + \beta f_i(y)$ for all $x,y \in \mathbb{R}^n$ and all $\alpha, \beta \in \mathbb{R}$ with $\alpha, \beta \ge 0$ and $\alpha + \beta = 1$. In general, very mature and effective algorithms exist to solve convex optimization problems. If a problem can be transformed into convex form, then it becomes rather easy to solve, however this process can be very difficult and many tricks exist. Least squares problems are actually a special case of convex optimization problems.
+
+\emph{Nonlinear optimization} describes the class of problems where the objective or constraint functions are not linear, but not known to be convex. Unfortunately there are no effective algorithms for solving nonlinear problems in general but there are a number of approaches that may prove fruitful. These include the interior-point method we use and sequential quadratic programming.
+
+Unfortunately our problem falls under the umbrella of nonlinear problems. We can describe our objective function as $f_0(x) = |p(x)-p_\textrm{measured}|^2$ where $p(x)$ is the momentum vectors produced following Coulomb explosion of a molecular with structure $x$, and the inequality constraints $f_i(x) \leq 0$ encapsulate the box constraints that limit the geometries recovered to physically reasonable values. For a triatomic molecule, $x = (r_{12}, r_{23}, \theta)$ may be used, for example.
+
+% TODO: Explain: objective function looks like least squares. How is this not convex?
 
 \subsection{Duality}
-We define the \emph{Langrangian} associated with the optimization problem \eqref{eq:op} as
+In order to describe and understand the interior-point method we use, it is neccessary that we look at the concept of duality and the Lagrange dual function in optimization. We define the \emph{Langrangian} associated with the optimization problem \eqref{eq:op} as
 \begin{equation}
 L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^m \lambda_i f_i(x)
 + \sum_{i=1}^p \nu_i h_i(x)
 \end{equation}
-where $L: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$ and $\operatorname{dom} L = \mathcal{D} \times \mathbb{R}^m \times \mathbb{R}^p$. $\lambda_i$ is the Langrange multiplier associated with the inequality constraint $f_i(x) \leq 0$ and $\nu_i$ is the Langrange multiplier associated with the equality constraint $h_i(x) = 0$. Together, $\lambda \in \mathbb{R}^m$, and $\nu \in \mathbb{R}^p$, are called the \emph{dual variables} or \emph{Langrange multiplier vectors}.
+where $L: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$ and $\operatorname{dom} L = \mathcal{D} \times \mathbb{R}^m \times \mathbb{R}^p$. $\lambda_i$ is the Langrange multiplier associated with the inequality constraint $f_i(x) \leq 0$ and $\nu_i$ is the Langrange multiplier associated with the equality constraint $h_i(x) = 0$. Together, $\lambda \in \mathbb{R}^m$, and $\nu \in \mathbb{R}^p$, are called the \emph{dual variables} or \emph{Langrange multiplier vectors}. The basic idea is that we're accounting for the constraint functions by adjusting the objective function to include a weighted sum of the constraint functions.
 
 The \emph{Lagrangian dual function} is defined as the minimum value of the Lagrangian $L$ over $x$
 \begin{equation}
