@@ -24,12 +24,8 @@ Another reason for CEI's popularity may be that it promises direct and intuitive
   \label{fig:platonicSolids}
 \end{figure}
 
-\section{Physical principles and experimental outline}\label{sec:CEIphysics}
-
-%\subsection{Pump-probe Coulomb explosion imaging}
+\section{Physical principles and experimental outline} \label{sec:CEIphysics}
 In pump-probe Coulomb explosion imaging (CEI) one ultrashort laser pulse is split into two pulses through the use an asymmetric beamsplitter. One of the pulses, the pump pulse, is usually much weaker than the other, the probe pulse. A time delay $\tau$ between the pulses is then created such that the pump pulse goes first and the probe pulse second. The job of the pump pulse will be to initiate some change in the molecule. One example could include an isomerization of the molecule. Thus the pump pulse ``pumps'' the molecule into some excited state. The job of the powerful probe pulse is to engulf the molecule in an intense enough laser field such that multiple electrons are stripped off of it. The molecule's individual atoms are left in a highly-charged state and begin to behave as individual point charges in a purely Coulombic potential. The entire process occurs in the presence of a constant electric field and so the positively-charged ions all accelerate upwards towards a time- and position-sensitive detector. Thus the probe pulse allows for the ``probing'' of the excited state.
-
-%\subsection{Femtosecond Multiple Pulse Length Spectroscopy}
 
 \section{Molecular geometries seen using CEI}
 The original CEI experiment is usually traced back to \citet{Vager89} in which the Coulomb explosion is initiated by passing a molecular beam through a thin foil. This may be because it was the first work suggesting that full molecular structures may be recovered by measuring the velocity (or momentum) vectors of the atomic fragments, and even reported on a non-classical molecular structure. However, previous works utilizing CEI do exist, even some significant works that report on molecular structures \citep{Kanter79}.
@@ -40,7 +36,7 @@ Ultrashort laser pulses\footnotemark as a means of inducing Coulomb explosions m
 
 In this section we will trace the history of CEI back to the 1970's where it started with foil-induced fragmentation. We will then follow it's development to the present day where ultrashort laser pulses are the most popular means of performing CEI. Throughout we will focus solely on the achievements of CEI in determining molecular structures, and in creating molecular movies using these recovered structures.\footnotemark
 
-\footnotetext{Much of the molecular dynamics are inferred in CEI from studying the distribution of the fragment momentum vectors (\eg through the use of Newton and Dalitz plots) and the distribution of kinetic energy carried away by each fragment. We will be focusing on the original aim of CEI, that is, to measure molecular structures.}
+\footnotetext{Much of the molecular dynamics are inferred in CEI from studying the distribution of the fragment momentum vectors (\eg~ through the use of Newton and Dalitz plots) and the distribution of kinetic energy carried away by each fragment. We will be focusing on the original aim of CEI, that is, to measure molecular structures.}
 
 Interestingly, the first-ever mention of the term ``Coulomb explosion'' in the published literature comes from an unrelated study of the fine structure of singly ionized helium by \citet{Novick55}. They measured the energy difference of the $2 \, ^2 S_{1/2}$ and $2 \, ^2 P_{1/2}$ states of ionized helium as a sensitive test of quantum electrodynamics. Coulomb explosion (or space charge explosion) was the dominant ion removal mechanism which they accounted for in modeling the quenching rate\footnotemark of metastable $2 \, ^2 S_{1/2}$ ions by radio frequency radiation to describe the observed resonance lineshapes (spending two appendices on it).
 
@@ -102,17 +98,17 @@ Of course, there are some assumptions that must hold for a complete and accurate
 \subsubsection*{Attempt at an analytical solution}
 \index{Classical imaging formula}
 \index{Coulomb explosion imaging!Classical imaging formula}
-Before taking a tour of the molecular geometries recovered using laser-induced CEI, it is worth mentioning that \citet{Nagaya04} have attempted to arrive at an analytical solution for calculating molecular geometries from measured momentum vectors. They were able to derive a ``classical imaging formula''
-\begin{equation}
-|\Psi_\mathrm{image}(R_I)|^2 = S(p) \frac{1}{P_\mathrm{ion}(R_I)} \sqrt{\frac{\mu q_A q_B}{8\pi\epsilon_0 R_I^3}} , \quad R_I = \frac{\mu q_A q_B}{2\pi\epsilon_0 p^2}
-\end{equation}
-where
-\begin{equation}
-S(p) = |c(p)|^2 = \left| \int \Phi_C^*(p,r) T_\mathrm{ion}(r) \Psi(r) \; dr  \right|^2
-\end{equation}
-for the position wavefunction of a molecule in terms of its momentum distribution $S(p)$. They are able to derive a similar formula for the Coulomb explosion of a symmetric linear triatomic molecule, but the more general case of the asymmetric linear triatomic molecule proves much more formidable.\footnotemark ~They proceed to compare their ``classical'' reconstructions for the vibrational wavefunction of a helium trimer system to the predictions of the quantum theory, noting small discrepencies. The bulk of their article focuses on the Coulomb explosion of asymmetric linear triatmoic molecules and derives a two-dimensional classical imaging formula in terms of hyperspherical coordinates. An extension to three dimensions for bent triatomic molecules is promised but could not be found in the published literature.
+Before taking a tour of the molecular geometries recovered using laser-induced CEI, it is worth mentioning that \citet{Nagaya04} have attempted to arrive at an analytical solution for calculating molecular geometries from measured momentum vectors. They were able to derive a \emph{classical imaging formulae} giving the image of the squared vibrational wavefunction inverted from the momentum distribution of the atomic ions for the Coulomb explosion of a diatomic molecule, a linear symmetric triatomic molecule, and a linear asymmetric triatomic molecule. They are able to derive similar formulae for the diatomic and linear, symmetric, triatomic molecule, but the more general case of the asymmetric, linear, triatomic molecule proves much more formidable.\footnotemark~ The bulk of their article focuses on that case, deriving a three-dimensional classical imaging formula in terms of Jacobi and hyperspherical coordinates then reducing it to two dimensions. An extension to three dimensions for bent triatomic molecules is promised but could not be found in the published literature.
 
-\footnotetext{While a highly commendable effort, their unsaid conclusion seems to be that this is an intractable problem as their research group seems to have gone silent on this problem and the only citations to this work are in the context of the difficulty of the problem.}
+As an example, their formula for the Coulomb explosion of a diatomic molecule $AB$
+\begin{equation}
+|\Psi_\mathrm{image}(R_I)|^2 = S(p) \frac{1}{P_\mathrm{ion}(R_I)} \sqrt{\frac{\mu q_A q_B}{8\pi\epsilon_0 R_I^3}}
+\end{equation}
+where $S(p)$ is the momentum distribution measured in the asymptotic region (when the atomic fragments are far apart and barely interact), $P_\mathrm{ion}(R_I) = |T_\mathrm{ion}(R_I)|^2$ is the ionizatin probability, $mu$ is the reduced mass of the diatomic molecule, $q_A$ and $q_B$ are the electric charges on atoms $A$ and $B$ respectively, and $R_I = \mu q_A q_B/2\pi\epsilon_0 p^2$ seems to be turning point of the Frank-Condon factor.
+
+They proceed to compare their ``classical'' reconstructions for the vibrational wavefunction of a helium trimer system to the predictions of the quantum theory, noting small discrepencies. It seems that similar formulae were derived and actually used in previous studies \citep{Bandrauk01,Chelkowski02}.
+
+\footnotetext{While a highly commendable effort, their unsaid conclusion seems to be that this is an intractable problem as their research group seems to have gone silent on this problem and the very few citations to this work are in the context of the difficulty of the problem.}
 
 \subsubsection*{Inferring dynamics from energy spectra and momentum vector distribtuions}
 Due to the difficulty of recovering the molecular geometries, the structures and dynamics of small molecules are usually inferred from the kinetic energy spectra of the fragments and their momentum vector distributions (usually studied using Newton and Dalitz plots).
@@ -237,7 +233,7 @@ For any relation $f = f(x_1, x_2, \dots, x_n)$, assuming independent variables (
 \begin{equation} \label{eq:varianceFormula}
 \Delta f = \sqrt{\sum_{i=1}^{n} \left( \frac{\partial f}{\partial x_i} \Delta x_i \right)^2}
 \end{equation}
-where $\Delta x_i$ is the standard deviation in the independent variable $x_i$ and where the partial derivatives $\partial f/\partial x_i$ are evaluated at the mean of $x_i$. This formula relies on the linear characteristic of the gradient of $f$ and so it's a good estimate for the standard deviation of $f$ as long as the standard deviations $\Delta x_i$ are small compared to the partial derivatives. As it employs a truncated Taylor series, it may even be a biased estimate in some cases. Much can be said about which formula to use in the propagation of uncertainty, and expository articles on the subject have been written by \citet{Birge39} and \citet{Ku1966}, the latter of which provides a derivation of \eqref{eq:varianceFormula}. In our case, we will not attempt to make accurate nor precise calculations of any uncertainty, we are simply interested in making rough estimates of the uncertainties on the measured momentum vectors to make rough estimates on the uncertainty of reconstructed geometries in chapter \ref{ch:uncertainty}.
+where $\Delta x_i$ is the standard deviation in the independent variable $x_i$ and where the partial derivatives $\partial f/\partial x_i$ are evaluated at the mean of $x_i$. This formula relies on the linear characteristic of the gradient of $f$ and so it's a good estimate for the standard deviation of $f$ as long as the standard deviations $\Delta x_i$ are small compared to the partial derivatives. As it employs a truncated Taylor series, it may even be a biased estimate in some cases. Much can be said about which formula to use in the propagation of uncertainty, and expository articles on the subject have been written by \citet{Birge39} and \citet{Ku1966}, the latter of which provides a derivation of \eqref{eq:varianceFormula}. In our case, we will not attempt to make accurate nor precise calculations of any uncertainty, so we will not fuss about which method we choose to propagate our uncertainties forward. We are simply interested in making rough estimates of the uncertainties on the measured momentum vectors to make rough estimates on the uncertainty of reconstructed geometries in chapter \ref{ch:uncertainty}.
 
 Using \eqref{eq:varianceFormula} we may calculate the uncertainty in the measured momentum values, which will we different for each component. In our case, $p_x = p_x(m,x,x_0,t)$ and $p_y = p_y(m,y,y_0,t)$, however, the uncertainty in the atomic mass $m$ is orders of magnitude smaller than the uncertainty in the other variables and so we will ignore its effects. Thus we get that
 \begin{subequations}
@@ -283,7 +279,7 @@ Repeating the process for $p_z = p_z(q,V,\ell,t_0,t)$ but ignoring the tiny unce
 }
 \end{equation}
 
-\section{Exploratory data analysis of the momentum measurements}
+\section{Exploratory data analysis}
 Before we attempt to reconstruct geometries based on the momentum vectors measured, it would be a good idea to inspect and analyze the raw data first. Such an analysis will help us identify any issues with the data and really we should be making sense of the raw data before attempting to analyze it further. Such an analysis is typically termed exploratory data analysis, first promoted by \citet{Tukey77}.
 
 For each Coulomb explosion event, our measurements for \ch{OCS} include a momentum vector $(p_x, p_y, p_z)$ for each atom or fragment. Thus each event involves the measurement of $9$ scalars, ultimately forming a $9$-dimensional multivariate dataset with some structure, mainly imposed by the condition that momentum must be conserved along each physical axis in the reference frame of the molecule, that is the center-of-momentum (COM) frame for us.
@@ -332,11 +328,11 @@ where $i,j \in \lbrace 1,2,\dots, n \rbrace$ and so the second summation is over
   \frac{d\mathbf{p}_i}{dt} &= \frac{\partial \mathcal{H}}{\partial \mathbf{r}_i} = \frac{1}{4\pi\epsilon_0}\sum_{j, \; j \ne i} \frac{\mathbf{r}_i - \mathbf{r}_j}{|\mathbf{r}_i - \mathbf{r}_j|^3}
   \end{align}
 \end{subequations}
-where $i$ is held fixed over the second summation. With appropriate initial conditions this system of $6n$ scalar first-order ordinary differential equations may be easily solved using, for example, the classical fourth-order Runge-Kutta method for numerically solving ordinary differential equations. The atoms are assumed to be at rest so that $\mathbf{p}_i(t=0) = 0$, while the initial positions, $\mathbf{r}_i(t=0) = 0$, are chosen to correspond to the molecular geometry.
+where $i$ is held fixed over the second summation. With appropriate initial conditions this system of $6n$ scalar first-order ordinary differential equations may be easily solved using, for example, the classical fourth-order Runge-Kutta method for numerically solving ordinary differential equations. The atoms are assumed to be at rest so that $\mathbf{p}_i(t=0) = 0$, while the initial positions, $\mathbf{r}_i(t=0)$, are chosen to correspond to the molecular geometry.
 
 One way to think of the problem being tackled in this thesis is: which initial geometry $\mathbf{r}_i(t=0) = 0$ results in the momentum values measured at the detector? The atoms are far enough apart after just a few nanoseconds that by the time they arrive at the detector, they feel almost no forces due to each other and their momenta attain asymptotic values which we can denote $\mathbf{p}_i(t\rightarrow\infty)$.
 
-\section{Dimensionality reducing conventions for describing geometries and momenta} \label{sec:conventions}
+\section{Describing geometries and momenta} \label{sec:conventions}
 While tackling the problem of geometry reconstruction, it will be crucial to choose a convention for describing the geometries and momentum vectors especially so that geometries and vector arrangements can be compared with ease. Even more importantly, it provides us with an opportunity to reduce the dimensionality of the problem from $3N$ to $3N-6$ for a molecular system with $N$ atoms. This stems from the fact that we only need to describe the relative position of each atom, not its absolute position. For example, a triatomic molecule can be described by two bond lengths and a bond angle, rather than three position vectors. Also, the exact same molecule can produce different momentum vectors after a Coulomb explosion depending on its initial orientation with respect to the detector. We must use a momentum convention to ensure a one-to-one mapping between geometries and measured momentum vectors.
 
 \subsection{Triatomic molecules}
