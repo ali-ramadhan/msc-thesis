@@ -35,51 +35,65 @@ Optimization problems can be classified based on the nature of the objective fun
 
 \emph{Convex optimization problems} are a superset of linear programs and have constraint functions that satisfy $f_i(\alpha x + \beta y) \le \alpha f_i(x) + \beta f_i(y)$ for all $x,y \in \mathbb{R}^n$ and all $\alpha, \beta \in \mathbb{R}$ with $\alpha, \beta \ge 0$ and $\alpha + \beta = 1$. In general, very mature and effective algorithms exist to solve convex optimization problems. If a problem can be transformed into convex form, then it becomes rather easy to solve, however this process can be very difficult and many tricks exist. Least squares problems are actually a special case of convex optimization problems.
 
-\emph{Nonlinear optimization} describes the class of problems where the objective or constraint functions are not linear, but not known to be convex. Unfortunately there are no effective algorithms for solving nonlinear problems in general but there are a number of approaches that may prove fruitful. These include the interior-point method we use and sequential quadratic programming.
+\emph{Nonlinear optimization} describes the class of problems where the objective or constraint functions are not linear, but not known to be convex. Unfortunately there are no effective algorithms for solving nonlinear problems in general but there are a number of approaches that may prove fruitful. These include the interior-point method we use and sequential quadratic programming. \citet{Sun15} provide an expository article on ``when nonconvex problem are not scary''.
 
 Unfortunately our problem falls under the umbrella of nonlinear problems. We can describe our objective function as $f_0(x) = |p(x)-p_\textrm{measured}|^2$ where $p(x)$ is the momentum vectors produced following Coulomb explosion of a molecular with structure $x$, and the inequality constraints $f_i(x) \leq 0$ encapsulate the box constraints that limit the geometries recovered to physically reasonable values. For a triatomic molecule, $x = (r_{12}, r_{23}, \theta)$ may be used, for example.
 
 % TODO: Explain: objective function looks like least squares. How is this not convex?
 
 \subsection{Duality}
-In order to describe and understand the interior-point method we use, it is neccessary that we look at the concept of duality and the Lagrange dual function in optimization. We define the \emph{Langrangian} associated with the optimization problem \eqref{eq:op} as
+In order to describe and understand the interior-point method we use, it is neccessary that we look at the concept of duality. We begin by defining the \emph{Langrangian} associated with the optimization problem \eqref{eq:op} as
 \begin{equation}
 L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^m \lambda_i f_i(x)
 + \sum_{i=1}^p \nu_i h_i(x)
 \end{equation}
 where $L: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$ and $\operatorname{dom} L = \mathcal{D} \times \mathbb{R}^m \times \mathbb{R}^p$. $\lambda_i$ is the Langrange multiplier associated with the inequality constraint $f_i(x) \leq 0$ and $\nu_i$ is the Langrange multiplier associated with the equality constraint $h_i(x) = 0$. Together, $\lambda \in \mathbb{R}^m$, and $\nu \in \mathbb{R}^p$, are called the \emph{dual variables} or \emph{Langrange multiplier vectors}. The basic idea is that we're accounting for the constraint functions by adjusting the objective function to include a weighted sum of the constraint functions.
 
-The \emph{Lagrangian dual function} is defined as the minimum value of the Lagrangian $L$ over $x$
+The \emph{Lagrange dual function} is defined as the minimum value of the Lagrangian $L$ over $x$
 \begin{equation}
 g(\lambda, \nu) = \inf_{x \in \mathcal{D}} L(x, \lambda, \nu)
 = \inf_{x \in \mathcal{D}} \left[ f_0(x) + \sum_{i=1}^m \lambda_i f_i(x)
 + \sum_{i=1}^p \nu_i h_i(x) \right]
 \end{equation}
-where $g: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$. The $\inf$ operator refers to the \emph{infimum} operator.
+where $g: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$. The $\inf$ operator refers to the \emph{infimum} operator, which may also be called the  \emph{greatest lower bound} operator. An important property of the dual function is that it is concave even when the problem is not convex, as it is the pointwise infimum of a family of affine functions of $(\lambda, \nu)$.
 
 \begin{theorem}
-  The Lagrangian dual yields a lower bound on the optimal value of the problem \eqref{eq:op} for $\lambda \succeq 0$ and any $\nu$.
+  The Lagrange dual function yields a lower bound on the optimal value of the problem \eqref{eq:op} for $\lambda \succeq 0$ and any $\nu$.
 \end{theorem}
 \begin{proof}
-  The proof is trivial.
+  Denote the optimal value by $p^\star$ and a feasible point by $x'$ so that it satisfies the constraints $f_i(x') \le 0$ and $h_i(x') = 0$. Then for $\lambda \succeq 0$ and any $\nu$ we have that
+  
+  $$ \sum_{i=1}^m \lambda_i f_i(x') + \sum_{i=1}^p \lambda_i h_i(x') \le 0 $$
+  so that
+  $$ L(x',\lambda,\nu) = f_0(x') + \sum_{i=1}^m \lambda_i f_i(x') + \sum_{i=1}^p \lambda_i h_i(x') \le f_0(x') $$
+  and
+  $$ g(\lambda, \nu) = \inf_{x \in \mathcal{D}} L(x, \lambda, \nu) \le L(x', \lambda, \nu) \le f_0(x') $$
+  which must hold for every feasible point $x'$ including the optimal solution $x^\star$ and thus
+  $$ g(\lambda, \nu) \le p^\star = f_0(x^\star) $$ 
 \end{proof}
 
-The \emph{Lagrangian dual problem} associated with \eqref{eq:op} is given as
+
+As the lagrange dual function provides a lower bound on the optimal value $p^\star$ that depends on $(\lambda,\nu)$, we may be interested in finding the best lower bound. This leads to the \emph{Lagrange dual problem} associated with \eqref{eq:op} which can be stated as
 \begin{align} \label{eq:dualop}
 \mathrm{maximize}    \quad & g(\lambda, \nu) \nonumber \\
 \mathrm{subject\;to} \quad & \lambda \succeq 0
 \end{align}
+and is always a convex problem as the dual function $g(\lambda, \nu)$ is always convex as mentioned when we introduced it. We can then talk about \emph{dual feasible} pairs $(\lambda,\nu)$ with $\lambda \succeq 0$ and $g(\lambda,\nu) > -\infty$, \emph{optimal Lagrange multipliers} or the \emph{dual optimal} pair $(\lambda^\star, \nu^\star)$, and the optimal value of the dual problem, denoted $d^\star$ . In some contexts involving both the dual problem \eqref{eq:dualop} and the original problem \eqref{eq:op}, the original problem is called the \emph{primal problem}.
 
-\begin{theorem}
-  The Lagrangian dual yields a lower bound on the optimal value of the problem \eqref{eq:op} for $\lambda \succeq 0$ and any $\nu$.
-\end{theorem}
-\begin{proof}
-  The proof is trivial.
-\end{proof}
-In some contexts involving both the dual problem \eqref{eq:dualop} and the original problem \eqref{eq:op}, the original problem is called the \emph{primal problem}.
+If the optimal value of the dual problem $d^\star$ and of the primal problem $p^\star$ are equal, $d^\star = p^\star$, then we say that \emph{strong duality} holds and the \emph{optimal duality gap} is zero, $d^\star - p^\star = 0$. Otherwise $d^\star \le p^\star$ and we say that \emph{weak duality} holds.
 
 \subsection{Optimality conditions}
-The KKT conditions are analogous to the condition that the gradient must be zero at a minimum, modified to take constraints into account. The difference is that the KKT conditions hold for constrained problems.
+It will be quite useful to impose conditions on what makes a feasible point an optimal point or solution for both the primal and dual problems. Denoting the optimal primal solution by $x^\star$ and the optimal value by $p^\star = f_0(x^\star)$, we already know that it must satisfy the constraints $f_i(x^\star) \ge 0$ and $h_i(x^\star) = 0$. Denoting the dual optimal by $(\lambda^\star, \nu^\star)$ we would like for $\lambda_i^\star \ge 0$ so that the dual function provides a lower bound on $p^\star$. 
+
+% TODO: Complementary slackness
+
+Since $x^\star$ minimizes the Lagrangian $L(x, \lambda^\star, \nu^\star)$ over $x$, its gradient must be zero at the minima or maximum $x^\star$, giving us
+\[
+\nabla f_0(x^\star) + \sum_{i=1}^m \lambda_i^\star \nabla f_i(x^\star)
++ \sum_{i=1}^p \nu_i^\star \nabla h_i(x^\star) = 0
+\]
+
+Together, we can summarize the five conditions we obtained
 \begin{align} \label{eq:kkt}
 f_i(x^\star) & \geq 0, \; & i & \in {1,\dots,m} \nonumber \\
 h_i(x^\star) & = 0, \; & i & \in {1,\dots,p} \nonumber \\
@@ -88,20 +102,80 @@ h_i(x^\star) & = 0, \; & i & \in {1,\dots,p} \nonumber \\
 \nabla f_0(x^\star) + \sum_{i=1}^m \lambda_i^\star \nabla f_i(x^\star)
 + \sum_{i=1}^p \nu_i^\star \nabla h_i(x^\star) & = 0, \; & i & \in {1,\dots,m} \nonumber
 \end{align}
-The first two conditions are simply the original constraints of the primal problem which must always be satisfied. The third condition is the dual problem constraints. The fourth condition is that of complementary slackness, and the fifth enforces stationarity.
+which together are called the \emph{Karush-Kuhn-Tucker (KKT) conditions}. They are sometimes referred to as the first-order optimality conditions, and second-order conditions do exist.
 
 \subsection{Trust regions}
+Switching gears a little bit, we'll look at a general strategy of solving optimization problem using the concept of a \emph{trust region}. When searching for an optimal solution starting from an initial point $x_0$, the idea is to create and solve an approximate optimization problem at each iterate $x_k$ with the hope that the approximation is easier to solve yet locally accurate enough to help locate the true optimal solution. The approximated is \emph{trusted} only so much, up to some radius or region boundary. A circular or spherical trust region may be used, but so can box and elliptical regions. If a sufficiently better iterate $x_{k+1}$ is not found within the trust region then the region may be shrunk in case the approximation is invalid so far from the iterate $x_k$.
+
+The approximation employed may be termed the \emph{model function} so that the approximate problem at iterate $x_k$ becomes $\operatorname{minimize}_p m_k(x_k + p)$ where $p$ is the candidate step so that $x_k + p$ lies within the trust region. A very popular model function takes the form of a quadratic approximation using the first two terms of a Taylor approximation of the objective function at the iterate point
+\begin{equation}
+  m_k(x_k + p) = f(x_k) + p^T \nabla f(x_k) + \frac{1}{2} p^T \nabla^2 f(x_k) p
+\end{equation}
+where $\nabla f(x_k)$ and $\nabla^2 f(x_k)$ are the gradient and Hessian of the objective function $f$ at the point $x_k$ \citep{More83}.
+
+Trust regions see a great deal of use in nonlinear optimization methods, and can be modified for constrained optimization. Beyond the choice of approximation and trust region type, choosing the region size and shape, the step size, and the method used to solve even the trust region subproblem are important. Another class of methods serving a similar purpose are line search methods where a direction is first chosen to search for the next iterate, so that the step size is chosen second. Line search methods are in a sense the dual of trust region methods, where the step size (trust region radius or boundary) is chosen first, then a direction is chosen.
 
 \subsection{Primal-dual interior point methods}
-\subsubsection{Barrier function}
-\subsubsection{Direct Newton step}
-\subsubsection{Trust region step}
+The idea behind an interior-point method is to modify the an original problem to take into account the constraint functions by modifying the objective function to penalize iterates that leave the feasible region (or break the constraints). As this may modify the optimal solution, the approximation is realxed as a local minimum is approached, so you are essentially solving a series of approximate optimization subproblems. A very popular approximation is to use a logarithmic barrier, that induces a penalty that approaches $\infty$ as you approach the constraint.
+
+\begin{align} \label{eq:dualop}
+\mathrm{minimize} \quad & f_\mu(x,s) = f(x) - \mu \sum_{i=1}^{m} \ln s_i \nonumber \\
+\mathrm{subject\;to} \quad & g_i(x) + s_i = 0 \\
+                           & h_i(x) = 0 \nonumber
+\end{align}
+
+Direct step
+\begin{equation}
+\begin{pmatrix}
+  H   & 0        & J_h^T & J_g^T \\
+  0   & S\Lambda & 0     & -S \\
+  J_h & 0        & I     & 0 \\
+  J_g & -S       & 0     & I
+\end{pmatrix}
+\begin{pmatrix}
+  \Delta x  \\
+  \Delta s  \\
+  -\Delta y \\
+  -\Delta \lambda \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+\nabla f - J_h^T y - J_g^T \lambda  \\
+S\Lambda - \mu e \\
+h \\
+g + s \\
+\end{pmatrix}
+\end{equation}
+where $H$ is the Hessian of the Lagrangian of $f_\mu$
+\begin{equation}
+H = \nabla^2 f(x) + \sum_i \lambda_i \nabla^2 g_i(x) + \sum_j \lambda_j \nabla^2 h_j(x),
+\end{equation}
+$J_g$ and $J_h$ are the Jacobians of the constraint function $g$ and $h$ respectively, $S = \operatorname{diag}(s)$, $\Lambda = \operatorname{diag}(\lambda)$, $\lambda$ and $y$ are the Lagrange multipliers associated with the constraint functions $g$ and $h$ respectively, and $e$ is a vector of ones with the same size as $g$.
+
 
 \subsection{Curse of dimensionality and possible solutions}
+The curse of dimensionality, a term first introduced by \citet{Bellman57} when considering problems in dynamic optimization, refers to the exponential increase in volume when adding extra dimensions to Euclidean space \citep{Keogh10}. It manifests itself in two ways when tackling the geometry reconstruction problem for larger and larger molecules, as we need $3N-6$ parameters to describe the geometry of an molecule with $N \ge 3$ atoms. Firstly, the parameter space or phase space to be searched increases exponentially with $N$, and with this increase may come an increase in local minima, and possible an increase in the number of degenerate geometries. While we believe, anecdotally, that interior-point methods will still be feasible for polyatomic molecules with several atoms, convergence will definitely take longer and multiple runs may be required before finding a feasible geometry or any degenerate geometries, possibly necessitating the use of a supercomputer cluster.
+
+The second manifestation, which seems more severe from preliminary investigations of reconstructing acetylene (\ch{C2H2}) molecular geometries, is the proliferation of saddle points in high-dimensional spaces, termed the \emph{saddle-point problem} as argued by \citet{Pascanu14} using evidence from statistical physics, random matrix theory, and neural network theory. Fortunately, this is a very active area of research due to the recent surge and revival of interest in artificial intelligence \citep{Bengio16,LeCun15} and the development of new algorithms may be helpful in reconstructing larger molecules. One recent example worth looking into for future improvements include the saddle-free Newton method proposed by \citet{Dauphin14} which uses second-curvature information to rapidly escape from high-dimensional saddle points.
+
+One easy method of tackling this problem when attempting to reconstruct larger molecules is to fix certain parameters of the molecule's geometry, ones which may exhibit very low variability. An example may be the triple \ch{C+C} bond in acetylene.
 
 \section{Current implementation}
+There are many complications involved with implementing advanced optimization algorithms such as interior-point methods and so instead of reinventing the wheel, we will use a readily-available and mature implemention in MATLAB's Optimization Toolbox in conjunction with the Global Optimization and Parallel Processing Toolboxes. In the spirit of open science and reproducibility, we would have chosen an open-source implementation however this was not a consideration at the beginning and the MATLAB implementation is superior to most of the available alternatives, commericial and otherwise.
+
+The Optimization Toolbox provides a general-purpose nonlinear programming solver \texttt{fmincon} that attempts to find the minimum of a constrained nonlinear multivariable function. Among the algorithms it can employ is the interior-point method we described in the previous section. 
+
+We use \texttt{fmincon} to find geometries.
+
+To find degenerate geometries and ensure that we have found geometries corresponding to global minima and not just local minima, we run \texttt{fmincon} multiple times for each set of measured momentum vectors, each time using a different initial starting point. This is done using the \texttt{MultiStart} solver from the Global Optimization Toolbox used to find multiple local minima.
+
+As we may have many measurements to reconstruct, we may want to make use of all available processor cores when running on a personal computer and we especially want to make full use of each core when running on a supercomputer cluster, so the measurements are iterated over using a \emph{parallel for loop} or a \texttt{parfor} loop which executes each loop iteration on a different core.
 
 \section{Geometry reconstructions}
+Now that we have what we think is a more sophisticated method for reconstructing, we should reconstruct the same geometries we saw in section \ref{sec:degenerateGeometries}.
+
+\section{Investigating degenerate geometries}
+We should also test whether this approach can accurately reconstruct simulated geometries as we tested the Nelder-Mead simplex method in section \ref{ssec:simplexFail} and the lookup table in section \ref{ssec:LTaccuracy}. We will use this information to actually investigate degenerate geometries a bit more closely.
 
 \section{Conclusions and lessons learnt}
 \emph{The importance of covariances and joint distributions}---

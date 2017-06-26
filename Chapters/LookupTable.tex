@@ -157,14 +157,14 @@ In our case, we chose to increase the precision by a factor of $5$ each iteratio
 
 One possible improvement is to store these thousands of extra simulations as extra lookup table rows, effectively extending the lookup table. This storing or caching of the results of expensive function calls is termed \emph{memoization}. It may help if the geometries being reconstructed tend to lie close to each other, however in practice the sparsity of reconstructed geometries relative to the resolution of these extra rows results in almost no improvements in performance.
 
-\subsection{Using simulations to test accuracy}
+\subsection{Using simulations to test accuracy} \label{ssec:LTaccuracy}
 Since we used simulations to test the accuracy of the Nelder-Mead simplex method in section \ref{ssec:simplexFail}, it is only fair that we subject the lookup table to the same analysis.
 
 % TODO: Find or recreate these plots!
 
 It is important that we do not simulate geometries that are already contained in the lookup table otherwise the reconstruction is trivial.
 
-\section{Geometry reconstructions done by lookup table} \label{ssec:degenerateGeometries}
+\section{Geometry reconstructions done by lookup table} \label{sec:LTgeometries}
 
 With the knowledge that the lookup table can be somewhat trusted, we should use it to reconstruct some real geometries. Here we will reconstruct the  \ch{OCS} $(2,2,2)$ geometry. Figure \ref{fig:OCS2227fsLTGeometry} shows one such geometry, forming the first frame of a molecular movie.
 
