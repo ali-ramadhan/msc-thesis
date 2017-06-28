@@ -230,6 +230,29 @@ Of particular interest might be the average and modal (most likely) geometries r
   \label{table:lookupTableGeometries}
 \end{table}
 
+\subsection{Kernel density estimation}
+Probability distributions for the atomic positions in the $xy$-plane and along both the $x$- and $y$-axes in figure \ref{fig:OCS2227fsLTGeometry} are estimated using kernel density estimates (KDE's) which may be thought of as a smoothed histogram that integrates to one (like a probability distribution). They are a method of performing nonparametric statistics, that is, of fitting observations to a probability distribution that has no dependency on a parameter \citep[\S 20.2-20.3]{Kendall99}. They serve roughly the same purpose as a histogram, however histograms tend to be non-smooth and their shape depends on both the width of the bins and the ends points of the bins. To solve at least the first two problems, we can use a KDE.
+
+% TODO: Might be better than histograms, and definitely are great for higher dimensions where you get hit hard by the curse of dimensionality.
+
+For independent and identically distributed univariate samples $x_1, x_2, \dots, x_n$ drawn from an unknown probability distribution $f$, its KDE is
+\begin{equation}
+\hat{f}_h(x) = \frac{1}{n} \sum_{i=1}^n K_h(x-x_i)
+= \frac{1}{nh} \sum_{i=1}^n K\left(\frac{x - x_i}{h}\right)
+\end{equation}
+where $K$ is the \emph{kernel}, a function with zero mean that integrates to one, and $h > 0$ is the \emph{bandwidth}, a smoothing parameter analogous to the bin width \citep[pp. 137]{Scott15}. Many kernel choices exist such as the rectangle or triangle function but the standard normal (or Gaussian) kernel is the most popular. Multivariate KDE's replace the scalar bandwidth parameter $h$ with a symmetric and positive bandwidth matrix $\mathbf{H}$ with a variable number of smoothing parameters \citep{Wand93} however full bandwidth matrices seem to give markedly better performance \citep{Duong03}.
+
+Selection of the bandwidth $h$, as expected, is the most difficult aspect of KDE. Analytical formulae can be derived for the bandwidth $h$ \citep[pp. 143]{Scott15} that accurately estimate the unknown density $f$ by minimizing the mean integrated squared error (MISE) however they require knowledge of the unknown density $f$ and so cannot generally be used. Fortunately, when estimating a normal (or Gaussian) density, the bandwidth that minimizes the MISE is given by \citet{Silverman86} as
+\begin{equation}
+  h = \left(\frac{4\hat{\sigma}^5}{3n} \right)^\frac{1}{d+4}
+    \approx 1.06 \left(\frac{\sigma^5}{n} \right)^\frac{1}{d+4}
+\end{equation}
+where $n$ is the number of observations, $\hat{\sigma}$ is the standard deviation of the samples, and $d$ is the dimensionality of the observations (so $d=1$ for univariate observations and $d=2$ for bivariate). This is termed the \emph{normal distribution approximation} or the ``rule of thumb''. As our atomic positions seem to rougly follow a normal distribution, we used the \citet{Silverman86} rule of thumb.\footnotemark~ It is worth noting that it does not perform well on multimodal data which is why certain estimates in figure \ref{fig:OCS222100fsMomentum} appear oversmoothed.
+
+\footnotetext{Figure \ref{fig:OCS2227fsLTGeometry} was plotted using the Python seaborn package which is built upon the SciPy and MatplotLib packages, and uses SciPy to perform the KDE. See colophon (appendix \ref{appx:colophon}) for more details.}
+
+Other methods do exist, and univariate estimators are especially effective as briefly surveryed by \citet{Jones96}, but bandwidth selection for multivariate kernel density estimates is quite difficult for non-Gaussian densities \citep[\S 6.5.2]{Scott15}.
+
 \section{Degenerate molecular geometries} \label{sec:degenerateGeometries}
 In chapter \ref{ch:introduction} we hinted at the fact that due to the ill-posed nature of the geometry reconstruction inverse problem, multiple solutions may be posible. While investigating the reconstructed geometries, this feature surprisingly did pop up for the \ch{OCS} molecule and the lookup table can help provide some insight into these multiple solutions, which we will call \emph{degenerate geometries}.
 
