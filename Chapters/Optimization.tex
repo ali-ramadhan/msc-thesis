@@ -183,10 +183,10 @@ Now that we have a more sophisticated method for reconstructing geometries, we s
 \end{figure}
 
 \subsection{Comparision with the lookup table}
-
+Qualitatively not very different.
 
 \subsection{Investigating individual reconstructions}
-
+While figure \ref{fig:OCS2227fsMOGeometry} gives a good intuitive image of what a molecular geometry looks like, it would be interesting to see a distribution of bond lengths and bond angles and quantify the variable in each of these parameters. We could also look at correlations between the bond lengths and bond angles and see, for example, if longer \ch{C-O} bond lengths correspond to longer \ch{C-S} bond lengths, or if more bent geometries tend to have longer bond lengths. To visualize this relationship in figure \ref{fig:OCS2227fsMOGeometryPairs} we utilize a scatterplot matrix as we did for figure \ref{fig:OCS2227fsMomentum}.
 
 \begin{figure}
   \centering
@@ -195,6 +195,16 @@ Now that we have a more sophisticated method for reconstructing geometries, we s
   {Scatter plot matrix showing the bivariate relationship between the parameters $(r_\mathrm{CO}, r_\mathrm{CS}, \theta)$ for the reconstructions of the molecular geometry of \ch{OCS} following Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. On the diagonal, histograms show the distribution of bond lengths and bond angle for the reconstructed geometries (tick marks at the bottom of each column). Below the diagonal, scatter plots show the bivariate relationship between each molecular parameter. Above the diagonal, the same relationship is given using a contour plot instead.}
   \label{fig:OCS2227fsMOGeometryPairs}
 \end{figure}
+
+The bond length distributions on the diagonal of figure \ref{fig:OCS2227fsMomentum} make sense; they peak slightly above the equilibrium values indicating some molecular rearrangement and bond lengthening due to the molecule's interaction with the laser field. The bond angle distribution shows less variability suggesting that the molecule may have not had much time to bend yet. % TODO: How similar is this to theoretical calculations?
+
+What is very interesting, however, is the relationship between the two bond lengths, $r_\mathrm{CO}$ and $r_\mathrm{CS}$. We may expect both bond lengths to lengthen or possibly to have one bond stretch while the other remains relatively constant, but the reconstructions actually indicate the complete opposite, that while one stretches the other bond shrinks almost following a reciprocal relationship. This effect becomes even more pronounced when reconstructed molecular geometries exposed to longer pulse lengths.
+
+Certainly such bizarre data suggests that something must have gone wrong. To our knowledge no other studies performing geometry reconstruction using Coulomb explosion imaging have reported the correlations between their bond lengths and bond angles, so it is impossible to tell whether other studies have found similar relationships or if we have done something wrong.\footnotemark~ When plotted, the geometries and even the bond length and bond angle distributions make physical sense, it is only the correlations that do not.
+
+\footnotetext{Private communication with collaborators suggests that other investigations have led to similar worrying results, leading to the abandonment of geometry reconstruction efforts.}
+
+Such worrying results force us to distrust the geometry reconstructions we have done so far. While the average geometries and overall dataset may look fine, the individual geometries seem to not make physical sense so the dataset cannot be trusted. It is worth noting that performing a similar analysis on the geometries reconstructed using the lookup table produces the same worrying results so this bizarre relationship seems to emerge out of at least two different reconstruction methods. We will come back and resolve this issue in the next chapter.
 
 \section{Investigating degenerate geometries}
 We should also test whether this approach can accurately reconstruct simulated geometries as we tested the Nelder-Mead simplex method in section \ref{ssec:simplexFail} and the lookup table in section \ref{ssec:LTaccuracy}. We will use this information to actually investigate degenerate geometries a bit more closely.
