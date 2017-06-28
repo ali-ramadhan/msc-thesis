@@ -171,11 +171,13 @@ To find degenerate geometries and ensure that we have found geometries correspon
 
 As we may have many measurements to reconstruct, we may want to make use of all available processor cores when running on a personal computer and we especially want to make full use of each core when running on a supercomputer cluster, so the measurements are iterated over using a \emph{parallel for loop} or a \texttt{parfor} loop which executes each loop iteration on a different core.
 
-\section{Geometry reconstructions}
+\section{Geometry reconstructions and how to plot them}
 Now that we have what we think is a more sophisticated method for reconstructing, we should reconstruct the same geometries we saw in section \ref{sec:degenerateGeometries}.
 
 \section{Investigating degenerate geometries}
 We should also test whether this approach can accurately reconstruct simulated geometries as we tested the Nelder-Mead simplex method in section \ref{ssec:simplexFail} and the lookup table in section \ref{ssec:LTaccuracy}. We will use this information to actually investigate degenerate geometries a bit more closely.
+
+We considered whether these degeneracies could arise due to our choice of momentum convention in section \ref{sec:conventions} however our convention simply rotates the three momentum vectors such that the carbon's momentum vector lies along the $+x$-axis and all three vectors lie in a plane.
 
 \section{Conclusions and lessons learnt}
 \emph{The importance of covariances and joint distributions}---
@@ -183,4 +185,3 @@ We should also test whether this approach can accurately reconstruct simulated g
 \emph{Geometry reconstruction is highly sensitive to uncertainty in the momentum vectors}---
 
 \subsection{Future directions}
-% Ref curse of dimensionality, maybe look to other optimization algorithms, e.g. the high dimensionality saddle point avoiding one.
