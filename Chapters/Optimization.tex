@@ -118,7 +118,7 @@ Trust regions see a great deal of use in nonlinear optimization methods, and can
 \subsection{Primal-dual interior point methods}
 The idea behind an interior-point method is to modify the an original problem to take into account the constraint functions by modifying the objective function to penalize iterates that leave the feasible region (or break the constraints). As this may modify the optimal solution, the approximation is realxed as a local minimum is approached, so you are essentially solving a series of approximate optimization subproblems. A very popular approximation is to use a logarithmic barrier, that induces a penalty that approaches $\infty$ as you approach the constraint.
 
-\begin{align} \label{eq:dualop}
+\begin{align}
 \mathrm{minimize} \quad & f_\mu(x,s) = f(x) - \mu \sum_{i=1}^{m} \ln s_i \nonumber \\
 \mathrm{subject\;to} \quad & g_i(x) + s_i = 0 \\
                            & h_i(x) = 0 \nonumber
@@ -204,21 +204,46 @@ Certainly such bizarre data suggests that something must have gone wrong. To our
 
 \footnotetext{Private communication with collaborators suggests that other investigations have led to similar worrying results, leading to the abandonment of geometry reconstruction efforts.}
 
-Such worrying results force us to distrust the geometry reconstructions we have done so far. While the average geometries and overall dataset may look fine, the individual geometries seem to not make physical sense so the dataset cannot be trusted. It is worth noting that performing a similar analysis on the geometries reconstructed using the lookup table produces the same worrying results so this bizarre relationship seems to emerge out of at least two different reconstruction methods. We will come back and resolve this issue in the next chapter.
+Such worrying results force us to distrust the geometry reconstructions we have done so far. While the average geometries and overall dataset may look fine, the individual geometries seem to not make physical sense so the dataset cannot be trusted. It is worth noting that performing a similar analysis on the geometries reconstructed using the lookup table produces the same worrying results so this bizarre relationship seems to emerge out of at least two different reconstruction methods. We will come back and resolve this issue in the next chapter (the reconstruction method is not at fault).
 
 \section{Investigating degenerate geometries}
-We should also test whether this approach can accurately reconstruct simulated geometries as we tested the Nelder-Mead simplex method in section \ref{ssec:simplexFail} and the lookup table in section \ref{ssec:LTaccuracy}. We will use this information to actually investigate degenerate geometries a bit more closely.
+We should also test whether this approach can accurately reconstruct simulated geometries as we tested the Nelder-Mead simplex method in section \ref{ssec:simplexFail} and the lookup table in section \ref{ssec:LTaccuracy}. We will also use this information to actually investigate degenerate geometries a bit more closely.
 
-We considered whether these degeneracies could arise due to our choice of momentum convention in section \ref{sec:conventions} however our convention simply rotates the three momentum vectors such that the carbon's momentum vector lies along the $+x$-axis and all three vectors lie in a plane.
+When testing the accuracy of the Nelder-Mead simplex method and the lookup table, we did not do it so thoroughly. We just varied one molecular parameter at a time, which was sufficient to show the inadequecy of the simplex method. For a more thorough test, we will substantially vary all the parameter but simulating the Coulomb explosion of geometries within a cube in phase space described by $\SI{100}{\pico\meter} \le r_\mathrm{CO}, r_\mathrm{CS} \le \SI{500}{\pico\meter}$ and $\SI{140}{\deg} \le \theta \le \SI{180}{\deg}$. For a low-resolution testing, we pick geometries $r_\mathrm{CO} \times r_\mathrm{CS} \times \theta_\mathrm{OCS}$ where $r_\mathrm{CO}$ and $r_\mathrm{CS}$ are sets containing $10$ uniformly spaced bond lengths between \SI{100}{\pico\meter} and \SI{500}{\pico\meter}, $\theta_\mathrm{OCS}$ is a set containing $10$ uniformly spaced bond angles between \SI{140}{\deg} and \SI{180}{\deg}, and $X \times Y = {(x,y) | x \in X \mathrm{and} y \in Y}$ denotes the cartesian product as expressed in set-builder notation \citep[p. 6]{Warner90}. Thus we are reconstructing $10^3 = 1000$ geometries from simulated Coulomb explosions.
+
+We find that the optimization routine can reconstruct the simulated geometries in $98.8\%$ of cases using only a single starting guess. Each reconstruction takes approximately one second. In each of these reconstructions, the parameters of the recovered geometry numerically matched the original geometry up to several decimal places. The absolute error between the recovered and simulated momentum vectors was below $10^{-55}$ for $95\%$ of reconstructions, with the mean error being approximately $10^{-57}$ which is 10 orders of magnitude lower than the absolute errors on momentum vectors retreived using the lookup table. Since we use the square of the $\ell_2$-norm to quantify the absolute error, this actually represents an improvement of approximately 5 orders of magnitude in accuracy over the lookup table. Using multiple starting points recovers geometries for the other $1.2\%$ of cases.
+
+While the optimization routine recovered very precise geometries whose post-explosion momentum vectors very closely match the expected vectors, the geometries were not always the ones we started with and expected. It seems that in about $5\%$ of cases, the routine returned a degenerate geometry. It is important to note that when the Nelder-Mead simplex method and the lookup table returned a different geometry than expected, it was just a failure in recovering the exact geometry as the momentum vectors did not match closely except for a small number of cases where it had found a degenerate geometry. However, in this case we are getting very precise reconstructions and each different geometry represents a degenerate geometry. To showcase the nature of these degenerate geometry, we plot arrows between the expected geometry and the recovered degenerate geometry in figure \ref{fig:OCS222DegeneracyMapSD}, which we will call a \emph{degeneracy map}. If the recovered geometry was the original geometry as expected, then no arrow is plotted.
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS222DegeneracyMapSD}
-  \caption[OCS 222 degeneracy map.]
-  {OCS 222 degeneracy map.}
+  \caption[Mapping between degenerate geometries for the \ch{OCS} $(2,2,2)$ molecule.]
+  {Mapping between degenerate geometries for the \ch{OCS} $(2,2,2)$ molecule. The Coulomb explosion of $1000$ uniformly distributed geometries within a cube in phase space described by $\SI{100}{\pico\meter} \le r_\mathrm{CO}, r_\mathrm{CS} \le \SI{500}{\pico\meter}$ and $\SI{140}{\deg} \le \theta \le \SI{180}{\deg}$ was simulated and then reconstructed using the momentum vectors of the atomic fragments that resulted from the simulations. If the reconstructed geometry matched the original geometry exactly, then no arrow is plotted. However, an arrow is plotted from the original expected geometry to the recovered geometry if it represented a degenerate geometry. Arrows small enough that they resemble points indicate a slight numerical difference between the expected geometry and the reconstructed geometry, but do not neccessarilly represent a degenerate geometry.}
   \label{fig:OCS222DegeneracyMapSD}
 \end{figure}
 
+We see some patterns in the degenerate geometries recovered. They only occur for molecules with bond angles between approximately \SI{150}{\deg} and \SI{170}{\deg} which includes a sizable minority of the molecules reconstructed as indicated by the bond angle distribution in figure \ref{fig:OCS2227fsMOGeometryPairs}. Degenerate geometries exist mainly for molecules exhibiting significant bond asymmetry and these geometries tend to be degenerate with another molecule that is more bent and has a smaller degree of bond length asymmetry. They also seem to appear in two regions, one where the \ch{C-O} bond length is longer, and another where the \ch{C-S} bond length is longer. Figure \ref{fig:OCS222DegeneracyMapSD} may suggest the existence of a discrete number of these degenerate geometries, however, repeating the test with a greater number of geometries produces very similar results except for a correspondingly higher density of arrows, suggesting that regions exist in phase space where every geometry is degenerate with another, \ie~ that an uncountably infinite\footnotemark~ number of degenerate geometries exist.
+
+\footnotetext{A countably finite set may refer to the set of integers $\mathbb{Z} = {0, \pm 1, \pm 2, \dots}$, for example, which may be enumerated. An uncountably infinite set has the same cardinality as the set of real numbers $\mathbb{R}$ which cannot be enumerated \citep{Halmos17}.}
+
+In these simulations we knew \textit{a priori} what geometry we expected to reconstruct, so we can assign a direction to each arrow. However, when reconstructing experimental data, we have no prior knowledge of what geometry we expected to recover, so the arrow could point in either direction. In some cases it might be possible to choose one degenerate geometry over the other(s) if one is physically unrealistic, \eg~ if it is very highly bent or exhibits an extreme bond length asymmetry.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCS222DegeneracyMapHDPairs}
+  \caption[Scatter plot matrix.]
+  {Scatter plot matrix.}
+  \label{fig:OCS222DegeneracyMapHDPairs}
+\end{figure}
+
+To further visualize the set of geometries we recovered, we utilize a scatterplot matrix in figure \ref{fig:OCS222DegeneracyMapHDPairs} showing the bond length and angle distributions as well as their bivariate relationships. This uses $8,000$ geometries. It is interesting to note that whenever degenerate geometries exist, the more bent geometry is found. Perhaps these more bent solutions posess a larger \emph{basin of attraction}, which may or may not be strongly dependent on the optimization algorithm employed. It might be interesting to visualize them, possibly taking a similar approach as \citet{Asenjo13} who actually employ mathematical optimization methods to determine energy minimizing molecular structures. They observe basins with rather complicated boundaries, reminiscent of the beautiful and spatially chaotic patterns produced by the magnetic pendulum.
+
+For the feasibility of geometry reconstruction, however, this result carries extra worries. Even when the measured momentum vectors can be mapped to a molecular geometry very precisely, the existance of multiple solutions corresponding to very different geometries may make it impossible to perform accurate geometry reconstructions, especially when multiple degenerate geometries represent physically realizable geometries.
+
+Interestingly, we find that we recover degenerate geometries approximately $5\%$ of the time while \citet[supplementary information]{Kunitski15} report finding degenerate geometries approximately $10\%$ of the time, although they chose to disregard them for their analyses.
+
+We considered whether these degeneracies could arise due to our choice of momentum convention in section \ref{sec:conventions} however our convention simply rotates the three momentum vectors such that the carbon's momentum vector lies along the $+x$-axis and all three momentum vectors lie in a plane.
 
 \section{Conclusions}
 \emph{The importance of covariances and joint distributions}---
