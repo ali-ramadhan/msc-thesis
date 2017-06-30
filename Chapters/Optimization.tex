@@ -190,23 +190,62 @@ Now that we have a more sophisticated method for reconstructing geometries, we s
   \label{fig:OCS2227fsMOGeometry}
 \end{figure}
 
-Before plotting, badly reconstructed geometries and duplicate geometries are filtered out. A badly reconstructed geometry satisfy one of three criteria. (1) It does not satisfy the KKT optimality conditions from section \ref{ssec:KKT} in which case the optimization algorithm is said to not have converged and \texttt{MultiStart} assigns such a geometry with an exit flag of $1$ making it easy to filter out such geometries. (2) It produces momentum vectors with a high absolute error when compared to the measured momentum vectors. We choose a threshold of $10^{-50}$ above which we say that the geometry is not precise enough to be a good reconstruction. The vast majority of reconstructions have significantly lower error and in general, geometries with a high error do not satisfy (1) either. (3) It lies very close to the box constraints (within $0.01$) that form our cuboid of physically realistic geometries. This usually indicates that the optimal geometry lies outside the constraints. Such bad geometries tend to also satisfy (1) and (2), but some redundancy is desirable to find all badly reconstructed geometries.
+Before plotting, badly reconstructed geometries and duplicate geometries are filtered out. A badly reconstructed geometry satisfy at least one of three criteria. It (1) does not satisfy the KKT optimality conditions from section \ref{ssec:KKT} in which case the optimization algorithm is said to not have converged and \texttt{MultiStart} assigns such a geometry with an exit flag of $1$ making it easy to filter out such geometries. Or (2) it produces momentum vectors with a high absolute error when compared to the measured momentum vectors. We choose a threshold of $10^{-50}$ above which we say that the geometry is not precise enough to be a good reconstruction. The vast majority of reconstructions have significantly lower error ($10^{-59} - 10^{-54}$) and in general, geometries with a high absolute error do not satisfy (1) either. Or finally, (3) it lies very close to the box constraints (within $0.001$) that form our cuboid of physically realistic geometries in phase space. This usually indicates that the optimal geometry lies outside the constraints and that the solver asymptotically approached the boundary (due to the logarithmic barrier) in an attempt to converge on an optimal solution. Such bad geometries tend to also satisfy (1) and (2), but some redundancy is desirable to find all badly reconstructed geometries.
 
-For our reconstruction, we used \texttt{MultiStart} with $50$ runs, which in hindsight was quite excessive. Out of 1,285 sets of measured momentum vectors, we attempted to reconstruct each 50 times, recovering 53,648 geometries in total. 50,615 represented duplicate geometries leaving us with 3,033 unique reconstructed geometries. 1,816 had an exit flag of 1 indicating a bad geometry (a non-optimal solution). Zero geometries with high error were found, having all been found with an exit flag of 1. Then a further 91 geometries were found very close to the box constraints. Filtering out these 1,816 + 91 = 1,907 bad geometries, we are left with 1,126 good reconstructed geometries. 1,072 measurements were mapped to a single geometry, 18 measurements to two distinct degenerate geometries, and 6 to three distinct degenerate geometries. This corresponds to 2\% of reconstructed geometries containing degeneracies. 1,096 measurements were successfully reconstructed, giving an 85\% success rate.
+For our reconstruction, we configured \texttt{MultiStart} to use $50$ uniformly distributed starting points, which in hindsight was highly excessive. Out of $1,285$ sets of measured momentum vectors, we attempted to reconstruct each $50$ times, recovering $53,648$ geometries in total. $50,615$ represented duplicate geometries. Due to rounding errors involved with the comparison of floating-point numbers, we defined two triatomic geometries $i$ and $j$ to be duplicates if $\Delta_{ij} < 0.1$ where $\Delta_{ij} = |r_{12}^i - r_{12}^j| + |r_{23}^i - r_{23}^j| + |\theta^i - \theta^j|$ with bond lengths and angles being numerically described in picometers and degrees. After filtering out duplicate geometries, $3,033$ unique reconstructed geometries remain. $1,816$ had an exit flag of $1$ indicating a bad geometry (a non-optimal solution). No geometries with high error ($>10^{-50}$) were found, having all been previously found with an exit flag of 1. Then a further 91 geometries were found very close to the box constraints. Filtering out these $1,816 + 91 = 1,907$ bad geometries, we are left with $1,126$ ``good'' geometry reconstructions. $1,072$ were mapped to a single geometry, $18$ measurements to two distinct degenerate geometries, and $6$ to three distinct degenerate geometries. No measurement mapped to $4$ or more degenerate geometries, and $189$ measurements could not be reconstructed to satisfy our box constraints. In total, 2\% of measurements mapped to multiple degenerate geometries and $1,096$ measurements were successfully reconstructed, giving an 85\% success rate.
 
-The good 7 fs geometries are all plotted in figure \ref{fig:OCS2227fsMOGeometry} and the others are tabulated in appendix \ref{appx:supplementaryFigures}. Reconstruction statistics for each is tabulated in table \ref{table:MOSuccess}. The modal and average geometries of for each pulse length up to 100 fs are tabulated in table \ref{table:MOGeometries}. The 200 fs data was not analyzed as the molecule seemed to have stretched way too much for the reconstruction to seem trustworthy.
+The recovered geometries are plotted in figure \ref{fig:OCS2227fsMOGeometry} and the geometries recovered for other laser pulse lengths (\SIlist{30;60;100}{\femto\s}) are plotted in appendix \ref{appx:supplementaryFigures} (figures \ref{fig:OCS22230fsMOGeometry}--\ref{fig:OCS222100fsMOGeometry}). The \SI{200}{\femto\s} data was not analyzed as the molecule seemed to have stretched too much for the lookup table reconstruction to seem trustworthy. Reconstruction statistics including success rate and number of degenerate geometries found for each pulse length is tabulated in table \ref{table:MOSuccess}. The modal and average geometries of for each pulse length are tabulated in table \ref{table:MOGeometries}.
+
+% TODO: Discuss geometry plotting methods?
+
+\begin{table}
+  \myfloatalign
+  \centering
+  \begin{tabularx}{\textwidth}{cccc}
+    \toprule
+    Pulse length (\SI{}{\fs}) & Geometries & Reconstructions & Degenerate \\
+    \midrule
+    7 & 1285 & 1096 (85\%) & 18+6 (2.2\%) \\
+    30 & 1501 & 1164 (76\%) & 62+30 (7.9\%) \\
+    60 & 358 & 249 (70\%) & 15+6 (8.4\%) \\
+    100 & 1056 & 694 (66\%) & 39+13 (7.5\%) \\
+    \bottomrule
+  \end{tabularx}
+  \caption[Statistics for geometry reconstruction using constrained nonlinear optimization as a function of pulse length.]
+  {Statistics for geometry reconstruction using constrained nonlinear optimization. The geometries column lists the number of experimental measurements (sets of momentum vectors) obtained, the reconstructions column lists the number and percentage of these measurements that were successfully reconstructed, and the degenerate column lists the number of measurements for which 2 and 3 degenerate geometries were found, respectively, and the percentage of successful reconstructions that yielded degenerate geometries. No measurement ever yielded more than 3 degenerate geometries.}
+  \label{table:MOSuccess}
+\end{table}
+
+\begin{table}
+  \myfloatalign
+  \centering
+  \begin{tabularx}{0.85\textwidth}{ccccccc}
+    \toprule
+    & \multicolumn{3}{c}{Modal geometry} & \multicolumn{3}{c}{Average geometry} \\
+    Pulse length (fs) & $r_\mathrm{CO}$ & $r_\mathrm{CS}$ & $\theta_\mathrm{OCS}$ & $r_\mathrm{CO}$ & $r_\mathrm{CS}$ & $\theta_\mathrm{OCS}$ \\
+    \midrule
+    7 & 170 & 159 & 173 & 193 & 168 & 172 \\
+    30 & 231 & 177 & 172 & 243 & 215 & 168 \\
+    60 & 238 & 196 & 172 & 242 & 232 & 166 \\
+    100 & 249 & 206 & 171 & 256 & 254 & 165 \\
+    \bottomrule
+  \end{tabularx}
+  \caption[Average and modal geometries reconstructed using constrained nonlinear optimization as a function of pulse length.]
+  {Average and modal geometries calculated from the geometries reconstructed using constrained nonlinear optimization as a function of pulse length. The bond lengths are given in picometers (\SI{e-12}{\m}) and the bond angles in degrees.}
+  \label{table:MOGeometries}
+\end{table}
+
+% TODO: Discuss these tables.
 
 \subsection{Comparision with the lookup table}
-Comparing figures \ref{fig:OCS2227fsLTGeometry} and \ref{fig:OCS2227fsMOGeometry} we do not see much qualitative difference between the two. Figure \ref{fig:OCS2227fsMOGeometry} does have a greater number of reconstructions and data points. This is due to both the higher success rate (85\% versus 73\%) and since 500 more measurements were found since the lookup table was tested. Degenerate geometries contribute a small amount as well. The atomic positions exhibit greater variability in their positions, which may be because the optimization routine is able to reconstruct more extreme geometries than the lookup table could and with greater precision. 
+Comparing figures \ref{fig:OCS2227fsLTGeometry} and \ref{fig:OCS2227fsMOGeometry} we do not see much qualitative difference between the two. Figure \ref{fig:OCS2227fsMOGeometry} does have a greater number of reconstructions and data points. This is due to both the higher success rate (85\% versus 73\%) and since 500 more measurements were found since the lookup table was tested. Degenerate geometries contribute a small amount as well. The atomic positions exhibit greater variability in their positions, which may be because the optimization routine is able to reconstruct more extreme geometries than the lookup table could and with greater precision. The modal and average geometries calculated from both reconstructions are extremely similar.
 
-The modal and average geometries of the two are very similar.
+While the overall geometry is not very different, the absolute errors on each geometry are much smaller. The lookup table produces geometries with absolute errors on the order of $10^{-48}$ at best due to its low resolution but the optimization routine finds geometries with errors on the order of $10^{-59} - 10^{-54}$, corresponding to an additional 3-5 decimal places of precision on the numerical values of the molecular parameters.
 
-While the overall geometry is not much different, the absolute errors on each geometry are much smaller. The lookup table produces geometries with absolute errors on the order of $10^{-48}$ at best due to its low resolution but the optimization routine here finds geometries with errors on the order of $10^{-59} - 10^{-54}$, corresponding to an extra 3-4 decimal places of accuracy on the molecular parameters.
-
-Some degenerate geometries.
+The optimization routine is also able to precisely find degenerate geometries by using multiple starting points, a task which would have been non-trivial for the lookup table.
 
 \subsection{Investigating individual reconstructions}
-While figure \ref{fig:OCS2227fsMOGeometry} gives a good intuitive image of what a molecular geometry looks like, it would be interesting to see a distribution of bond lengths and bond angles and quantify the variable in each of these parameters. We could also look at correlations between the bond lengths and bond angles and see, for example, if longer \ch{C-O} bond lengths correspond to longer \ch{C-S} bond lengths, or if more bent geometries tend to have longer bond lengths. To visualize this relationship in figure \ref{fig:OCS2227fsMOGeometryPairs} we utilize a scatterplot matrix as we did for figure \ref{fig:OCS2227fsMomentum}.
+Figure \ref{fig:OCS2227fsMOGeometry} provides an intuitive image of what a molecular geometry looks like, but it would be interesting to also see a distribution of bond lengths and bond angles to quantify the variability in each of these parameters. Correlations between the bond lengths and bond angles may also be looked at to study, for example, if longer \ch{C-O} bond lengths correspond to longer \ch{C-S} bond lengths, or if more bent geometries tend to have longer bond lengths. To visualize this relationship in figure \ref{fig:OCS2227fsMOGeometryPairs} we utilize a scatterplot matrix.
 
 \begin{figure}
   \centering
