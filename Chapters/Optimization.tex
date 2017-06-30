@@ -82,7 +82,7 @@ and is always a convex problem as the dual function $g(\lambda, \nu)$ is always 
 
 If the optimal value of the dual problem $d^\star$ and of the primal problem $p^\star$ are equal, $d^\star = p^\star$, then we say that \emph{strong duality} holds and the \emph{optimal duality gap} is zero, $d^\star - p^\star = 0$. Otherwise $d^\star \le p^\star$ and we say that \emph{weak duality} holds.
 
-\subsection{Optimality conditions}
+\subsection{Optimality conditions} \label{ssec:KKT}
 It will be quite useful to impose conditions on what makes a feasible point an optimal point or solution for both the primal and dual problems. Denoting the optimal primal solution by $x^\star$ and the optimal value by $p^\star = f_0(x^\star)$, we already know that it must satisfy the constraints $f_i(x^\star) \ge 0$ and $h_i(x^\star) = 0$. Denoting the dual optimal by $(\lambda^\star, \nu^\star)$ we would like for $\lambda_i^\star \ge 0$ so that the dual function provides a lower bound on $p^\star$. 
 
 % TODO: Complementary slackness
@@ -172,18 +172,30 @@ To find degenerate geometries and ensure that we have found geometries correspon
 As we may have many measurements to reconstruct, we may want to make use of all available processor cores when running on a personal computer and we especially want to make full use of each core when running on a supercomputer cluster, so the measurements are iterated over using a \emph{parallel for loop} or a \texttt{parfor} loop which executes each loop iteration on a different core. When the number of cores exceeds the number of \texttt{fmincon} runs required by \texttt{MultiStart}, this ensures that the other cores are reconstructing other geometries.
 
 \section{Reconstructions of experimental data}
-Now that we have a more sophisticated method for reconstructing geometries, we should reconstruct the same geometries we saw in section \ref{sec:degenerateGeometries} for the \ch{OCS} $(2,2,2)$ molecule.
+Now that we have a more sophisticated method for reconstructing geometries, we should reconstruct the same geometries we saw in section \ref{sec:degenerateGeometries} for the \ch{OCS} $(2,2,2)$ molecule. We will look at the process of analyzing and plotting the \ch{OCS} $(2,2,2)$ \SI{7}{\femto\s} geometries for figure \ref{fig:OCS2227fsMOGeometry} in detail.
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS2227fsMOGeometry}
   \caption[Scatter plot showing a reconstruction of the molecular geometry of \ch{OCS} following Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel.]
-  {Scatter plot showing a reconstruction of the molecular geometry of \ch{OCS} following Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. Each geometry is represented by three colored points, one for each atomic fragment; red for oxygen on the left, black for carbon in the center, and yellow for sulfur on the right. The colors were chosen to imitate the CPK coloring convention. Geometries are plotted such that the molecule's center of mass is at the origin to showcase the variance in each atomic fragment's position, and are rotated such that a vertical line bisects the \ch{O-C-S} bond angle. Bivariate kernel density estimates (KDE) with a Gaussian kernel, plotted as shaded-in contours, are used to estimate the the probability density of each atomic fragment's position (see section \ref{sec:kde} for a discussion of KDE's). Solid black lines are drawn between the peaks of each atomic fragment's kernel density estimate to illustrate the \emph{modal geometry} or most likely geometry. Along the top of the plot, univariate KDE's show the probability density of each atomic fragment's position along the $x$-axis, and the same is done for the $y$-axis along the right. The molecule is almost straight but an aspect ratio of approximately $10:1$ is employed to showcase variability in the $y$-axis.}
+  {Scatter plot showing a reconstruction of the molecular geometry of \ch{OCS} following Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. Each geometry is represented by three colored points, one for each atomic fragment; red for oxygen on the left, black for carbon in the center, and yellow for sulfur on the right. The colors were chosen to imitate the CPK coloring convention. Geometries are plotted such that the molecule's center of mass is at the origin to showcase the variance in each atomic fragment's position, and are rotated such that a vertical line bisects the \ch{O-C-S} bond angle. Bivariate kernel density estimates (KDE) with a Gaussian kernel, plotted as shaded-in contours, are used to estimate the the probability density of each atomic fragment's position (see section \ref{sec:kde} for a discussion of KDE's). Solid black lines are drawn between the peaks of each atomic fragment's kernel density estimate to illustrate the \emph{modal geometry} or most likely geometry. Along the top of the plot, univariate KDE's show the probability density of each atomic fragment's position along the $x$-axis, and the same is done for the $y$-axis along the right. The modal geometry is calculated to be $r_\mathrm{CO} = \SI{170}{\pico\m}$, $r_\mathrm{CS} = \SI{159}{\pm}$, $ \theta_\mathrm{OCS} = 173\degree$ while the average geometry of $r_\mathrm{CO} = \SI{193}{\pico\m}$, $r_\mathrm{CS} = \SI{168}{\pico\m}$, $ \theta_\mathrm{OCS} = 171\degree$ is slightly larger due to outliers. The molecule is almost straight but an aspect ratio of approximately $10:1$ is employed to showcase variability in the $y$-axis.}
   \label{fig:OCS2227fsMOGeometry}
 \end{figure}
 
+Before plotting, badly reconstructed geometries and duplicate geometries are filtered out. A badly reconstructed geometry satisfy one of three criteria. (1) It does not satisfy the KKT optimality conditions from section \ref{ssec:KKT} in which case the optimization algorithm is said to not have converged and \texttt{MultiStart} assigns such a geometry with an exit flag of $1$ making it easy to filter out such geometries. (2) It produces momentum vectors with a high absolute error when compared to the measured momentum vectors. We choose a threshold of $10^{-50}$ above which we say that the geometry is not precise enough to be a good reconstruction. The vast majority of reconstructions have significantly lower error and in general, geometries with a high error do not satisfy (1) either. (3) It lies very close to the box constraints (within $0.01$) that form our cuboid of physically realistic geometries. This usually indicates that the optimal geometry lies outside the constraints. Such bad geometries tend to also satisfy (1) and (2), but some redundancy is desirable to find all badly reconstructed geometries.
+
+For our reconstruction, we used \texttt{MultiStart} with $50$ runs, which in hindsight was quite excessive. Out of 1,285 sets of measured momentum vectors, we attempted to reconstruct each 50 times, recovering 53,648 geometries in total. 50,615 represented duplicate geometries leaving us with 3,033 unique reconstructed geometries. 1,816 had an exit flag of 1 indicating a bad geometry (a non-optimal solution). Zero geometries with high error were found, having all been found with an exit flag of 1. Then a further 91 geometries were found very close to the box constraints. Filtering out these 1,816 + 91 = 1,907 bad geometries, we are left with 1,126 good reconstructed geometries. 1,072 measurements were mapped to a single geometry, 18 measurements to two distinct degenerate geometries, and 6 to three distinct degenerate geometries. This corresponds to 2\% of reconstructed geometries containing degeneracies. 1,096 measurements were successfully reconstructed, giving an 85\% success rate.
+
+The good 7 fs geometries are all plotted in figure \ref{fig:OCS2227fsMOGeometry} and the others are tabulated in appendix \ref{appx:supplementaryFigures}. Reconstruction statistics for each is tabulated in table \ref{table:MOSuccess}. The modal and average geometries of for each pulse length up to 100 fs are tabulated in table \ref{table:MOGeometries}. The 200 fs data was not analyzed as the molecule seemed to have stretched way too much for the reconstruction to seem trustworthy.
+
 \subsection{Comparision with the lookup table}
-Qualitatively not very different.
+Comparing figures \ref{fig:OCS2227fsLTGeometry} and \ref{fig:OCS2227fsMOGeometry} we do not see much qualitative difference between the two. Figure \ref{fig:OCS2227fsMOGeometry} does have a greater number of reconstructions and data points. This is due to both the higher success rate (85\% versus 73\%) and since 500 more measurements were found since the lookup table was tested. Degenerate geometries contribute a small amount as well. The atomic positions exhibit greater variability in their positions, which may be because the optimization routine is able to reconstruct more extreme geometries than the lookup table could and with greater precision. 
+
+The modal and average geometries of the two are very similar.
+
+While the overall geometry is not much different, the absolute errors on each geometry are much smaller. The lookup table produces geometries with absolute errors on the order of $10^{-48}$ at best due to its low resolution but the optimization routine here finds geometries with errors on the order of $10^{-59} - 10^{-54}$, corresponding to an extra 3-4 decimal places of accuracy on the molecular parameters.
+
+Some degenerate geometries.
 
 \subsection{Investigating individual reconstructions}
 While figure \ref{fig:OCS2227fsMOGeometry} gives a good intuitive image of what a molecular geometry looks like, it would be interesting to see a distribution of bond lengths and bond angles and quantify the variable in each of these parameters. We could also look at correlations between the bond lengths and bond angles and see, for example, if longer \ch{C-O} bond lengths correspond to longer \ch{C-S} bond lengths, or if more bent geometries tend to have longer bond lengths. To visualize this relationship in figure \ref{fig:OCS2227fsMOGeometryPairs} we utilize a scatterplot matrix as we did for figure \ref{fig:OCS2227fsMomentum}.
@@ -219,7 +231,7 @@ While the optimization routine recovered very precise geometries whose post-expl
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS222DegeneracyMap}
   \caption[Mapping between degenerate geometries for the \ch{OCS} $(2,2,2)$ molecule.]
-  {Mapping between degenerate geometries for the \ch{OCS} $(2,2,2)$ molecule. The Coulomb explosion of $1000$ uniformly distributed geometries within a cube in phase space described by $\SI{100}{\pico\meter} \le r_\mathrm{CO}, r_\mathrm{CS} \le \SI{500}{\pico\meter}$ and $\SI{140}{\deg} \le \theta \le \SI{180}{\deg}$ was simulated and then reconstructed using the momentum vectors of the atomic fragments that resulted from the simulations. If the reconstructed geometry matched the original geometry exactly, then no arrow is plotted. However, an arrow is plotted from the original expected geometry to the recovered geometry if it represented a degenerate geometry. Arrows small enough that they resemble points indicate a slight numerical difference between the expected geometry and the reconstructed geometry, but do not neccessarilly represent a degenerate geometry.}
+  {Mapping between degenerate geometries for the \ch{OCS} $(2,2,2)$ molecule. The Coulomb explosion of (a) $1,000 \; (10^3)$ and (b) $8,000 \; (20^3)$ uniformly distributed geometries within a cuboid in phase space described by $\SI{100}{\pico\meter} \le r_\mathrm{CO}, r_\mathrm{CS} \le \SI{500}{\pico\meter}$ and $\SI{140}{\deg} \le \theta \le \SI{180}{\deg}$ was simulated and then reconstructed using the momentum vectors of the atomic fragments that resulted from the simulations. If the reconstructed geometry matched the original geometry exactly, then no arrow is plotted. However, an (a) arrow or (b) line is plotted from the original expected geometry to the recovered geometry if it represented a degenerate geometry. Arrows and lines small enough that they resemble points indicate a slight numerical difference between the expected geometry and the reconstructed geometry, and do not neccessarily represent a degenerate geometry.}
   \label{fig:OCS222DegeneracyMapSD}
 \end{figure}
 
@@ -246,8 +258,14 @@ Interestingly, we find that we recover degenerate geometries approximately $5\%$
 We considered whether these degeneracies could arise due to our choice of momentum convention in section \ref{sec:conventions} however our convention simply rotates the three momentum vectors such that the carbon's momentum vector lies along the $+x$-axis and all three momentum vectors lie in a plane.
 
 \section{Conclusions}
-\emph{The importance of covariances and joint distributions}---
+\emph{Geometries may be reconstructed quickly and precisely using constrained nonlinear optimization}---
 
-\emph{Geometry reconstruction is highly sensitive to uncertainty in the momentum vectors}---
+\subsection{Lessons learnt}
+\emph{Individual reconstructed geometries must be investigated}--- \\
 
-\subsection{Future directions}
+\subsection{Future directions}\noindent
+\emph{Regions in phase space containing degenerate geometries make geometry reconstruction more difficult}---
+\emph{Reconstruction of larger molecules}--- \\
+
+\noindent
+\emph{More efficient optimization}---
