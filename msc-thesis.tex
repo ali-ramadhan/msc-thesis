@@ -59,7 +59,12 @@
 \include{Chapters/UncertaintyQuantification}
 \include{Chapters/Conclusion}
 
-% TODO: Move appendices behind bibliography to fit UW guidelines?
+% Small caps for author names.
+% Moved here so it only applied to the actual bibliography, not the main text.
+\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}}
+
+\include{FrontBackmatter/Bibliography}
+
 \appendix
 %\renewcommand{\thechapter}{\alph{chapter}}
 \cleardoublepage
@@ -68,17 +73,8 @@
 \include{Appendices/CodeListings}
 \include{Appendices/Colophon}
 
-% Small caps for author names.
-% Moved here so it only applied to the actual bibliography, not the main text.
-\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}}
-
 %\cleardoublepage
-\include{FrontBackmatter/Bibliography}
-%\cleardoublepage\include{FrontBackmatter/Declaration}
-%\cleardoublepage\include{FrontBackmatter/Colophon}
-
-%\cleardoublepage
-\addcontentsline{toc}{chapter}{\textsc{index}}
-\printindex
+%\addcontentsline{toc}{chapter}{\textsc{index}}
+%\printindex
 
 \end{document}
