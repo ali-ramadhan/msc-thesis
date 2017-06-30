@@ -172,7 +172,7 @@ With the knowledge that the lookup table can be somewhat trusted, we should use 
   \centering
   \includegraphics[width=\textwidth]{Plots/OCS2227fsLTGeometry}
   \caption[Scatter plot showing the molecular geometry of \ch{OCS} following Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel.]
-  {Scatter plot showing the molecular geometry of \ch{OCS} following Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. Each geometry is represented by three colored points, one for each atomic fragment; red for oxygen on the left, black for carbon in the center, and yellow for sulfur on the right. The colors were chosen to imitate the CPK coloring convention. Geometries are plotted such that the molecule's center of mass is at the origin to showcase the variance in each atomic fragment's position, and are rotated such that a vertical line bisects the \ch{O-C-S} bond angle. Bivariate kernel density estimates (with a Gaussian kernel), plotted as shaded-in contours, are used to estimate the the probability density of each atomic fragment's position. Solid black lines are drawn between the peaks of each atomic fragment's kernel density estimate to illustrate the \emph{modal geometry} or most likely geometry. Along the top of the plot, marginal distributions show the probability density of each atomic fragment's position along the $x$-axis and the same is done for the $y$-axis along the right. The modal geometry is calculated to be $r_\mathrm{CO} = \SI{1.32}{\angstrom}$, $r_\mathrm{CS} = \SI{1.26}{\angstrom}$, $ \theta_\mathrm{OCS} = 172.7\degree$ while the average geometry of $r_\mathrm{CO} = \SI{1.39}{\angstrom}$, $r_\mathrm{CS} = \SI{1.27}{\angstrom}$, $ \theta_\mathrm{OCS} = 171.6\degree$ is slightly larger due to outliers. The molecule is almost straight but an aspect ratio of approximately $12:1$ is employed to showcase variability in the $y$-axis. In chapter \ref{ch:optimization} we will see that plotting geometries in this manner, while intuitive and satisfying, can be misleading.}
+  {Scatter plot showing the molecular geometry of \ch{OCS} following Coulomb explosion by a \SI{7}{\fs} laser pulse for the $(2,2,2)$ fragmentation channel. Each geometry is represented by three colored points, one for each atomic fragment; red for oxygen on the left, black for carbon in the center, and yellow for sulfur on the right. The colors were chosen to imitate the CPK coloring convention. Geometries are plotted such that the molecule's center of mass is at the origin to showcase the variance in each atomic fragment's position, and are rotated such that a vertical line bisects the \ch{O-C-S} bond angle. Bivariate kernel density estimates (with a Gaussian kernel), plotted as shaded-in contours, are used to estimate the the probability density of each atomic fragment's position. Solid black lines are drawn between the peaks of each atomic fragment's kernel density estimate to illustrate the \emph{modal geometry} or most likely geometry. Along the top of the plot, marginal distributions show the probability density of each atomic fragment's position along the $x$-axis and the same is done for the $y$-axis along the right. The modal geometry is calculated to be $r_\mathrm{CO} = \SI{1.74}{\angstrom}$, $r_\mathrm{CS} = \SI{1.59}{\angstrom}$, $ \theta_\mathrm{OCS} = 172.7\degree$ while the average geometry of $r_\mathrm{CO} = \SI{1.93}{\angstrom}$, $r_\mathrm{CS} = \SI{1.61}{\angstrom}$, $ \theta_\mathrm{OCS} = 171.6\degree$ is slightly larger due to outliers. The molecule is almost straight but an aspect ratio of approximately $12:1$ is employed to showcase variability in the $y$-axis. In chapter \ref{ch:optimization} we will see that plotting geometries in this manner, while intuitive and satisfying, can be misleading.}
   \label{fig:OCS2227fsLTGeometry}
 \end{figure}
 
@@ -218,11 +218,11 @@ Of particular interest might be the average and modal (most likely) geometries r
     & \multicolumn{3}{c}{Modal geometry} & \multicolumn{3}{c}{Average geometry} \\
     Pulse width (fs) & $r_\mathrm{CO}$ & $r_\mathrm{CS}$ & $\theta_\mathrm{OCS}$ & $r_\mathrm{CO}$ & $r_\mathrm{CS}$ & $\theta_\mathrm{OCS}$ \\
     \midrule
-    7 & 1.32 & 1.26 & 172.7 & 1.39 & 1.27 & 171.6 \\
-    30 & 1.53 & 1.32 & 171.7 & 1.58 & 1.43 & 170.3 \\
-    60 & 1.56 & 1.40 & 171.4 & 1.60 & 1.47 & 170.4 \\
-    100 & 1.59 & 1.47 & 170.6 & 1.65 & 1.57 & 169.12 \\
-    200 & 1.78 & 1.49 & 171.4 & 1.76 & 1.65 & 163.2 \\
+    7 & 1.74 & 1.59 & 173 & 1.93 & 1.61 & 172 \\
+    30 & 2.34 & 1.74 & 172 & 2.50 & 2.04 & 170 \\
+    60 & 2.43 & 1.96 & 171 & 2.56 & 2.16 & 170 \\
+    100 & 2.52 & 2.16 & 171 & 2.72 & 2.46 & 169 \\
+    200 & 3.17 & 2.22 & 171 & 3.10 & 2.72 & 163 \\
     \bottomrule
   \end{tabularx}
   \caption[Average and modal geometries reconstructed using a lookup table.]
