@@ -36,7 +36,7 @@ Optimization problems can be classified based on the nature of the objective fun
 
 \emph{Nonlinear optimization} describes the class of problems where the objective or constraint functions are not linear, but not known to be convex. Unfortunately there are no effective algorithms for solving nonlinear problems in general but there are a number of approaches that may prove fruitful. These include the interior-point method we use and sequential quadratic programming. \citet{Sun15} provide an expository article on ``when nonconvex problem are not scary''.
 
-Unfortunately our problem falls under the umbrella of nonlinear problems. We can describe our objective function as $f_0(x) = |p(x)-p_\textrm{measured}|^2$ where $p(x)$ is the momentum vectors produced following Coulomb explosion of a molecular with structure $x$, and the inequality constraints $f_i(x) \leq 0$ encapsulate the box constraints that limit the geometries recovered to physically reasonable values. For a triatomic molecule, $x = (r_{12}, r_{23}, \theta)$ may be used, for example.
+Unfortunately the problem of geometry reconstruction falls under the category of nonlinear problems. We can describe our objective function as $f_0(x) = |p(x)-p_\textrm{measured}|^2$ where $p(x)$ is the momentum vectors produced following Coulomb explosion of a molecular with structure $x$, and the inequality constraints $f_i(x) \leq 0$ encapsulate the box constraints that limit the geometries recovered to physically reasonable values. For a triatomic molecule, $x = (r_{12}, r_{23}, \theta)$ may be used, for example.
 
 % TODO: Explain: objective function looks like least squares. How is this not convex?
 
@@ -101,7 +101,7 @@ h_i(x^\star) & = 0, \; & i & \in {1,\dots,p} \nonumber \\
 \nabla f_0(x^\star) + \sum_{i=1}^m \lambda_i^\star \nabla f_i(x^\star)
 + \sum_{i=1}^p \nu_i^\star \nabla h_i(x^\star) & = 0, \; & i & \in {1,\dots,m} \nonumber
 \end{align}
-which together are called the \emph{Karush-Kuhn-Tucker (KKT) conditions}. They are sometimes referred to as the first-order optimality conditions, and second-order conditions do exist.
+which together are called the \emph{Karush-Kuhn-Tucker (KKT) conditions}. They are sometimes referred to as the first-order optimality conditions, as second-order conditions do exist.
 
 \subsection{Trust regions}
 Switching gears a little bit, we'll look at a general strategy of solving optimization problem using the concept of a \emph{trust region}. When searching for an optimal solution starting from an initial point $x_0$, the idea is to create and solve an approximate optimization problem at each iterate $x_k$ with the hope that the approximation is easier to solve yet locally accurate enough to help locate the true optimal solution. The approximated is \emph{trusted} only so much, up to some radius or region boundary. A circular or spherical trust region may be used, but so can box and elliptical regions. If a sufficiently better iterate $x_{k+1}$ is not found within the trust region then the region may be shrunk in case the approximation is invalid so far from the iterate $x_k$.
