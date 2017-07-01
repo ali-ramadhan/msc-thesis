@@ -295,25 +295,25 @@ In these simulations we knew \textit{a priori} which geometry we expected to rec
   \label{fig:OCS222DegeneracyMapHDPairs}
 \end{figure}
 
-To further visualize the set of geometries we recovered, we utilize a scatterplot matrix in figure \ref{fig:OCS222DegeneracyMapHDPairs} showing the bond length and angle distributions as well as their bivariate relationships. This uses $8,000$ geometries. It is interesting to note that whenever degenerate geometries exist, the more bent geometry is found. Perhaps these more bent solutions posess a larger \emph{basin of attraction}, which may or may not be strongly dependent on the optimization algorithm employed. It might be interesting to visualize them, possibly taking a similar approach as \citet{Asenjo13} who actually employ mathematical optimization methods to determine energy minimizing molecular structures. They observe basins with rather complicated boundaries, reminiscent of the beautiful and spatially chaotic patterns produced by the magnetic pendulum.
+To further visualize the set of geometries we recovered, we utilize a scatterplot matrix in figure \ref{fig:OCS222DegeneracyMapHDPairs} showing the bond length and angle distributions for the $8,000$ geometries used for accuracy testing as well as their bivariate relationships. It is interesting to note that whenever degenerate geometries exist, the more bent geometry is found. Perhaps these more bent solutions posess a larger \emph{basin of attraction}, which may or may not be strongly dependent on the optimization algorithm employed. It might be interesting to visualize them, possibly taking a similar approach as \citet{Asenjo13} who actually employ mathematical optimization methods to determine energy minimizing molecular structures. They observe basins with rather complicated boundaries, reminiscent of the beautiful and spatially chaotic patterns produced by the magnetic pendulum.
 
-For the feasibility of geometry reconstruction, however, this result carries extra worries. Even when the measured momentum vectors can be mapped to a molecular geometry very precisely, the existance of multiple solutions corresponding to very different geometries may make it impossible to perform accurate geometry reconstructions, especially when multiple degenerate geometries represent physically realizable geometries.
+For the feasibility of geometry reconstruction, however, this result raises additional issues past the unusual bond length correlations found in the previous section. Even when the measured momentum vectors can be mapped to a molecular geometry very precisely, the existance of multiple solutions corresponding to very different geometries may make it impossible to perform accurate geometry reconstructions, especially when multiple degenerate geometries represent physically realizable geometries. Table \ref{table:lookupTableSuccess} also suggests the existence of triply degenerate geometries, which may further complicate the task of geometry reconstruction.
 
 Interestingly, we find that we recover degenerate geometries approximately $5\%$ of the time while \citet[supplementary information]{Kunitski15} report finding degenerate geometries approximately $10\%$ of the time, although they chose to disregard them for their analyses.
 
-We considered whether these degeneracies could arise due to our choice of momentum convention in section \ref{sec:conventions} however our convention simply rotates the three momentum vectors such that the carbon's momentum vector lies along the $+x$-axis and all three momentum vectors lie in a plane.
+We considered whether these degeneracies could arise due to our choice of momentum convention in section \ref{sec:conventions} however our convention simply rotates the three momentum vectors such that the carbon's momentum vector lies along the $+x$-axis and all three momentum vectors lie in a plane. The length of the momentum vectors and the relative angles between them remain unchanged, and so two different geometries producing different momentum vectors cannot result in the same set of vectors after rotation into our convention, unless they represent degenerate geometries.
 
 \section{Conclusions}
-\emph{Geometries may be reconstructed quickly and precisely using constrained nonlinear optimization}---
+\emph{Geometries may be reconstructed quickly and precisely using constrained nonlinear optimization}---This approach represents a significant improvement over the geometry reconstructions provided by the lookup table. Reconstructing a single geometry can be done in approximately one second, which is faster than the lookup table if enhanced precision is desired. Furthermore, the recovered molecular parameters are orders of magnitude more precise than those provided by the lookup table, and degenerate geometries may be found precisely.
 
-\subsection{Lessons learnt}
-\emph{Individual reconstructed geometries must be investigated}--- \\
-
-\noindent
-\emph{Regions in phase space containing degenerate geometries make geometry reconstruction more difficult}---
-
-\subsection{Future directions}
-\emph{Reconstruction of larger molecules}--- \\
-
-\noindent
-\emph{More efficient optimization}---
+%\subsection{Lessons learnt}
+%\emph{Individual reconstructed geometries must be investigated}--- \\
+%
+%\noindent
+%\emph{Regions in phase space containing degenerate geometries make geometry reconstruction more difficult}--- 
+%
+%\subsection{Future directions}
+%\emph{Reconstruction of larger molecules}--- \\
+%
+%\noindent
+%\emph{More efficient optimization}---
