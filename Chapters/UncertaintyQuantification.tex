@@ -7,13 +7,69 @@
 \hrule
 \vspace{1.5 em}
 
-\section{Quantifying the uncertainty on a reconstructed geometry}
+In the previous two chapters, we approached the task of geometry reconstruction using two approaches, the rather lookup table which seemed unable to scale up to molecules bigger than a triatomic molecule, and the more sophisticated optimization approach. We also ended on a troubling note, that our reconstructed geometries had unusual bond length correlations and that degenerate geometries can be rather numerous.
+
+In this chapter we will tackle the important task of quantifying the uncertainty on our geometry reconstructions, which surprisingly has not been done by any previous study. While seemingly unrelated, it will provide us with some resolution to the unusual bond length correlations we observed.
+
+\section{Uncertainty on a reconstructed geometry}
+We will start with a rather heuristic approach to uncertainty quantification in this section. A rigorous and more sophisticated approach relying on the framework of Bayesian inference is sketched out in section \ref{sec:uncertaintyBayesian}, and other methods of uncertainty quantification are also suggested and discussed.
+
+The question we are interested in answering is how does some amount of uncertainty on the measured momentum vectors affect the amount of uncertainty on the reconstructed geometry? We already calculated the uncertainty on the momentum vectors in section \ref{ssec:measurementUncertainty} but we cannot derive an analytic formula for the uncertainty on the molecular parameters or the atomic positions.
+
+\subsection{A heuristic approach}
+We will take a very basic approach here by generalizing a common notion in one-dimensional error analysis. If a variable $x$ carries an uncertainty $\delta x$ such that the true value of $x$ lies within some interval $[x - \delta x, x + \delta x]$ then the true value of some arbitrary monotonic scalar function of one variable $f(x)$ will lie within some interval $[f(x - \delta x), f(x + \delta x)]$. Or within
+\begin{equation}
+\left[ \min_{x \in [x-\delta x, x+\delta x]} f(x), \max_{x \in [x-\delta x, x+\delta x]} f(x) \right]
+\end{equation}
+if $f$ is not restricted to be monotonic.
+
+A higher-dimensional generalization would suggest that for some momentum vector $\mathbf{p}$ with uncertainty $\delta\mathbf{p}$ . We are intrinsically making the assumption that the molecular parameters change monotonically as the momentum components are varied.
+
+As we have $9$ momentum components we will construct $512$ ($2^9$) sets of momentum vectors that together include all the endpoints. Then attempting to reconstruct a geometry for each set of momentum vectors will ideally provide us with $512$ geometries that together give us some idea into the range of possible geometries the measurement could possibly belong to.
+
+% FIGURE X HERE
+
+We see that we get back a range of geometries. All $512$ sets of momentum vectors were successfully mapped to a unique geometry.
+
+The distributions are centered around the original geometry. However, what is surprising is the very wide range of bond lengths possible. The variability in the bond angle is not as extreme, however.
+
+The bivariate relationships are interesting and look vaugely familiar.
+
+We will use the area formed by the set of points as a quantitative measure of uncertainty. The red dotted lines indicate the convex hull of the points while the purple solid lines indicate the alpha shape of the points. We will further discuss these concepts in the next subsection.
+
+The bond length correlation seems to follow a reciprocal relationship, a strikingly similar one to the unusual one observed in the reconstructions of experimental data. This suggests that the unusual relationship we observed earlier may have simply been an artifact of having a finite amount of uncertainty in the momentum vectors.
+
+Another interesting observation from the scatter plots is the clustering of geometries in phase space. Each geometry is actually extremely close to one other so that $256$ points are visible unless the scatter plots are very closely inspected, suggesting some sort of splitting. As we picked one of two extreme values for each momentum component, each component may be responsible for one of these splittings. This suggests that some uncertainty in certain momentum components may have a much greater effect on the uncertainty of reconstructed geometries. We will investigate this effect in the next section.
+
+\subsection{Convex hulls and alpha shapes}
+To quantify the uncertainty in the geometries, we will use two useful concepts from computational geometry, namely convex hulls and alpha shapes, which allow us to assign a shape and a volume to a set of points, and thus provide an additional hueristic quantitative measure of uncertainty.
+
+The convex hull of a set of points $S$ is the set of all convex combinations of its points.
+
+The concept of an alpha shape is a generalization of the convex hull first introduced by \citet{Edelsbrunner83} for two-dimensional shapes, then for three-dimensional shapes \citep{Edelsbrunner94}. Interestingly, alpha shapes have been used to analytically compute shapes for macromolecules such proteins and estimate their molecular areas and volume \citep{Liang98}.
+
+While a very haphazard measure of uncertainty, they are much easier to employ than the uncertainty quantification framework of Bayesian inference (section \ref{sec:uncertaintyBayesian}) and will come in handy when we perform some exploratory uncertainty analysis in section \ref{sec:uncertaintyAnalysis}.
+
+We end by providing a cool figure showcasing the three-dimensional convex hull and alpha shape in molecular phase space.
+
+% figure Z here
 
 \section{Determining the sources of uncertainty}
+We saw in figure X that certain momentum components may have a much greater effect on the uncertainty on a reconstructed geometry, or that geometry reconstruction is much more sensitive to certain momentum components than others.
 
-\section{Exploratory uncertainty analysis}
+We will attempt to explore this effect and pinpoint the momentum components responsible for introducing the most and the least uncertainty. To do this for the oxygen's $p_x$ component for example, we will look at the $256$ sets of momentum vectors that represent the extreme end and plot their position in the $r_\mathrm{CO}-r_\mathrm{CS}$ plane in phase space. Doing this for each component, we should have $9$ plots in total.
 
-\section{Uncertainty quantification using Bayesian inference}
+% figure Y here
+
+We definitely see that some components are more responsible than others. For example, the A component seems largely responsible for variability in $r_\mathrm{CO}$ and the B component seems responsible for variability in the $r_\mathrm{CS}$ component. Interestingly, removing the C component seems to produce a plot almost exactly like the one in figure X, suggesting that uncertainty in C introduces a negligible amount of uncertainty in the reconstructed geometries.
+
+This result has implications for the design and operation of Coulomb explosion imaging experiments, especially if the determination of molecular structure is a concern. The CEI apparatus could be built with the aim of minimizing certain momentum components. The laser's polarization may also have an effect.
+
+The exact dependence observed in figure Y may be due to experimental considerations. Or choice of momentum convention?
+
+\section{Exploratory uncertainty analysis} \label{sec:uncertaintyAnalysis}
+
+\section{Uncertainty quantification using Bayesian inference} \label{sec:uncertaintyBayesian}
 % MMMGRUBS alternative idea: Time evolve the system backwards from the measurement using a Kalman filter to keep track of the error in the geometry. My guess: The magnitude of the error will be much larger than the physical size of the molecule.
 
 \section{Conclusions}
