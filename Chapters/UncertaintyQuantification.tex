@@ -17,21 +17,45 @@ We will start with a rather heuristic approach to uncertainty quantification in 
 The question we are interested in answering is how does some amount of uncertainty on the measured momentum vectors affect the amount of uncertainty on the reconstructed geometry? We already calculated the uncertainty on the momentum vectors in section \ref{ssec:measurementUncertainty} but we cannot derive an analytic formula for the uncertainty on the molecular parameters or the atomic positions.
 
 \subsection{A heuristic approach}
-We will take a very basic approach here by generalizing a common notion in one-dimensional error analysis. If a variable $x$ carries an uncertainty $\delta x$ such that the true value of $x$ lies within some interval $[x - \delta x, x + \delta x]$ then the true value of some arbitrary monotonic scalar function of one variable $f(x)$ will lie within some interval $[f(x - \delta x), f(x + \delta x)]$. Or within
+We will take a very basic approach here by generalizing a common notion in one-dimensional error analysis. If a particular measurement $\bar{x}$ of a variable $x$ carries some uncertainty $\epsilon$ such that the true value of $\bar{x}$ lies within some interval $\bar{x} - \epsilon \le \bar{x} \le \bar{x} + \epsilon$ then the true value of some arbitrary monotonic scalar function $f(x)$ that is dependent on the value of measurement will lie within some interval
 \begin{equation}
-\left[ \min_{x \in [x-\delta x, x+\delta x]} f(x), \max_{x \in [x-\delta x, x+\delta x]} f(x) \right]
+  f(\bar{x} - \epsilon) \le f(\bar{x}) \le f(\bar{x} + \epsilon)
 \end{equation}
-if $f$ is not restricted to be monotonic.
 
-A higher-dimensional generalization would suggest that for some momentum vector $\mathbf{p}$ with uncertainty $\delta\mathbf{p}$ . We are intrinsically making the assumption that the molecular parameters change monotonically as the momentum components are varied.
+If we relax the condition that $f$ be a monotonic function, then as the true value of $f(\bar{x})$ can take on any value that $f$ attains within the interval $\bar{x} - \epsilon \le \bar{x} \le \bar{x} + \epsilon$, we can say very generally that it lies between
+\begin{equation}
+  \min_{\displaystyle \bar{x} - \epsilon \le x \le \bar{x} + \epsilon} \; f(x)
+  \le f(\bar{x})
+  \le \max_{\displaystyle \bar{x} - \epsilon \le x \le \bar{x} + \epsilon} \; f(x)
+\end{equation}
+which may not yield a useful interval especially in the presence of discontinuities or divergences. However, for finite-valued and well-behaved functions, it may provide some overestimate of the amount of uncertainty in $f(\bar{x})$. This could be particularly accurate for small neighbourhoods about $\bar{x}$ and for slowly-varying functions $f$. As geometry reconstruction produces reasonable values for the molecular parameters, we will use this idea to quantify the uncertainty on a geometry's reconstruction.
 
-As we have $9$ momentum components we will construct $512$ ($2^9$) sets of momentum vectors that together include all the endpoints. Then attempting to reconstruct a geometry for each set of momentum vectors will ideally provide us with $512$ geometries that together give us some idea into the range of possible geometries the measurement could possibly belong to.
+Before Generalizing this idea to form a higher-dimensional analogue, both in the number of variables $x_i$ and the dimensionality of the function $f(\mathbf{x})$ it will be helpful to look at this idea for the case of measurement of a vector of two variables $\bar{\mathbf{x}} = (\bar{x}_1, \bar{x}_2)$ with an uncertainty described by the vector $\bm{\epsilon} = (\epsilon_1, \epsilon_2)$ and error propagation through a vector-valued function of two variables $\mathbf{f}(\mathbf{x}) = (f_1, f_2)$. We will treat the vector-valued function as non-parametrix or as a ``black box'' as the function mapping momentum measurements to geometries cannot be parameterized or given in any analytical form. In this case the true value of $\bar{\mathbf{x}}$ lies within a box described by $\bar{x}_1 - \epsilon_1 \le \bar{x}_1 \le \bar{x}_1 + \epsilon_1$ and $\bar{x}_2 - \epsilon_2 \le \bar{x}_2 \le \bar{x}_2 + \epsilon_2$. If both $f_1$ and $f_2$ both depended monotonically on the values of $x_1$ and $x_2$ then determining the range of possible values of $\mathbf{f}(\bar{x})$ would be simple. Evaluating $\mathbf{f}(x)$ for $\mathbf{x} \in \mathbf{x}_\mathrm{ep} = \lbrace (\bar{x}_1 \pm \epsilon_1, \bar{x}_2 \pm \epsilon_2) \rbrace$, where $\mathbf{x}_\mathrm{ep}$ denotes the set of $x$ endpoints, would produce $4$ point in the $f_1f_2$ plane, whose set we denote by $\mathbf{f}_\mathrm{ep}$ whose rectangular boundary encloses the possible values of $f(\bar{x})$. Of course, if $f_1$ and $f_2$ do not depend monotonically on the values of $x_1$ and $x_2$, then values of $x_1$, $x_2$ between the endpoints may produce values of $f_1$,$f_2$ that lie outside the rectangular boundary. A further heuristic would be to not only look at the endpoints, but also a set of uniformally distributed points in the $x_1x_2$ plane. This map a rectangle from the $x_1x_2$ plane to some arbitrary region in the $f_1f_2$ plane and would produce a larger number of points, whose boundary is likely to not be rectangular anymore. In the case of a more complicated boundary, then the boundary may be described by the set of convex combinations of the points in $\mathbf{f}_\mathrm{ep}$,
+\begin{equation}
+  \displaystyle
+  \left\lbrace\left.
+  \sum_{\mathbf{f} \in \mathbf{f_i}_\mathrm{ep}}^{|\mathbf{f}_\mathrm{ep}|}
+  \alpha_i\mathbf{f_i}
+  \right| \alpha_i \ge 0 \; \mathrm{and} \;
+  \sum_i^{|\mathbf{f}_\mathrm{ep}|} \alpha_i = 1
+  \right\rbrace
+\end{equation}
+which is the convex hull of the set of points contained in $\mathbf{f}_\mathrm{ep}$, discussed further in the next subsection.
 
-% FIGURE X HERE
+Extending this idea to our problem of geometry reconstruction, we have $9$ measurements $\bar{\mathbf{p}} = (\bar{p}_1, \dots, \bar{p}_9)$ with uncertainty $\bm{\epsilon} = (\epsilon_1, \dots, \epsilon_9)$ and we are interested in the range of possible geometries as produced by $\mathbf{g}(\mathbf{p}) = (r_{12}, r_{23}, \theta)$. The possible values of the momentum components are contained within a $9$-dimensional hyperrectangle or box in momentum space, and we would like to obtain a $3$-dimensional region in phase space describing the set of possible geometries the measurement could correspond to. Generating a set of $N$ uniformally distributed points within the $9$-dimensional box would produce $N^9$ sets of momentum vectors, each of which we would have to reconstruct. Thus we will start by looking at the set of endpoints only, which contains $512$ ($2^9$) sets of momentum vectors. Then attempting to reconstruct a geometry for each set of momentum vectors will ideally provide us with $512$ geometries that together give us some idea into the range of possible geometries the measurement could possibly belong to. By only reconstructing the endpoints of our box in momentum space, we may be underestimating the range of possible geometries.
 
-We see that we get back a range of geometries. All $512$ sets of momentum vectors were successfully mapped to a unique geometry.
+% % r_CO=131.677 pm, r_CS=187.161 pm, theta=169.42 deg
+To carry out this idea for geometry reconstruction, we chose a representative geometry, $(r_\mathrm{CO}, r_\mathrm{CS}, \theta) = (\SI{130}{\pico\m}, \SI{190}{\pico\m}, \SI{169}{\degree})$ that does not lie in any of the degenerate regions discussed in figure \ref{fig:OCS222DegeneracyMaps} to avoid having to account for degenerate eometries. We placed an uncertainty of $5\%$ on each momentum component such that $\bm{\epsilon} = 0.05\mathbf{p}$, producing $512$ sets of momentum vectors corresponding to the corners of the $9$-dimensional box in momentum space. Reconstructing a geometry for each set of momentum vectors, we obtain $512$ geometries. The bond length and bond angle distributions are plotted as well as the bivariate relationships between the three parameters are plotted in figure \ref{fig:OCS222Uncertainty}. All $512$ sets of momentum vectors were successfully mapped to a unique geometry.
 
-The distributions are centered around the original geometry. However, what is surprising is the very wide range of bond lengths possible. The variability in the bond angle is not as extreme, however.
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCS222Exploration1_5percent}
+  \caption[K lol.]
+  {Each reconstructed geometry is plotted as an open blue circle. The boundary of the set of reconstructed geometries is calculated using two methods. The dotted red line denotes the convex hull and the solid purple line, the alpha shape of the set of points.}
+  \label{fig:OCS222Uncertainty}
+\end{figure}
+
+We immediately see that we a strikingly wide range of geometries are reconstructed. Inspection suggests that the bond length and bond angle distributions roughly form a Gaussian distribution about the parameters of the geometry reconstructed without introducing any uncertainty. The distributions encompass a wide range of possible bond lengths, \SI{80}{\pico\m} for the \ch{C-O} bond and \SI{175}{\pico\m} for the \ch{C-S} bond. The variability in the bond angle is not as extreme, encompassing a \SI{6}{\degree} range of possible bond angles. It is quite shocking that a small uncertainty of only $5\%$ could correspond to such a large variety of reconstructed geometries.
 
 The bivariate relationships are interesting and look vaugely familiar.
 
@@ -84,6 +108,8 @@ The heuristic uncertainty quantification performed in the previous three section
 % Philosophy? objective vs. subjective Bayes, frequentist vs. Bayesian, etc.
 The Bayesian point of view provides a more natural and intuitive way of thinking about uncertainty in the physical sciences.
 
+% Why Bayesian inference is perfect for inverse problems.
+
 Bayesian statistics actually predates the much more commonly taught frequentist statistical methods but has made a strong resurgence in recent years due to rising computational abilities and more recently, available software for parameter estimation in statistical models using Markov chain Monte Carlo.
 
 \subsection{Elementary concepts}
@@ -98,6 +124,8 @@ Performing the multi-dimensional integral can be very difficult. The integral is
 
 \subsection{Other Bayesian methods}
 Uncertainty quantification for inverse problems in the Bayesian framework.
+
+% Tikhonov regularization? Actually Bayesian inversion is a great alternative?
 
 % MMMGRUBS alternative idea: Time evolve the system backwards from the measurement using a Kalman filter to keep track of the error in the geometry. My guess: The magnitude of the error will be much larger than the physical size of the molecule.
 
