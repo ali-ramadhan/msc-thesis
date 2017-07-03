@@ -44,11 +44,15 @@ Another interesting observation from the scatter plots is the clustering of geom
 \subsection{Convex hulls and alpha shapes}
 To quantify the uncertainty in the geometries, we will use two useful concepts from computational geometry, namely convex hulls and alpha shapes, which allow us to assign a shape and a volume to a set of points, and thus provide an additional hueristic quantitative measure of uncertainty.
 
-The convex hull of a set of points $S$ is the set of all convex combinations of its points.
+The convex hull of a set of points $S$ is the set of all convex combinations of its points. An analogy would be to stretch a rubber band around the set of points and let it rest, its final shape being the convex hull.
 
-The concept of an alpha shape is a generalization of the convex hull first introduced by \citet{Edelsbrunner83} for two-dimensional shapes, then for three-dimensional shapes \citep{Edelsbrunner94}. Interestingly, alpha shapes have been used to analytically compute shapes for macromolecules such proteins and estimate their molecular areas and volume \citep{Liang98}.
+Many algorithms exist to calculate the convex hull of a set of points, especially in 2 or 3 dimensions.
 
-While a very haphazard measure of uncertainty, they are much easier to employ than the uncertainty quantification framework of Bayesian inference (section \ref{sec:uncertaintyBayesian}) and will come in handy when we perform some exploratory uncertainty analysis in section \ref{sec:uncertaintyAnalysis}.
+The concept of an alpha shape is a generalization of the convex hull first introduced by \citet{Edelsbrunner83} for two-dimensional shapes, then for three-dimensional shapes \citep{Edelsbrunner94}. Interestingly, alpha shapes have been used to analytically compute shapes for macromolecules such proteins and estimate their molecular areas and volume \citep{Liang98}. An interesting analogy of alpha shapes uses ice cream scoopers.
+
+The nice thing about convex hulls is that they are unique for each set of points, while multiple distinct alpha shapes exist. This is a desirable property of alpha shapes as there is no formal concept of shape so no algorithm can determine the correct shape for a set of points. However, the concept allows for an $\alpha$ to be picked that produces the most desirable shape. 
+
+While a very haphazard measure of uncertainty, they are much easier to employ than the sophisticated uncertainty quantification framework of Bayesian inference (section \ref{sec:uncertaintyBayesian}) and will come in handy when we perform some exploratory uncertainty analysis in section \ref{sec:uncertaintyAnalysis}. Our needs are rather basic at this point.
 
 We end by providing a cool figure showcasing the three-dimensional convex hull and alpha shape in molecular phase space.
 
@@ -65,11 +69,36 @@ We definitely see that some components are more responsible than others. For exa
 
 This result has implications for the design and operation of Coulomb explosion imaging experiments, especially if the determination of molecular structure is a concern. The CEI apparatus could be built with the aim of minimizing certain momentum components. The laser's polarization may also have an effect.
 
-The exact dependence observed in figure Y may be due to experimental considerations. Or choice of momentum convention?
+The exact dependence observed in figure Y may be due to experimental considerations. Or choice of momentum convention? Further investigation is certainly warranted.
 
 \section{Exploratory uncertainty analysis} \label{sec:uncertaintyAnalysis}
+Let's put a range of uncertainties on the momentum vectors and observe how much uncertainty we have on the reconstructed geometries. We will use the widths of the distributions and the convex hull and alpha shape areas and volumes to quantify the uncertainty with the aim of finding how uncertainty in geometry reconstruction varies as a function of uncertainty in the momentum vectors.
+
+% Various figures here
+
+Interestingly, we are always able to reconstruct the geometry.
 
 \section{Uncertainty quantification using Bayesian inference} \label{sec:uncertaintyBayesian}
+The heuristic uncertainty quantification performed in the previous three sections has provided some significant insights on the problem of geometry reconstruction, and emphasized the large effect that measurement uncertainty must have played in our reconstruction of experimental data. This emphasizes the importance of tackling the task of uncertainty quantification in a rigorous and sophisticated manner, in which case the Bayesian inference framework provides the answer.
+
+% Philosophy? objective vs. subjective Bayes, frequentist vs. Bayesian, etc.
+The Bayesian point of view provides a more natural and intuitive way of thinking about uncertainty in the physical sciences.
+
+Bayesian statistics actually predates the much more commonly taught frequentist statistical methods but has made a strong resurgence in recent years due to rising computational abilities and more recently, available software for parameter estimation in statistical models using Markov chain Monte Carlo.
+
+\subsection{Elementary concepts}
+% Ideas?: credibility, models, parameters, distributions.
+% Theory?: Bayes Theorem, prior predictive, posterior, posterior mode (read up).
+% Bayes’ theorem: we just need to do a multi-dimensional integral
+
+\subsection{Markov chain Monte Carlo}
+% The basic idea
+Performing the multi-dimensional integral can be very difficult. The integral is usually approximated using Markov Chain Monte Carlo.
+% Markov Chain Monte Carlo: transition kernel, checking for convergence, Metropolis-Hastings algorithm, Gibbs Sampling, Hamiltonian MCMC
+
+\subsection{Other Bayesian methods}
+Uncertainty quantification for inverse problems in the Bayesian framework.
+
 % MMMGRUBS alternative idea: Time evolve the system backwards from the measurement using a Kalman filter to keep track of the error in the geometry. My guess: The magnitude of the error will be much larger than the physical size of the molecule.
 
 \section{Conclusions}
