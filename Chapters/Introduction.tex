@@ -14,6 +14,14 @@ The scope of this imaging method is to make measurements of the geometries of si
 
 The method involves shooting a molecule in a vacuum chamber with two laser pulses, a pump pulse followed by a probe pulse after some time delay $\tau \ge 0$. The pump causes the molecule to undergo some change, then the more intense probe pulse strips off enough electrons from the molecule such that the molecule's individual atoms separate and repel each other ``explosively'' due to Coulomb repulsion. The further apart the atoms are repelled, the weaker the repulsion and eventually every atom reaches an asymptotic state of constant velocity. This all takes place in a constant electric field that accelerates all the atoms towards a time and position-sensitive detector. The detector can tell us how much time each atom took to reach it, and the position where the atom hit it. From this information, the atom’s (asymptotic) momentum can be calculated and then provided we know how to simulate the experiment in reverse, we can determine the initial geometry of the molecule just before it was hit by the pump pulse. By picking different values of $\tau$ and repeating the experiment many times for each $\tau$ we get a ``frame'' of the molecule's geometry at each $\tau$ , which may be placed in sequence to form a ``molecular movie'' of the change induced by the pump pulse.
 
+``CEI is an effective and straightforward tool to retrieve molecular structural properties, requiring no a prior assumptions about the molecule'' \citep{Xu16}. 
+
+``Thus, simultaneous determination of the final fragments velocity vectors from each single molecule, which is what CEI detectors do,  resolves the 3D initial conformation. Collecting conformations from an  ensemble of molecules unravels the density function of conformations of that  ensemble, conveying the detailed correlated variations within the molecular  structure''  \citep{Vager01}.
+
+``we find a three-dimensional structure that reproduces the measured fragment velocities'' \citep{Legare05structure}.
+
+``Coulomb explosion provides a direct access to the instantaneous structure of the target molecule'' \citep{Matsuda14}.
+
 \section{Research problem}
 Determining these geometries is a computationally difficult task. Almost every study dodges the problem entirely and relies on the momentum vectors to infer information about the geometries. The momentum vectors carry a lot of information but that is certainly not the structural imaging promised by Coulomb explosion imaging that is talked about. It also does not capture all the dynamics possible. When geometry reconstruction is done, it is usually done in a hand wavy way that sidesteps the nuances of the problem and ignores uncertainty, rendering it unreliable. I am working on a rigorous method to perform the geometry reconstruction that may be used (and improved) by my group and others.
 
