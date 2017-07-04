@@ -111,11 +111,17 @@ We end by providing a cool figure showcasing the three-dimensional convex hull a
 % figure Z here
 
 \section{Determining the sources of uncertainty}
-We saw in figure X that certain momentum components may have a much greater effect on the uncertainty on a reconstructed geometry, or that geometry reconstruction is much more sensitive to certain momentum components than others.
+We saw in figures \ref{fig:OCS222Uncertainty} that certain momentum components may have a greater effect on the uncertainty on a reconstructed geometry, or that geometry reconstruction is more sensitive to changes in certain momentum components over others.
 
-We will attempt to explore this effect and pinpoint the momentum components responsible for introducing the most and the least uncertainty. To do this for the oxygen's $p_x$ component for example, we will look at the $256$ sets of momentum vectors that represent the extreme end and plot their position in the $r_\mathrm{CO}-r_\mathrm{CS}$ plane in phase space. Doing this for each component, we should have $9$ plots in total.
+We will attempt to explore this effect and pinpoint the momentum components responsible for introducing the most (and the least) uncertainty in the reconstructed geometries. To do this for the oxygen's $p_x$ component for example, we will look at the $256$ geometries reconstructed using the $256$ sets of momentum vectors where $5\%$ was added to the oxygen's $p_x$ component, and plot their position in phase space in the $r_\mathrm{CO}-r_\mathrm{CS}$ plane. Doing this for each component, we produce $9$ plots in total, one for each momentum component, as shown in figure \ref{fig:OCS222DeterminingSource}.
 
-% figure Y here
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCS222Exploration2}
+  \caption[A heuristic estimate on the range of possible \ch{OCS} $(2,2,2)$ geometries that may be reconstructed assuming a true geometry of $(r_\mathrm{CO}, r_\mathrm{CS}, \theta) = (\SI{130}{\pico\m}, \SI{190}{\pico\m}, \SI{169}{\degree})$ and $5\%$ uncertainty on the measured momentum vector components except for the single component indicated in the title of each scatter plot.]
+  {A heuristic estimate on the range of possible \ch{OCS} $(2,2,2)$ geometries that may be reconstructed assuming a true geometry of $(r_\mathrm{CO}, r_\mathrm{CS}, \theta) = (\SI{130}{\pico\m}, \SI{190}{\pico\m}, \SI{169}{\degree})$ and $5\%$ uncertainty on the measured momentum vector components except for the single component indicated in the title of each scatter plot.}
+  \label{fig:OCS222DeterminingSource}
+\end{figure}
 
 We definitely see that some components are more responsible than others. For example, the A component seems largely responsible for variability in $r_\mathrm{CO}$ and the B component seems responsible for variability in the $r_\mathrm{CS}$ component. Interestingly, removing the C component seems to produce a plot almost exactly like the one in figure X, suggesting that uncertainty in C introduces a negligible amount of uncertainty in the reconstructed geometries.
 
@@ -123,12 +129,11 @@ This result has implications for the design and operation of Coulomb explosion i
 
 The exact dependence observed in figure Y may be due to experimental considerations. Or choice of momentum convention? Further investigation is certainly warranted.
 
-\section{Exploratory uncertainty analysis} \label{sec:uncertaintyAnalysis}
-Let's put a range of uncertainties on the momentum vectors and observe how much uncertainty we have on the reconstructed geometries. We will use the widths of the distributions and the convex hull and alpha shape areas and volumes to quantify the uncertainty with the aim of finding how uncertainty in geometry reconstruction varies as a function of uncertainty in the momentum vectors.
-
+% TODO: Remove???
+% \section{Exploratory uncertainty analysis} \label{sec:uncertaintyAnalysis}
+% Let's put a range of uncertainties on the momentum vectors and observe how much uncertainty we have on the reconstructed geometries. We will use the widths of the distributions and the convex hull and alpha shape areas and volumes to quantify the uncertainty with the aim of finding how uncertainty in geometry reconstruction varies as a function of uncertainty in the momentum vectors.
 % Various figures here
-
-Interestingly, we are always able to reconstruct the geometry.
+% Interestingly, we are always able to reconstruct the geometry.
 
 \section{Uncertainty quantification using Bayesian inference} \label{sec:uncertaintyBayesian}
 The heuristic uncertainty quantification performed in the previous three sections has provided some significant insights on the problem of geometry reconstruction, and emphasized the large effect that measurement uncertainty must have played in our reconstruction of experimental data. This emphasizes the importance of tackling the task of uncertainty quantification in a rigorous and sophisticated manner, in which case the Bayesian inference framework provides the answer.

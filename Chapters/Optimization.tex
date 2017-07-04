@@ -243,7 +243,7 @@ While the overall geometry is not very different, the absolute errors on each ge
 
 The optimization routine is also able to precisely find degenerate geometries by using multiple starting points, a task which would have been non-trivial for the lookup table.
 
-\subsection{Investigating individual reconstructions}
+\subsection{Investigating individual reconstructions} \label{ssec:weirdBonds}
 Figure \ref{fig:OCS2227fsMOGeometry} provides an intuitive image of what a molecular geometry looks like, but it would be interesting to also see a distribution of bond lengths and bond angles to quantify the variability in each of these parameters. Correlations between the bond lengths and bond angles may also be looked at to study, for example, if longer \ch{C-O} bond lengths correspond to longer \ch{C-S} bond lengths, or if more bent geometries tend to have longer bond lengths. To visualize this relationship in figure \ref{fig:OCS2227fsMOGeometryPairs} we utilize a scatterplot matrix.
 
 \begin{figure}
@@ -264,7 +264,7 @@ Such an unusual relationship suggests that our reconstruction efforts may have f
 
 At this juncture, such worrying results force us to distrust the geometry reconstructions we have produced thus far. While the average geometries and overall dataset seems to be physically reasonable, the individual geometries seem to not make physical sense. Additionally, the same unusual relationship emerges out of at least two different reconstruction methods. For now we will move on to utilize the optimization routine to further investigate the nature of the degenerate geometries we are recovering, however we will come back and resolve this issue in the next chapter.
 
-\section{Investigating degenerate geometries}
+\section{Investigating degenerate geometries} \label{sec:optimizationDegeneracies}
 The optimization approach should also be tested to study whether it can accurately reconstruct simulated geometries in the same manner we tested the Nelder-Mead simplex method (section \ref{ssec:simplexFail}) and the lookup table (section \ref{ssec:LTaccuracy}). We will also use this information to further investigate the nature of the degenerate geometries we are recovering.
 
 The accuracy testing of the Nelder-Mead simplex method and the lookup table was relatively cursory, and could be made more thorough. We varied one molecular parameter at a time, which was however, sufficient to show the inadequecy of the simplex method. For a more thorough test, we will substantially vary all the molecular parameters by simulating the Coulomb explosion of geometries within a box in phase space described by $\SI{100}{\pico\meter} \le r_\mathrm{CO}, r_\mathrm{CS} \le \SI{500}{\pico\meter}$ and $\SI{140}{\degree} \le \theta \le \SI{180}{\degree}$. For a low-resolution test, we pick geometries $r_\mathrm{CO} \times r_\mathrm{CS} \times \theta_\mathrm{OCS}$ where $r_\mathrm{CO}$ and $r_\mathrm{CS}$ are sets containing $10$ uniformly spaced bond lengths between \SI{100}{\pico\meter} and \SI{500}{\pico\meter}, $\theta_\mathrm{OCS}$ is a set containing $10$ uniformly spaced bond angles between \SI{140}{\deg} and \SI{180}{\deg}, and $X \times Y = \lbrace (x,y) | x \in X \;\mathrm{and}\; y \in Y \rbrace$ denotes the cartesian product as expressed in set-builder notation \citep[p. 6]{Warner90}. Thus we are reconstructing $10^3 = 1,000$ geometries from simulated Coulomb explosions. We also perform a higher-resolution test using $20^3 = 8,000$ uniformly distributed geometries within the same box.
