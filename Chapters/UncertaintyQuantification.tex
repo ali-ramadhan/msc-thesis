@@ -145,6 +145,10 @@ The Bayesian point of view provides a more natural and intuitive way of thinking
 
 Bayesian statistics actually predates the much more commonly taught frequentist statistical methods but has made a strong resurgence in recent years due to rising computational abilities and more recently, available software for parameter estimation in statistical models using Markov chain Monte Carlo.
 
+A well-known article authored by \citet{Efron86} and titled ``Why isn't everyone a Bayesian?'' argues in favor of the more intuitive and powerful Bayesian framework . \citet{Cousins95} authored a similarly titled article, ``Why isn't every physicist a Bayesian?'' comparing both the classical and Bayesian frameworks in the context of particle physics. A more recent article on the subject authored by \citet{Lyons12} appeared in \emph{Physics Today}. Extensive review articles have been written on the more general subject of Bayesian inference in physics and include numerous examples and case studies \citet{vonToussaint11,Dose03,Dagostini03}. Although not particularly writing about Bayesian inference, \citet{Hogg10} provide a rather excellent and extensive tutorial in fitting data to models in the form of an article, and include numerous excercises relying on the use of Bayesian inference.
+
+Numerous textbooks exist on the topic. \citet{Gelman14} provide an excellent introduction to Bayesian data analysis, especially the theory while \citet{Kruschke14} provide a very solid and easy to follow introduction especially to Markov chain Monte Carlo methods which we cover in more depth later.
+
 \subsection{Elementary concepts}
 % Ideas?: credibility, models, parameters, distributions.
 % Theory?: Bayes Theorem, prior predictive, posterior, posterior mode (read up).
@@ -155,8 +159,19 @@ Bayesian statistics actually predates the much more commonly taught frequentist 
 Performing the multi-dimensional integral can be very difficult. The integral is usually approximated using Markov Chain Monte Carlo.
 % Markov Chain Monte Carlo: transition kernel, checking for convergence, Metropolis-Hastings algorithm, Gibbs Sampling, Hamiltonian MCMC
 
+\citet{Diaconis09} gives a introduction to MCMC methods with a focus on their impact on the types of scientific and mathematical problems they have allowed us to solve, opening with a fascinating example of deciphering coded messages between prison inmates. \citet{Richey10} and \citet{Robert11} give a short history of MCMC methods and their development. 
+
+An extensive handbook on MCMC methods does exist \citep{Brooks11} and includes a practical introduction to MCMC methods in its first chapter, authored by \citet{Geyer11}. Other standard textbooks and references on MCMC methods such as \citet{Gilks95} and \citet{Christian99}.
+
+
+The Gibbs sampler relies on the Metropolis-Hastings algorithm first prorposed by \citet{Metropolis53}. \citet{Casella92} gives an introduction to the Gibbs Sampler.
+
+Hamiltonian MCMC takes a Hamiltonian mechanics approach to sampling, inspired by a hybrid Monte Carlo method first proposed by \citet{Duane87} for the efficient solution of problems in lattice gauge theory. \citet{Neal11} provides an excellent and practical introduction. Stan is the most popular and mature implementation \citet{Carpenter17}.
+
 \subsection{Other Bayesian methods}
 Uncertainty quantification for inverse problems in the Bayesian framework.
+
+Bayesian inference is very suitable for inference in inverse problems and operating within such a framework may yield improved methods for geometry reconstruction \citet{Stuart10}. Recent work that may of interest includes the quantification of uncertainty for differential equations as developed by \citet{Chkrebtii16}, however this only works for time evolving a system of differentials forward.
 
 % Tikhonov regularization? Actually Bayesian inversion is a great alternative?
 
