@@ -7,14 +7,12 @@
 \hrule
 \vspace{1.5 em}
 
-We have shown that geometry reconstruction can be done 
+We have shown that geometry reconstruction can be performed quickly using two approaches, a heuristic lookup table discussed in chapter \ref{ch:lookupTable} and the more precise optimization routine relying on constrained nonlinear optimization methods in chapter \ref{ch:optimization}. We used both methods to investigate the existence of multiple solutions, or degenerate geometries, and used different analyses to study their nature which should be performed before attempting to reconstruct any molecular geometry. We also investigated the effect of uncertainty in the momentum vectors on the reconstructed geometries in chapter \ref{ch:uncertainty}, highlighting the sensitive nature of the task.
 
 \section*{Infeasibility of geometry reconstruction}
-We have found multiple barriers to accurate geometry reconstruction. Firstly, that geometry reconstruction is highly sensitive to uncertainties in the momentum vectors, means that .
+We have found two major barriers to accurate geometry reconstruction. Firstly, it is highly sensitive to uncertainties in the momentum vectors, however, even if they are measured accurately enough that measurement uncertainty is no longer a concern, the initial momentum carried by each atomic fragment would need to be measured accurately as well since they introduce additional uncertainty that cannot be inferred otherwise. Secondly, the existence of degenerate geometries for large regions of phase space may make reconstruction difficult, especially if multiple degeneracies represent physically realizable structures. The problem is exasperated in the presence of uncertainty as the true geometry may now be contained in multiple unconnected regions in phase space.
 
-If the initial momentum of each atomic fragment can be measured, then the 
-We dealt with a highly ideal case
+We only investigated the simplest case possible by assuming the atomic fragments evolve on a purely classical Coulomb potential and that they possess zero initial momentum, and yet the reconstruction problem already seems to exhibit pathological behavior. Accounting for additional complexity through the use of a more accurate non-Coulombic potential, the measurement or estimation of initial momentum for the atomic fragments, and the modeling of the laser's electric field with the molecule are likely to increase the problem's sensitivity to uncertainty in the momentum vectors, and thus the entire task of geometry reconstruction appears to be rather unfeasible for triatomic molecules, let alone larger molecules which require at least twice the number of degrees of freedom to describe. Additional degrees of freedom, introduced due to the modeling of additional phenomena or the study of larger molecules, would increase the dimensionality of the optimization problem, possibly resulting in a problem that is too difficult to solve with the already advanced optimization methods employed due to the curse of dimensionality. It is also possible that accounting for additional complexity may introduce additional degeneracies through the introduction of extraneous degrees of freedom, which would make the accurate reconstruction of molecular geometries even more difficult.
 
 % \section*{Possible improvements}
-
 % \section*{Future directions}
