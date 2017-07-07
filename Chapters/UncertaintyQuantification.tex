@@ -139,42 +139,71 @@ In using a convex hull or alpha shape to describe the set of possible geometries
 % Let's put a range of uncertainties on the momentum vectors and observe how much uncertainty we have on the reconstructed geometries. We will use the widths of the distributions and the convex hull and alpha shape areas and volumes to quantify the uncertainty with the aim of finding how uncertainty in geometry reconstruction varies as a function of uncertainty in the momentum vectors.
 
 \section{Uncertainty quantification using Bayesian inference} \label{sec:uncertaintyBayesian}
-The heuristic uncertainty quantification performed in the first two sections has provided significant insights on the process of geometry reconstruction, and emphasized the large effect that measurement uncertainty must have played in our reconstruction of experimental data. This further highlights the importance of tackling the task of uncertainty quantification in a rigorous and sophisticated manner, in which case the Bayesian inference framework provides a .
+The heuristic uncertainty quantification performed in the first two sections has provided significant insights on the process of geometry reconstruction, and emphasized the large effect that measurement uncertainty must have played in our reconstruction of experimental data. This further highlights the importance of tackling the task of uncertainty quantification in a rigorous and sophisticated manner, in which case the Bayesian inference framework provides a mature set of methods, software, and learning material to do this.
 
-% Philosophy? objective vs. subjective Bayes, frequentist vs. Bayesian, etc.
 The Bayesian point of view provides a more natural and intuitive way of thinking about uncertainty in the physical sciences.
 
-% Why Bayesian inference is perfect for inverse problems.
+% Let us borrow an example from \citet{vanderPlas14}, who provides a primer comparing the frequentist and Bayesian approaches with several examples implemented in Python, to illustrate this point. Let us assume an astronomer is interested in measuring the photon flux $F$ of a star whose flux does not vary. Frequentist statistics defines the probability as a limiting case of repeated measurements and so after many repeated measurements, the true value of the flux $F$ is typically given as being within some \emph{confidence interval} with $95\%$ probability. Bayesian statistics 
 
-Bayesian statistics actually predates the much more commonly taught frequentist statistical methods but has made a strong resurgence in recent years due to rising computational abilities and more recently, available software for parameter estimation in statistical models using Markov chain Monte Carlo.
+The Bayesian approach allows us to write down the exact probability distribution we wish to find in terms of the measurements we have made and our prior beliefs and solve the resulting equations for it, such that our prior beliefs are updated based on the measurements we have made. Bayesian inference is also suitable for inferring unknown parameters in inverse problems.
 
-A well-known article authored by \citet{Efron86} and titled ``Why isn't everyone a Bayesian?'' argues in favor of the more intuitive and powerful Bayesian framework . \citet{Cousins95} authored a similarly titled article, ``Why isn't every physicist a Bayesian?'' comparing both the classical and Bayesian frameworks in the context of particle physics. A more recent article on the subject authored by \citet{Lyons12} appeared in \emph{Physics Today}. Extensive review articles have been written on the more general subject of Bayesian inference in physics and include numerous examples and case studies \citet{vonToussaint11,Dose03,Dagostini03}. Although not particularly writing about Bayesian inference, \citet{Hogg10} provide a rather excellent and extensive tutorial in fitting data to models in the form of an article, and include numerous excercises relying on the use of Bayesian inference.
+Bayesian statistics actually predates the more commonly taught frequentist statistical methods (\eg~ p-values, confidence intervals, etc.) but has made a strong resurgence in recent years due to rising computational abilities and more recently, available software for parameter estimation in statistical models using Markov chain Monte Carlo methods \citep{Brooks03}. It is important to note that frequentist methods such as $t$-tests still have immense utility in the sciences, however, Bayesian inference methods provide the means of tackling more complex problems that are intractible otherwise. Bayesian methods have had large impacts in many scientific fields such as genetics \citep{Beaumont04} and more recently, machine learning \citep{Murphy12}, and an interpretation of quantum mechanics, termed \emph{Quantum Bayesianism}, exists as well \citep{Timpson08}. 
 
-Numerous textbooks exist on the topic. \citet{Gelman14} provide an excellent introduction to Bayesian data analysis, especially the theory while \citet{Kruschke14} provide a very solid and easy to follow introduction especially to Markov chain Monte Carlo methods which we cover in more depth later.
+Many have argued for philosophical superiority of the Bayesian approach, most famously by \citet{Efron86} in his article titled ``\textit{Why isn't everyone a Bayesian?}''. \citet{Cousins95} authored a similarly titled article, ``\textit{Why isn't every physicist a Bayesian?}'' comparing both the classical and Bayesian frameworks in the context of particle physics. A more recent article on the subject authored by \citet{Lyons12} appeared in \emph{Physics Today}. Extensive review articles have been written on the general subject of Bayesian inference in physics and include numerous examples and case studies \citet{vonToussaint11,Dose03,Dagostini03}. Although not particularly writing about Bayesian inference, \citet{Hogg10} provide a rather excellent and extensive tutorial in fitting data to models in the form of an article, and include numerous excercises relying on the use of Bayesian inference.
+
+Numerous textbooks exist on the topic. \citet{Gelman14} provide an excellent introduction to Bayesian data analysis, especially the theoretical foundations of Bayesian statistics, and \citet{Kruschke14} provides a practical and easy-to-follow introduction accompanied with many examples.
+
+% 1. Setting up a full probability model—a joint probability distribution for all observable and unobservable quantities in a problem. The model should be consistent with knowledge about the underlying scientific problem and the data collection process.
+% 2. Conditioning on observed data: calculating and interpreting the appropriate posterior distribution—the conditional probability distribution of the unobserved quantities of ultimate interest, given the observed data.
+% 3. Evaluating the fit of the model and the implications of the resulting posterior distribution: how well does the model fit the data, are the substantive conclusions reasonable, and how sensitive are the results to the modeling assumptions in step 1? In response, one can alter or expand the model and repeat the three steps.
 
 \subsection{Basic concept}
-% Ideas?: credibility, models, parameters, distributions.
-% Theory?: Bayes Theorem, prior predictive, posterior, posterior mode (read up).
-% Bayes’ theorem: we just need to do a multi-dimensional integral
+At the center of Bayesian statistics lies Bayes' theorem or Bayes' rule which describes the probability of an event based on prior knowledge of conditions that may be related to the event. It was first introduced by Reverend Thomas Bayes and published two years after his death with revisions by Ronald Price in a work titled ``\textit{An Essay towards solving a Problem in the Doctrine of Chances}'' \citep{Bayes1763} although evidence suggests that the title was modified by Price to support a theological arugment, and that Bayes intended it to be ``\textit{A Method of Calculating the Exact Probability of All Conclusions founded on Induction}'' \citep{Stigler13}. Pierre-Simon Laplace then developed it further and published it in its modern form along with many fundamental results in statistics \citep{Laplace1820}. \citet{Dale99} discusses the history in more detail, and \citet{McGrayne11} traces the history of Bayes' rule in her popular science book and its applications from World War II to bioinformatics.
 
-Bayes' theorem states that
-\begin{equation}
+Bayes' theorem in its simplest form states that probability of observing an event $A$ given that $B$ is true is
+\begin{equation} \label{eq:BayesRule}
   P(A|B) = \frac{P(B|A) P(A)}{P(B)}
 \end{equation}
-or for our geometry reconstruction problem for a triatomic molecule
+where $P(B|A)$ is the probability that event $B$ occurs given that $A$ is true, and $P(A)$ and $P(B)$ are the probabilities that events $A$ and $B$ occur respectively. $P(A|B)$ denotes a conditional probability and can be expressed as $P(A|B) = P(A \cap B) / P(B)$ where $P(A \cap B)$ is the probability of both $A$ and $B$ occuring and $\cap$ denotes the intersection operation from set theory.\footnotemark~
+
+\footnotetext{These concepts can all be made more rigorous in a modern framework. See \citet{Kallenberg06} for an introduction to modern probability theory.} 
+
+For Bayesian inference of model parameters given that certain measurements or observations, the basic idea can be extracted from \eqref{eq:BayesRule}. Let us use $\theta$ to denote the parameters of a model, for example $\theta = (r_{12}, r_{23}, \phi)$ for a model of a triatomic molecule, and $y$ to denote data that has been measured or observed. We are interested in finding the \emph{posterior probability density} $P(\theta|y)$, the probability that our model is described by the parameters $\theta$ given that certain measurements $y$ have been made. Using \eqref{eq:BayesRule}, we can write
 \begin{equation}
+  P(\theta|y) = \frac{P(\theta) P(y|\theta)}{P(y)}
+\end{equation}
+where $P(\theta)$ denotes the \emph{prior distribution}, that is the probability distribution encapsulating our belief regarding the model parameters prior to making any measurements, and $P(y|\theta)$ is the \emph{likelihood function} is the distribution of observed data conditional on the model parameters. $P(y)$ is the \emph{marginal likelihood},
+\begin{equation}
+  P(y) = \int P(\theta) P(y|\theta) \mathop{d\theta}
+\end{equation}
+or the distribution of measurements marginalized over the model parameters. It can be difficult to compute as a high-dimensional integral. As it does not depend on $\theta$ it is a constant when considering a fixed set of measurements $y$, and thus we may instead be interested in computing the \emph{unormalized posterior density}
+\begin{equation}
+  \underbrace{P(\theta|y)}_\mathrm{posterior}
+  \propto
+  \underbrace{P(\theta)}_\mathrm{priot}
+  \times
+  \underbrace{P(y|\theta)}_\mathrm{likelihood}
+\end{equation}
+
+Using our geometry reconstruction problem for a triatomic molecule as an example, we are modeling a molecule using the parameters $\theta = (r_{12}, r_{23}, \phi)$ where $\phi$ now denotes the bond angle, and the measurements $y$ constitute a set of three momentum vectors $y = (\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3)$ so \eqref{eq:BayesRule} gives
+\begin{equation} \label{eq:BayesGeometry}
   P(r_{12}, r_{23}, \phi|\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3) = \frac{P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3|r_{12}, r_{23}, \phi) P(r_{12}, r_{23}, \phi)}{P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3)}
 \end{equation}
-where we use $\phi$ to refer to the bond angle as $\theta$ is very commonly used to denote estimators and unknown parameters in statistics. However, the denominator
+where $P(r_{12}, r_{23}, \phi)$ is the prior distribution and $P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3|r_{12}, r_{23}, \phi)$ is the likelihood, that is the probability that the momentum vectors $(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3)$ are observed given that the molecule is described by the parameters $(r_{12}, r_{23}, \phi)$.
+
+In our case, a uniform distribution or a guess distribution may be used for the prior, or it may be obtained from quantum chemicstry simulations for greater accuracy. Generally the posterior only depends strongly on the prior in the absence of sufficient data. \citet{Gelman14} discusses the choice of prior distribution in great detail. The likelihood function $P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3|r_{12}, r_{23}, \phi)$ is governed by a deterministic simulation as exploding a certain molecule will produce exactly one set of momentum vectors, so in reality it is a Dirac-delta function. However, in the presence of measurement uncertainty it will form a proper probability distribution.
+
+The denominator of \eqref{eq:BayesGeometry},
 \begin{equation}
   P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3) =
     \int P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3|r_{12}, r_{23}, \phi)
     \mathop{dr_{12}} \mathop{dr_{23}} \mathop{d\phi}
 \end{equation}
-is in general extremely difficult to calculate and is simply a scaling factor so we generally just look
+will be extremely difficult to calculate in general as it is the probability that the momentum vectors $(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3)$ are measured, regardless of the molecular geometry that produced them. As the marginal likelihood is simply a scaling factor, we will instead be interested in computing the unnormalized posterior density
 \begin{equation}
   P(r_{12}, r_{23}, \phi|\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3) \propto P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3|r_{12}, r_{23}, \phi) P(r_{12}, r_{23}, \phi)
 \end{equation}
+Evaluating this expression can still be difficult, and the usual approach is to randomly sample from it, forming a posterior probability density in the process. \emph{Markov chain Monte Carlo} methods provide the means of doing this.
 
 \subsection{Markov chain Monte Carlo}
 % The basic idea
