@@ -1,1 +1,23 @@
-\chapter{Code listings} \label{appx:code}
+\chapter{Essential code listings} \label{appx:code}
+\markboth{\spacedlowsmallcaps{Essential code listings}}{\spacedlowsmallcaps{Essential code listings}}
+
+This appendix includes the most essential MATLAB code required to replicate the results presented in this thesis.. The rest of the code, including scripts to reproduce each plot, is available on the \texttt{ali-ramadhan/msc-thesis-code} GitHub repository.
+
+\definecolor{mintedbg}{rgb}{0.152, 0.157, 0.133}
+\setminted{
+  fontfamily=tt,
+  fontsize=\footnotesize,
+  frame=lines,
+  linenos=true,
+  numberblanklines=true,
+  tabsize=4,
+  %bgcolor=lightgray,
+  style=xcode
+}
+
+\inputminted{matlab}{CodeListings/hamiltonianDerivative.m}
+\inputminted{matlab}{CodeListings/simulateMomenta.m}
+\inputminted{matlab}{CodeListings/removeCOMMotion.m}
+\inputminted{matlab}{CodeListings/rotateMomentum.m}
+\inputminted{matlab}{CodeListings/lookupGeometries.m}
+\inputminted{matlab}{CodeListings/multiStartTriatomic.m}
