@@ -79,7 +79,8 @@
 \PassOptionsToPackage{T1}{fontenc} % T2A for cyrillics
     \usepackage{fontenc}     
 \usepackage{textcomp} % fix warning with missing font shapes
-\usepackage{scrhack}  % fix warnings when using KOMA with listings package
+% Moved to bottom to get minted working.
+% \usepackage{scrhack}  % fix warnings when using KOMA with listings package
 \usepackage{xspace}   % to get the spacing after macros right  
 \usepackage{mparhack} % get marginpar right
 \usepackage{fixltx2e} % fixes some LaTeX stuff --> since 2015 in the LaTeX kernel (see below)
@@ -258,14 +259,15 @@
 \renewbibmacro{in:}{}
 %\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}} % Small caps for author names.
 
-\usepackage{imakeidx}
-\usepackage{sidecap}
+\usepackage{imakeidx} % index generation
+\usepackage{sidecap} % side captions
 %\usepackage[version=4]{mhchem}
 \usepackage{chemformula}
 \usepackage{float} % For [H] option in figures.
 \usepackage{gensymb} % For \degree
 %\usepackage[toc,page]{appendix}
 \usepackage{setspace}
+\usepackage{bm} % bold math
 
 % to automatically ensure floats do not go into the next section.
 \usepackage[section]{placeins}
@@ -274,4 +276,6 @@
 \usepackage[binary-units=true]{siunitx}
 \sisetup{list-final-separator = {, and }}
 
-\usepackage{bm}
+\usepackage{xcolor}
+\usepackage{minted}
+\usepackage{scrhack}  % fix warnings when using KOMA with listings package
