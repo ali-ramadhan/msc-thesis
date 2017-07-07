@@ -46,7 +46,7 @@ In this case the true value of $\bar{\mathbf{x}}$ lies within a box described by
 where $\mathrm{ep}$ is an abbreviation for ``endpoints'' (as $\mathbf{x}_\mathrm{ep}$ denotes the set of endpoints for the box containing feasible values of $\mathbf{x}$ in the $x_1x_2$ plane) would produce $4$ point in the $f_1f_2$ plane, whose set we denote by $\mathbf{f}_\mathrm{ep}$ and whose rectangular boundary encloses the possible values of $f(\bar{x})$. Thus the propagation of uncertainty in this case can be thought of a mapping from a rectangle in the $x_1x_2$ plane to a rectangle in the $f_1f_2$ plane.
 
 If $f_1$ and $f_2$ do not depend monotonically on $x_1$ and $x_2$, then values of $x_1$, $x_2$ between the endpoints may produce values of $f_1$,$f_2$ that lie outside the rectangular boundary. A further heuristic would be to not only look at the endpoints, but also a set of uniformally distributed points in the $x_1x_2$ plane within the box of possible values for $\mathbf{x}$. In this case, the propagation of uncertainty can be thought of as a mapping from a rectangle in the $x_1x_2$ plane to an arbitrary region in the $f_1f_2$ plane whose boundary may not be rectangular anymore, or even a single region. In the case of a more complicated boundary, we will generalize \eqref{eq:shittyInterval} by describing the boundary using a \emph{convex hull}. The convex hull $C$ of a set of points $S = \lbrace p_1, p_2, \dots, p_n \rbrace$ where $p_i \in \mathbb{R}^m$ for all $i$ can be expressd mathematically as
-\begin{equation}
+\begin{equation} \label{eq:convexhull}
 C = \left\lbrace\left.
   \sum_{i=1}^n \lambda_i p_i \right|
   \lambda_i \ge 0
@@ -85,7 +85,7 @@ We immediately see that a strikingly wide range of geometries are reconstructed 
 
 The bivariate relationships shown in figures \ref{fig:OCS222Uncertainty}(d)-(f) suggest the range of possible geometries. Interestingly, the bond length correlation in figure \ref{fig:OCS222Uncertainty}(d) seems to follow a reciprocal relationship, a strikingly similar one to the unusual one observed in the reconstructions of experimental data. This suggests that uncertainty in the momentum measurments may lead to the reconstruction of a geometry with asymetrically stretched bonds, and that the unusual relationship we observed in section \ref{ssec:weirdBonds} may have been a manifestation of measurement uncertainty and due to the highly sensitive nature of geometry reconstruction.
 
-Placing a larger uncertainty on the momentum vector components further stretches the shape of the set of points in figure \ref{fig:OCS222Uncertainty}(d), modifying it to further resemble the more extreme reciprocal relationship between $r_\mathrm{CO}$ and $r_\mathrm{CS}$ found for longer pulse lengths (see figures \ref{fig:OCS22230fsMOGeometryPairs} -- \ref{fig:OCS222100fsLTGeometryPairs}). 
+Placing a larger uncertainty on the momentum vector components further stretches the shape of the set of points in figure \ref{fig:OCS222Uncertainty}(d), modifying it to further resemble the more extreme reciprocal relationship between $r_\mathrm{CO}$ and $r_\mathrm{CS}$ found for longer pulse lengths (see figures \ref{fig:OCS22230fsMOGeometryPairs} -- \ref{fig:OCS222100fsMOGeometryPairs}). 
 
 Exposing the molecule to longer laser pulses provides a longer amount of time for the molecule to rearrange and may impart the atomic fragments with a larger initial momentum, thus decreasing the certainty with which the measured momentum vectors correspond to the true geometry. If we take a reciprocal relationship to be a signature indicating that too much measurement uncertainty is present for trustworthy geometry reconstructions, then we must conclude that even an uncertainty as low as a few parts per hundred in the momentum vector components is ``too much'' and that geometry reconstruction using Coulomb explosion imaging is unfeasible under such conditions.
 
@@ -96,24 +96,22 @@ An interesting observation resulting from the close inspection of the open blue 
 \subsection{Convex hulls and alpha shapes}
 To quantify the uncertainty in the geometries, we will use two useful concepts from computational geometry, namely convex hulls and alpha shapes, which allow us to assign a shape and a volume to a set of points, and thus provide an additional hueristic quantitative measure of uncertainty.
 
-The convex hull of a set of points $S$ is the set of all convex combinations of its points. An analogy would be to stretch a rubber band around the set of points and let it rest, its final shape being the convex hull.
+The convex hull of a set of points, introduced earlier and described mathematically by \eqref{eq:convexhull}, is used to assign boundaries in phase space for figures \ref{fig:OCS222Uncertainty}(d)-(f). Many algorithms exist to calculate the convex hull, especially in 2 or 3 dimensions. However, the convex hull may grossly overestimate the area especially 
 
-Many algorithms exist to calculate the convex hull of a set of points, especially in 2 or 3 dimensions.
+The concept of an alpha shape is a generalization of the convex hull used to assign shapes and volumes to a set of points, parameterized by a real number $\alpha \ge 0$. $\alpha$ may be varied until a desired shape is produced. They were first introduced by \citet{Edelsbrunner83} for two-dimensional shapes, then for three-dimensional shapes \citep{Edelsbrunner94} with applications in fields such as computer graphics. Interestingly, alpha shapes have been used to analytically compute shapes for macromolecules such proteins and estimate their molecular areas and volume \citep{Liang98}. % An interesting analogy of alpha shapes uses ice cream scoopers.
 
-The concept of an alpha shape is a generalization of the convex hull first introduced by \citet{Edelsbrunner83} for two-dimensional shapes, then for three-dimensional shapes \citep{Edelsbrunner94}. Interestingly, alpha shapes have been used to analytically compute shapes for macromolecules such proteins and estimate their molecular areas and volume \citep{Liang98}. An interesting analogy of alpha shapes uses ice cream scoopers.
+A desirable feature of convex hulls is that they are unique for each set of points, while multiple distinct alpha shapes exist. This is a desirable property of alpha shapes as there is no formal concept of shape so no algorithm can determine the correct shape for a set of points. However, the concept allows for an $\alpha$ to be picked that produces the most desirable shape. 
 
-The nice thing about convex hulls is that they are unique for each set of points, while multiple distinct alpha shapes exist. This is a desirable property of alpha shapes as there is no formal concept of shape so no algorithm can determine the correct shape for a set of points. However, the concept allows for an $\alpha$ to be picked that produces the most desirable shape. 
+While a very haphazard measure of uncertainty, they are much easier to employ than the sophisticated uncertainty quantification framework of Bayesian inference and satisfy our basic needs for now.
 
-While a very haphazard measure of uncertainty, they are much easier to employ than the sophisticated uncertainty quantification framework of Bayesian inference (section \ref{sec:uncertaintyBayesian}) and will come in handy when we perform some exploratory uncertainty analysis in section \ref{sec:uncertaintyAnalysis}. Our needs are rather basic at this point.
-
-We end by providing a cool figure showcasing the three-dimensional convex hull and alpha shape in molecular phase space.
+% We end by providing a cool figure showcasing the three-dimensional convex hull and alpha shape in molecular phase space.
 
 % figure Z here
 
 \section{Determining the sources of uncertainty} \label{sec:sourceUncertainty}
 We saw in figures \ref{fig:OCS222Uncertainty} that certain momentum components may have a greater effect on the uncertainty on a reconstructed geometry, or that geometry reconstruction is more sensitive to changes in certain momentum components over others.
 
-We will attempt to explore this effect and pinpoint the momentum components responsible for introducing the most (and the least) uncertainty in the reconstructed geometries. To do this for the oxygen's $p_x$ component for example, we will look at the $256$ geometries reconstructed using the $256$ sets of momentum vectors where $5\%$ was added to the oxygen's $p_x$ component, and plot their position in phase space in the $r_\mathrm{CO}-r_\mathrm{CS}$ plane. Doing this for each component, we produce $9$ plots in total, one for each momentum component, as shown in figure \ref{fig:OCS222DeterminingSource}.
+We will attempt to explore this effect and pinpoint the momentum components responsible for introducing the most (and the least) uncertainty in the reconstructed geometries. To do this for the oxygen's $p_x$ component for example, we will look at the $256$ geometries reconstructed using the $256$ sets of momentum vectors where $5\%$ was added to the oxygen's $p_x$ component, and plot their position in phase space in the $r_\mathrm{CO}r_\mathrm{CS}$ plane. Doing this for each component, we produce $9$ plots in total, one for each momentum component, as shown in figure \ref{fig:OCS222DeterminingSource}.
 
 \begin{figure}
   \centering
@@ -130,7 +128,7 @@ The exact dependence observed in figure \ref{fig:OCS222Uncertainty}, that is, wh
 Further investigation is certainly warranted, especially if one aims to design a Coulomb explosion imaging experiment for the purposes of minimizing errors in geometry reconstruction. Molecules may be oriented to minimize errors in geometry reconstruction, for example.
 
 \section{Exploratory uncertainty analysis} \label{sec:uncertaintyAnalysis}
-Our main intentions in this chapter are twofold. Firstly, to suggest that measurement uncertainty is responsible for the asymmetric bond length correlations that arise out of both reconstruction methods, and secondly, to suggest that uncertainty on certain momentum components results in a larger error on the reconstructed geometries which, upon further investigation, may be exploited in the design of CEI experiments for minimizing errors in geometry reconstruction.
+Our main intentions in this chapter were twofold. Firstly, to suggest that measurement uncertainty is responsible for the asymmetric bond length correlations that arise out of both reconstruction methods, and secondly, to suggest that uncertainty on certain momentum components results in a larger error on the reconstructed geometries which, upon further investigation, may be exploited in the design of CEI experiments for minimizing errors in geometry reconstruction.
 
 In this section we will simply describe some further investigations or rather, \emph{explorations}, that may be carried out to study the effects of measurement uncertainty on the geometry reconstruction process.
 
@@ -154,10 +152,29 @@ A well-known article authored by \citet{Efron86} and titled ``Why isn't everyone
 
 Numerous textbooks exist on the topic. \citet{Gelman14} provide an excellent introduction to Bayesian data analysis, especially the theory while \citet{Kruschke14} provide a very solid and easy to follow introduction especially to Markov chain Monte Carlo methods which we cover in more depth later.
 
-\subsection{Elementary concepts}
+\subsection{Basic concept}
 % Ideas?: credibility, models, parameters, distributions.
 % Theory?: Bayes Theorem, prior predictive, posterior, posterior mode (read up).
 % Bayes’ theorem: we just need to do a multi-dimensional integral
+
+Bayes' theorem states that
+\begin{equation}
+  P(A|B) = \frac{P(B|A) P(A)}{P(B)}
+\end{equation}
+or for our geometry reconstruction problem for a triatomic molecule
+\begin{equation}
+  P(r_{12}, r_{23}, \phi|\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3) = \frac{P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3|r_{12}, r_{23}, \phi) P(r_{12}, r_{23}, \phi)}{P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3)}
+\end{equation}
+where we use $\phi$ to refer to the bond angle as $\theta$ is very commonly used to denote estimators and unknown parameters in statistics. However, the denominator
+\begin{equation}
+  P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3) =
+    \int P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3|r_{12}, r_{23}, \phi)
+    \mathop{dr_{12}} \mathop{dr_{23}} \mathop{d\phi}
+\end{equation}
+is in general extremely difficult to calculate and is simply a scaling factor so we generally just look
+\begin{equation}
+  P(r_{12}, r_{23}, \phi|\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3) \propto P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3|r_{12}, r_{23}, \phi) P(r_{12}, r_{23}, \phi)
+\end{equation}
 
 \subsection{Markov chain Monte Carlo}
 % The basic idea
