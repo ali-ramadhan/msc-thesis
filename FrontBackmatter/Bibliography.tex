@@ -1,3 +1,10 @@
+% Changing bibname to `References`, which is more accurate as a bibliography contains all sources, whether cited or not.
+\renewcommand{\bibname}{References}
+
+% Small caps for author names.
+% Moved here so it only applied to the actual bibliography, not the main text.
+\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}}
+
 % work-around to have small caps also here in the headline
 \manualmark
 
@@ -12,4 +19,4 @@
 \printbibliography
 
 % work-around to have small caps also
-\markboth{\spacedlowsmallcaps{\bibname}}{\spacedlowsmallcaps{\bibname}}
+% \markboth{\spacedlowsmallcaps{\bibname}}{\spacedlowsmallcaps{\bibname}}
