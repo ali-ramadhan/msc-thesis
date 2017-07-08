@@ -202,9 +202,11 @@ will be extremely difficult to calculate in general as it is the probability tha
 \end{equation}
 Evaluating this expression can still be difficult, and the usual approach is to randomly sample from it, forming a posterior probability density in the process. \emph{Markov chain Monte Carlo} methods provide the means of doing this.
 
+% We can also see why Bayesian inference is great for inverse problem. The probability of interest for the inverse problem is directly related to the probability of interest for the forward problem.
+
 \subsection{Markov chain Monte Carlo}
-% The basic idea
-Performing the multi-dimensional integral can be very difficult. The integral is usually approximated using Markov Chain Monte Carlo.
+\emph{Markov chain Monte Carlo} (MCMC) methods are a class of algorithms for sampling from a probability distribution by constructing a \emph{Markov chain} whose equilibrium distribution is the same as that of the probability distribution we are sampling from.
+
 % Markov Chain Monte Carlo: transition kernel, checking for convergence, Metropolis-Hastings algorithm, Gibbs Sampling, Hamiltonian MCMC
 
 \citet{Diaconis09} gives a introduction to MCMC methods with a focus on their impact on the types of scientific and mathematical problems they have allowed us to solve, opening with a fascinating example of deciphering coded messages between prison inmates. \citet{Richey10} and \citet{Robert11} give a short history of MCMC methods and their development. 
@@ -217,8 +219,6 @@ The Gibbs sampler relies on the Metropolis-Hastings algorithm first prorposed by
 Hamiltonian MCMC takes a Hamiltonian mechanics approach to sampling, inspired by a hybrid Monte Carlo method first proposed by \citet{Duane87} for the efficient solution of problems in lattice gauge theory. \citet{Neal11} provides an excellent and practical introduction. Stan is the most popular and mature implementation \citet{Carpenter17}.
 
 \subsection{Other Bayesian methods}
-Uncertainty quantification for inverse problems in the Bayesian framework.
-
 Bayesian inference is very suitable for inference in inverse problems and operating within such a framework may yield improved methods for geometry reconstruction \citet{Stuart10}. Recent work that may of interest includes the quantification of uncertainty for differential equations as developed by \citet{Chkrebtii16}, however this only works for time evolving a system of differentials forward.
 
 % Tikhonov regularization? Actually Bayesian inversion is a great alternative?
