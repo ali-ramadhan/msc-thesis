@@ -66,7 +66,7 @@
   sorting=nyt,
   maxcitenames=3,
   maxbibnames=10,
-  %backref=true,
+  backref=true,
   natbib=true % natbib compatibility mode (\citep and \citet still work)
 }{biblatex}
 
@@ -141,29 +141,31 @@
 
 % Using PDFLaTeX
 \PassOptionsToPackage{pdftex,hyperfootnotes=false,pdfpagelabels}{hyperref}
-    \usepackage{hyperref}  % backref linktocpage pagebackref
+\usepackage{hyperref}  % backref linktocpage pagebackref
+
 \pdfcompresslevel=9
 \pdfadjustspacing=1 
+
 \PassOptionsToPackage{pdftex}{graphicx}
-    \usepackage{graphicx}
+\usepackage{graphicx}
 
 % Hyperreferences
 \hypersetup{%
     %draft, % = no hyperlinking at all (useful in b/w printouts)
-    colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,%
+    colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,
     % uncomment the following line if you want to have black links (e.g., for printing)
-    %colorlinks=false, linktocpage=false, pdfstartpage=3, pdfstartview=FitV, pdfborder={0 0 0},%
-    breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
-    plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,%
-    hypertexnames=true, pdfhighlight=/O,%nesting=true,%frenchlinks,%
-    urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen, %pagecolor=RoyalBlue,%
-    %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
-    pdftitle={\myTitle},%
-    pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},%
-    pdfsubject={},%
-    pdfkeywords={},%
-    pdfcreator={pdfLaTeX},%
-    pdfproducer={LaTeX with hyperref and classicthesis}%
+    %colorlinks=false, linktocpage=false, pdfstartpage=3, pdfstartview=FitV, pdfborder={0 0 0},
+    breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,
+    plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,
+    hypertexnames=true, pdfhighlight=/O,%nesting=true,%frenchlinks,
+    urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen, %pagecolor=RoyalBlue,
+    %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,
+    pdftitle={\myTitle},
+    pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},
+    pdfsubject={},
+    pdfkeywords={},
+    pdfcreator={pdfLaTeX},
+    pdfproducer={LaTeX with hyperref and classicthesis}
 }   
 
 % Setup autoreferences
