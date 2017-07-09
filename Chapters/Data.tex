@@ -190,7 +190,7 @@ Selection of the bandwidth $h$, as expected, is the most difficult aspect of KDE
 h = \left(\frac{4\hat{\sigma}^5}{3n} \right)^{1/(d+4)}
 \approx 1.06 \left(\frac{\sigma^5}{n} \right)^{1/(d+4)}
 \end{equation}
-where $n$ is the number of observations, $\hat{\sigma}$ is the standard deviation of the samples, and $d$ is the dimensionality of the observations (so $d=1$ for univariate observations and $d=2$ for bivariate). This is termed the \emph{normal distribution approximation} or the ``rule of thumb''. As most of our data, especially the atomic positions of reconstructed geometries, seems to rougly follow a normal distribution, we used the \citet{Silverman86} rule of thumb in computing our kernel bandwidths.\footnotemark~ It is worth noting that it does not perform well on multimodal data which is why certain estimates in figure \ref{fig:OCS2227fsMomentum} appear oversmoothed.
+where $n$ is the number of observations, $\hat{\sigma}$ is the standard deviation of the samples, and $d$ is the dimensionality of the observations (so $d=1$ for univariate observations and $d=2$ for bivariate). This is termed the \emph{normal distribution approximation} or the ``rule of thumb''. As most of our data, especially the atomic positions of reconstructed geometries, seems to rougly follow a normal distribution, we used the \citet{Silverman86} rule of thumb in computing our kernel bandwidths. It is worth noting that it does not perform well on multimodal data which is why certain estimates in figure \ref{fig:OCS2227fsMomentum} appear oversmoothed.
 
 Other methods do exist, and univariate estimators are especially effective as briefly surveryed by \citet{Jones96}, but bandwidth selection for multivariate kernel density estimates is quite difficult for non-Gaussian densities \citep[\S 6.5.2]{Scott15}.
 
@@ -212,7 +212,7 @@ where $i$ is held fixed over the second summation. With appropriate initial cond
 
 One way to think of the problem being tackled in this thesis is: which initial geometry $\mathbf{r}_i(t=0) = 0$ results in the momentum values measured at the detector? The atoms are far enough apart after just a few nanoseconds that by the time they arrive at the detector, they feel almost no forces due to each other and their momenta attain asymptotic values which we can denote $\mathbf{p}_i(t\rightarrow\infty)$.
 
-F4or some perspective, \citet{Slater15} discuss the computational simulation of ion trajectories for larger systems such as the the 3,5-dibromo-3',5'-difluoro-4'-cyanobiphenyl (\ch{DBrDFCNBph}) molecule, and who interestingly employ a pixel-imaging mass-spectrometry camera for position detection.
+For some perspective, \citet{Slater15} discuss the computational simulation of ion trajectories for larger systems such as the the 3,5-dibromo-3',5'-difluoro-4'-cyanobiphenyl (\ch{DBrDFCNBph}) molecule, and who interestingly employ a pixel-imaging mass-spectrometry camera for position detection.
 
 \section{Describing geometries and momenta} \label{sec:conventions}
 While tackling the problem of geometry reconstruction, it will be crucial to choose a convention for describing the geometries and momentum vectors especially so that geometries and vector arrangements can be compared with ease. Even more importantly, it provides us with an opportunity to reduce the dimensionality of the problem from $3N$ to $3N-6$ for a molecular system with $N$ atoms. This stems from the fact that we only need to describe the relative position of each atom, not its absolute position.
