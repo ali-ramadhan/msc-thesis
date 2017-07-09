@@ -197,29 +197,24 @@ The denominator of \eqref{eq:BayesGeometry},
     \mathop{dr_{12}} \mathop{dr_{23}} \mathop{d\phi}
 \end{equation}
 will be extremely difficult to calculate in general as it is the probability that the momentum vectors $(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3)$ are measured, regardless of the molecular geometry that produced them. As the marginal likelihood is simply a scaling factor, we will instead be interested in computing the unnormalized posterior density
-\begin{equation}
+\begin{equation} 
   P(r_{12}, r_{23}, \phi|\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3) \propto P(\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3|r_{12}, r_{23}, \phi) P(r_{12}, r_{23}, \phi)
 \end{equation}
-Evaluating this expression can still be difficult, and the usual approach is to randomly sample from it, forming a posterior probability density in the process. \emph{Markov chain Monte Carlo} methods provide the means of doing this.
-
-% We can also see why Bayesian inference is great for inverse problem. The probability of interest for the inverse problem is directly related to the probability of interest for the forward problem.
+Evaluating this expression can still be difficult, and the usual approach is to randomly sample from it, forming a posterior probability density in the process. \emph{Markov chain Monte Carlo} methods provide the means of doing this. We can also see why Bayesian inference is suitable for infering latent variables in inverse problems as the probability density of interest for the inverse problem is directly related to the probability density of interest for the forward problem, which is generally known.
 
 \subsection{Markov chain Monte Carlo}
-\emph{Markov chain Monte Carlo} (MCMC) methods are a class of algorithms for sampling from a probability distribution by constructing a \emph{Markov chain} whose equilibrium distribution is the same as that of the probability distribution we are sampling from.
+\emph{Markov chain Monte Carlo} (MCMC) methods are a class of algorithms for sampling from a probability distribution by constructing a \emph{Markov chain} whose equilibrium distribution is the same as that of the probability distribution we are sampling from. Extensive literature exists on the theory of Markov chains \citep{Levin09} and their mixing times, that is, the time until they come close to their equilibrium distribution. In practice, mature MCMC methods packaged as well-documented software, such as JAGS \citep{Plummer03} or Stan \citep{Carpenter17}, do not require intricate knowledge of Markov chains or MCMC sampling algorithms to use, however, it is always useful for any practitioner to have some idea of their inner workings.
 
-% Markov Chain Monte Carlo: transition kernel, checking for convergence, Metropolis-Hastings algorithm, Gibbs Sampling, Hamiltonian MCMC
+\citet{Diaconis09} gives an introduction to MCMC methods with a focus on their impact on the types of scientific and mathematical problems they have allowed us to solve, opening with a fascinating example involving deciphering coded messages between prison inmates. \citet{Richey10} and \citet{Robert11} give a short history of MCMC methods and their development.
 
-\citet{Diaconis09} gives a introduction to MCMC methods with a focus on their impact on the types of scientific and mathematical problems they have allowed us to solve, opening with a fascinating example of deciphering coded messages between prison inmates. \citet{Richey10} and \citet{Robert11} give a short history of MCMC methods and their development. 
+An extensive handbook on MCMC methods does exist \citep{Brooks11} and includes a practical introduction to MCMC methods in its first chapter, authored by \citet{Geyer11}, who discusses some important aspects of using Markov chains such as burn-in and convergence checking, and provides an overview of some important sampling methods. Standard textbooks and references on MCMC methods include \citet{Gilks95} and \citet{Christian99}.
 
-An extensive handbook on MCMC methods does exist \citep{Brooks11} and includes a practical introduction to MCMC methods in its first chapter, authored by \citet{Geyer11}. Other standard textbooks and references on MCMC methods such as \citet{Gilks95} and \citet{Christian99}.
+Two popular random walk MCMC methods include the Metropolis-Hastings algorithm and Gibbs sampling. The Metropolis-Hastings algorithm, first proposed by \citet{Metropolis53} performs a random walk using some proposed probability density with some rejection criterion, and can be quite inefficient especially for high-dimensional integrals. Gibbs sampling uses the Metropolis-Hastings algorithm, however, it samples from parameterized probability distributions thus requiring no tuning which can be highly desirable when direct sampling is difficult. \citet{Casella92} gives an introduction to the Gibbs Sampler and it is discussed extensively throughout the handbook by \citet{Brooks11}. Just another Gibbs Samples (JAGS) \citep{Plummer03} along with its R package (RJAGS) are popular implementations. \citet{Brooks11} discusses other random walk MCMC algorithms, such as slice sampling and reversible jump MCMC, extensively.
 
+One popular algorithm not based on random walks, Hamiltonian MCMC, has risen in popularity in recent years due to its utility in sampling from high-dimensional distributions more effectively than random walk based algorithms. Inspired by a hybrid Monte Carlo method first proposed by \citet{Duane87} for the numerical simulation of lattice field theories, Hamiltonian MCMC takes a Hamiltonian mechanics approach to sampling by subjecting a fictional particle to a potential energy function described by the target probability density distribution. Random sampling is performed by solving Hamilton's equations for the fictional particle. While seemingly bizarre, Hamiltonian MCMC does indeed work quite well in many cases. \citet{Neal11} provides an excellent and practical introduction. Stan (along with it's R wrapper, RStan, and Python wrapper, PyStan) is the most popular and mature implementation \citet{Carpenter17}, finding use in many scientific fields and in the humanities as well.
 
-The Gibbs sampler relies on the Metropolis-Hastings algorithm first prorposed by \citet{Metropolis53}. \citet{Casella92} gives an introduction to the Gibbs Sampler.
-
-Hamiltonian MCMC takes a Hamiltonian mechanics approach to sampling, inspired by a hybrid Monte Carlo method first proposed by \citet{Duane87} for the efficient solution of problems in lattice gauge theory. \citet{Neal11} provides an excellent and practical introduction. Stan is the most popular and mature implementation \citet{Carpenter17}.
-
-\subsection{Other Bayesian methods}
-Bayesian inference is very suitable for inference in inverse problems and operating within such a framework may yield improved methods for geometry reconstruction \citet{Stuart10}. Recent work that may of interest includes the quantification of uncertainty for differential equations as developed by \citet{Chkrebtii16}, however this only works for time evolving a system of differentials forward.
+% \subsection{Other Bayesian methods}
+% Bayesian inference is very suitable for inference in inverse problems and operating within such a framework may yield improved methods for geometry reconstruction \citet{Stuart10}. Recent work that may of interest includes the quantification of uncertainty for differential equations as developed by \citet{Chkrebtii16}, however this only works for time evolving a system of differentials forward.
 
 % Tikhonov regularization? Actually Bayesian inversion is a great alternative?
 
