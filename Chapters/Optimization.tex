@@ -101,15 +101,40 @@ and is always a convex problem as the dual function $g(\lambda, \nu)$ is always 
 If the optimal value of the dual problem $d^\star$ and of the primal problem $p^\star$ are equal, $d^\star = p^\star$, then we say that \emph{strong duality} holds and the \emph{optimal duality gap} is zero, $d^\star - p^\star = 0$. Otherwise $d^\star \le p^\star$ and we say that \emph{weak duality} holds.
 
 \subsection{Optimality conditions} \label{ssec:KKT}
-It will be quite useful to impose conditions on what makes a feasible point an optimal point or solution for both the primal and dual problems. Denoting the optimal primal solution by $x^\star$ and the optimal value by $p^\star = f_0(x^\star)$, we already know that it must satisfy the constraints $f_i(x^\star) \ge 0$ and $h_i(x^\star) = 0$. Denoting the dual optimal by $(\lambda^\star, \nu^\star)$ we would like for $\lambda_i^\star \ge 0$ so that the dual function provides a lower bound on $p^\star$. 
+It will be quite useful to impose conditions on what makes a feasible solution an optimal solution for both the primal and dual problems. This will provide a means of checking whether a proposed solution is optimal, as every optimal solution must satisfy the optimality conditions. Denoting the optimal primal solution by $x^\star$ and the optimal value by $p^\star = f_0(x^\star)$, we already know that it must satisfy the inequality and equality constraints,
+\begin{equation}
+f_i(x^\star) \ge 0 \quad \mathrm{and} \quad h_i(x^\star) = 0
+\end{equation}
+giving us two optimality conditions so far. Denoting the dual optimal by $(\lambda^\star, \nu^\star)$ we would like for
+\begin{equation}
+\lambda_i^\star \ge 0
+\end{equation}
+so that the dual function provides a lower bound on $p^\star$ by theorem \ref{thm:lower}, giving us a third condition.
 
-% TODO: Complementary slackness
+For the fourth condition, we look to the dual function and assume that strong duality holds, that is that $f_0(x^\star) = g(\lambda^\star, \nu^\star)$. Then we can write
+\begin{align}
+  f_0(x^\star) &= g(\lambda^\star, \nu^\star) \\
+  & = \inf_x \left[ f_0(x) + \sum_{i=1}^m \lambda_i^\star f_i(x) + \sum_{i=1}^p \nu_i^\star h_i(x) \right] \\
+  & \le f_0(x^\star)
+    + \underbrace{\sum_{i=1}^m \lambda_i f_i(x^\star)}_{\le 0}
+    + \underbrace{\sum_{i=1}^p \nu_i h_i(x^\star)}_{=0} \\
+  & \le f_0(^\star)
+\end{align}
+where we invoked the definition of the dual function on the second line, and the third line follows from the fact that the Lagrangian evaluated at the optimal primal point $x^\star$ provides a lower bound. Then on the fourth line we realize that the equality constraint functions $h_i(x) = 0$ cause the third term to vanish, and we assumed that the Lagrange multipliers obeyed $\lambda_i^\star \ge 0$ while the inequality constraints satisfy $f_i(x) \le 0$ thus causing the second term to be nonpositive. However we require that equality hold on the fourth line as $f_0(x^\star)$ must equal itself. For equality to hold, we thus require that the second term vanish just like the third term,
+\begin{equation}
+  \sum_{i=1}^m \lambda_i f_i(x^\star) = 0
+\end{equation}
+however each term is nonpositive so we can recast this condition as
+\begin{equation}
+  \lambda_i f_i(x^\star) = 0, i = 1,2,\dots,m
+\end{equation}
+This provides a forth optimality condition, known as \emph{complementary slackness}.
 
-Since $x^\star$ minimizes the Lagrangian $L(x, \lambda^\star, \nu^\star)$ over $x$, its gradient must be zero at the minima or maximum $x^\star$, giving us
-\[
+For the fifth condition, we realize that a function's first-derivative must vanish at a minima or maxima. Since $x^\star$ minimizes the Lagrangian $L(x, \lambda^\star, \nu^\star)$ over $x$, its gradient must be zero at the minima or maximum $x^\star$, giving us
+\begin{equation}
 \nabla f_0(x^\star) + \sum_{i=1}^m \lambda_i^\star \nabla f_i(x^\star)
 + \sum_{i=1}^p \nu_i^\star \nabla h_i(x^\star) = 0
-\]
+\end{equation}
 
 Together, we can summarize the five conditions we obtained
 \begin{align} \label{eq:kkt}
@@ -120,9 +145,9 @@ h_i(x^\star) & = 0, \; & i & \in {1,\dots,p} \nonumber \\
 \nabla f_0(x^\star) + \sum_{i=1}^m \lambda_i^\star \nabla f_i(x^\star)
 + \sum_{i=1}^p \nu_i^\star \nabla h_i(x^\star) & = 0, \; & i & \in {1,\dots,m} \nonumber
 \end{align}
-which together are called the \emph{Karush-Kuhn-Tucker (KKT) conditions}. They are sometimes referred to as the first-order optimality conditions, as second-order conditions do exist.
+which together are called the \emph{Karush-Kuhn-Tucker (KKT) conditions}. They are sometimes referred to as the first-order optimality conditions, as second-order conditions do exist \citep[\S 12.5]{Nocedal06}.
 
-\subsection{Trust regions}
+\subsection{Trust regions} \label{ssec:trust}
 Switching gears a little bit, we'll look at a general strategy of solving optimization problem using the concept of a \emph{trust region}. When searching for an optimal solution starting from an initial point $x_0$, the idea is to create and solve an approximate optimization problem at each iterate $x_k$ with the hope that the approximation is easier to solve yet locally accurate enough to help locate the true optimal solution. The approximated is \emph{trusted} only so much, up to some radius or region boundary. A circular or spherical trust region may be used, but so can box and elliptical regions. If a sufficiently better iterate $x_{k+1}$ is not found within the trust region then the region may be shrunk in case the approximation is invalid so far from the iterate $x_k$.
 
 The approximation employed may be termed the \emph{model function} so that the approximate problem at iterate $x_k$ becomes $\operatorname{minimize}_p m_k(x_k + p)$ where $p$ is the candidate step so that $x_k + p$ lies within the trust region. A very popular model function takes the form of a quadratic approximation using the first two terms of a Taylor approximation of the objective function at the iterate point
@@ -133,7 +158,7 @@ where $\nabla f(x_k)$ and $\nabla^2 f(x_k)$ are the gradient and Hessian of the 
 
 Trust regions see a great deal of use in nonlinear optimization methods, and can be modified for constrained optimization. Beyond the choice of approximation and trust region type, choosing the region size and shape, the step size, and the method used to solve even the trust region subproblem are important. Another class of methods serving a similar purpose are line search methods where a direction is first chosen to search for the next iterate, so that the step size is chosen second. Line search methods are in a sense the dual of trust region methods, where the step size (trust region radius or boundary) is chosen first, then a direction is chosen.
 
-\subsection{Primal-dual interior point methods}
+\subsection{Primal-dual interior point methods} \label{ssec:interiorPoint}
 The idea behind an interior-point method is to modify the an original problem to take into account the constraint functions by modifying the objective function to penalize iterates that leave the feasible region (or break the constraints). As this may modify the optimal solution, the approximation is realxed as a local minimum is approached, so you are essentially solving a series of approximate optimization subproblems. A very popular approximation is to use a logarithmic barrier, that induces a penalty that approaches $\infty$ as you approach the constraint.
 
 \begin{align}
