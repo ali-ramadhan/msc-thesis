@@ -9,12 +9,12 @@
 
 In the previous chapter, we saw that a lookup table approach could be used to perform geometry reconstruction using Coulomb explosion imaging. However, numerous drawbacks including the lookup table's exponential computational space complexity (severely limiting its scalability to larger molecules) and its inability to both provide precise reconstructions as well as distinguish between local and global minima leave much to be desired.
 
-In this chapter, we will approach the task of geometry reconstruction as an optimization problem, allowing us to utilize the the much more sophisticated methods of constrained nonlinear optimization. Before we describe our reconstruction methods, it will be worthwhile to provide some background on the theoretical framework underpinning the optimization algorithms we utilize. We will then describe our implementation and use it to reconstruct the same molecular structures seen in the previous chapter, allowing for some comparison between methods and for some verification of the results. We will then further study the individual geometries recovered and the nature of the degenerate geometries seen in section \ref{sec:degenerateGeometries}, bringing to light some troubling issues regarding the problem of geometry reconstructing as well as highlighting its pathalogical nature.
+In this chapter, we will approach the task of geometry reconstruction as an optimization problem, allowing us to utilize the the much more sophisticated methods of constrained nonlinear optimization. Before we describe our reconstruction methods, it will be worthwhile to provide some background on the theoretical framework underpinning the optimization algorithms we utilize. We will then describe our implementation and use it to reconstruct the same molecular structures seen in the previous chapter, allowing for some comparison between methods and for some verification of the results. We will then further study the individual geometries recovered and the nature of the degenerate geometries seen in section \ref{sec:degenerateGeometries}. %, bringing to light some troubling issues regarding the problem of geometry reconstructing as well as highlighting its pathalogical nature.
 
 \section{Mathematical optimization}
 We will take a massively expedited tour of mathematical optimization with the aim of explaining the inner workings of the primal-dual interior point methods used for nonlinear constrained optimization in this chapter. To understand how these methods operate, we will need to introduce some important concepts in optimization, namely the duality principle, the Karush-Kuhn-Tucker (KKT) optimality conditions, and the general concept of a trust region. This is prefaced with a brief introduction to the subject.
 
-No knowledge of mathematical optimization is required, however we will assume some background knowledge throughout this appendix, namely a familiarity with linear algebra, matrix algebra, vector calculus, and some elementary concepts in analysis. \citet{Boyd04} provides an excellent introduction to mathematical optimization, particularly convex optimization, and their freely-available textbook is accompanied by video lectures and lecture slides. However, our problem is nonconvex and so we turn to \citet{Nocedal06} who discuss the more advanced interior-point methods suitable for nonconvex optimization with great clarity.
+No knowledge of mathematical optimization is required, however we will assume some background knowledge throughout this section, namely a familiarity with linear algebra, matrix algebra, vector calculus, and some elementary concepts in analysis. \citet{Boyd04} provides an excellent introduction to mathematical optimization, particularly convex optimization, and their freely-available textbook is accompanied by video lectures and lecture slides. We will follow their textbook for sections \ref{ssec:elementaryOptimization} to \ref{ssec:KKT}. Our problem is nonconvex, however, and so we also turn to \citet{Nocedal06} for sections \ref{ssec:trust} to \ref{ssec:interiorPoint}, who discuss the more advanced interior-point methods suitable for nonlinear constrained optimization with clarity.
 
 \subsection{Elementary concepts} \label{ssec:elementaryOptimization}
 The standard form of a (continuous) optimization problem is
@@ -24,24 +24,44 @@ The standard form of a (continuous) optimization problem is
 f_i(x) \leq 0, \; i \in \left\{1, \dots, m \right\}\\
 & h_i(x) = 0, \; i \in \left\{1, \dots, p \right\} \nonumber
 \end{align}
-where $f_0(x): \mathbb{R}^n \rightarrow \mathbb{R}$ is the \emph{objective function} to be minimized over the variable $x \in \mathbb{R}^n$, $f_i(x) \leq 0$ are called the \emph{inequality constraints}, and $h_i(x) = 0$ are called the \emph{equality constraints}. We denote its domain by
+where $f_0(x): \mathbb{R}^n \rightarrow \mathbb{R}$ is the \emph{objective function} to be minimized over the variable $x \in \mathbb{R}^n$, $f_i(x) \leq 0$ are called the \emph{inequality constraints}, and $h_i(x) = 0$ are called the \emph{equality constraints}. The notation $f: A \rightarrow B$ denotes that $f$ is a \emph{function} (or \emph{mapping}) with \emph{domain} $A$, that is $A$ is its set of acceptable inputs, and \emph{codomain} $B$, that is $B$ is its set of acceptable outputs. We say that $f$ maps values from $A$ to $B$. $\mathbb{R}$ denotes the set of real numbers, and $\mathbb{R}^n$ denotes the $n$-dimensional real, or Eucliedian, vector space, that is the set of $n$-dimensional vectors with real components. The notation $x \in S$ denotes that $x$ is an element of the set $S$.
+
+We denote the domain of the optimization problem \eqref{eq:op}by
 \begin{equation}
 \mathcal{D} = \bigcap_{i=1}^m \operatorname{dom} f_i \cap \bigcap_{i=1}^p \operatorname{dom} h_i \neq \emptyset
 \end{equation}
-and assume it is nonempty.
+and assume it is nonempty. The $\cap$ operator denotes the intersection operation and the $\emptyset$ denotes the empty set, both from set theory \citep{Halmos17}. The operator $\operatorname{dom} f$ denotes the domain of the function $f$. In effect, an optimization problem is only defined for regions where the objective function and all constraints are defined. An optimization problem is solved once an optimal solution, usually denoted $x^\star$, is found that minimizes the objective function $f_0(x)$ such that $f_0(x^\star) \le f_0(x)$ for all $x \in \mathcal{D}$.
 
-Optimization problems can be classified based on the nature of the objective function and constraints, with each class having their own algorithms. Perhaps the simplest commonly encountered class is \emph{linear programs} where the objective function and constraints are linear, that is $f_0, \dots, f_m, h_1, \dots, h_p$ all satisfy $f_i(\alpha x + \beta y) = \alpha f_i(x) + \beta f_i(y)$ for all $x,y \in \mathbb{R}^n$ and $\alpha, \beta \in \mathbb{R}$. Although no analytical solution exists, efficient algorithms with computation time $\mathcal{O}(n^2m)$ exist to find solutions, such as George Dantzig's simplex method (the one more famous than Nelder-Mead's simplex method discussed in section \ref{sec:nelderMead}).
+Taking our geometry reconstruction problem as an example, we can describe our objective function as
+\begin{equation} \label{eq:ourObjective}
+f_0(x) = |p(x)-p_\textrm{measured}|^2
+\end{equation}
+where $p(x)$ is the momentum vectors produced following Coulomb explosion of a molecular with structure $x$, and the inequality constraints $f_i(x) \leq 0$ encapsulate the box constraints that limit the geometries recovered to physically reasonable values. For a triatomic molecule, $x = (r_{12}, r_{23}, \theta) \in \mathbb{R}^3$ may be used and $p(x) \in \mathbb{R}^9$ although it may be reduced to contain only $5$ or even $3$ nonzero components (see section \ref{sec:conventions}). For a general molecule with $N$ atoms, $x \in \mathbb{R}^{3N-6}$ and $p(x) \in \mathbb{R}^{3N-3}$ at most. We may wish to limit the reconstructed \ch{C-O} bond length to lie between \SIrange{100}{500}{\pico\m} in which case we would employ the inequality constraints $f_1(r_\mathrm{CO}) =  100 - r_\mathrm{CO} \le 0$ and $f_2(r_\mathrm{CO}) =  r_\mathrm{CO} - \SI{500}{\pico\m} \le 0$. Box constraints for the \ch{C-S} bond length and bond angle can be placed in a similar manner. Other contraints may be employed limiting, for example, the bond length ratio $r_\mathrm{CO}/r_\mathrm{CS}$ to lie between certain values pertaining to physically realizable geometries. We employ no equality constraints. Generally, $p(x)$ and $p_\textrm{measured}$ should be described in the same rotation convention otherwise they cannot be compared.
 
-\emph{Convex optimization problems} are a superset of linear programs and have constraint functions that satisfy $f_i(\alpha x + \beta y) \le \alpha f_i(x) + \beta f_i(y)$ for all $x,y \in \mathbb{R}^n$ and all $\alpha, \beta \in \mathbb{R}$ with $\alpha, \beta \ge 0$ and $\alpha + \beta = 1$. In general, very mature and effective algorithms exist to solve convex optimization problems. If a problem can be transformed into convex form, then it becomes rather easy to solve, however this process can be very difficult and many tricks exist. Least squares problems are actually a special case of convex optimization problems.
+Optimization problems can be classified based on the nature of the objective function $f_0$ and the constraints $f_i$ and $h_j$, with each class having their own algorithms. Perhaps the simplest commonly encountered class is the class of \emph{linear programs} where the objective function and constraints are linear, that is $f_0, \dots, f_m, h_1, \dots, h_p$ all satisfy the linearity property
+\begin{equation}
+f_i(\alpha x + \beta y) = \alpha f_i(x) + \beta f_i(y)
+\end{equation}
+for all $x,y \in \mathbb{R}^n$ and $\alpha, \beta \in \mathbb{R}$. Although no analytical solution exists to solve an arbitrary linear program, efficient algorithms with computational run time $\mathcal{O}(n^2m)$ exist to find solutions, such as George Dantzig's simplex method.
+
+\emph{Convex optimization problems} are a superset of linear programs and are characterized by having an objective function and constraint functions that all satisfy the convexity property
+\begin{equation}
+f_i(\alpha x + \beta y) \le \alpha f_i(x) + \beta f_i(y)
+\end{equation}
+for all $x,y \in \mathbb{R}^n$ and all $\alpha, \beta \in \mathbb{R}$ with $\alpha, \beta \ge 0$ and $\alpha + \beta = 1$. Commonly encountered convex function include the exponential function $e^x$ and the quadratic function $x^2$. In general, very mature and effective algorithms exist to solve convex optimization problems. If a problem can be transformed into convex form, then it becomes rather easy to solve, however this process can be very difficult and many tricks exist. Linear programs and the linear least squares problems are special case of convex optimization problems.
 
 \emph{Nonlinear optimization} describes the class of problems where the objective or constraint functions are not linear, but not known to be convex. Unfortunately there are no effective algorithms for solving nonlinear problems in general but there are a number of approaches that may prove fruitful. These include the interior-point method we use and sequential quadratic programming. \citet{Sun15} provide an expository article on ``when nonconvex problem are not scary''.
 
-Unfortunately the problem of geometry reconstruction falls under the category of nonlinear problems. We can describe our objective function as $f_0(x) = |p(x)-p_\textrm{measured}|^2$ where $p(x)$ is the momentum vectors produced following Coulomb explosion of a molecular with structure $x$, and the inequality constraints $f_i(x) \leq 0$ encapsulate the box constraints that limit the geometries recovered to physically reasonable values. For a triatomic molecule, $x = (r_{12}, r_{23}, \theta)$ may be used, for example.
+Unfortunately the problem of geometry reconstruction falls under the category of nonlinear problems. While our objective function \eqref{eq:ourObjective} seems to mimic a least-squares minimization problem, it is certainly nonlinear in nature. There are two contributors to the nonlinear nature of our objective function. One is the existence of multiple solutions as evidenced by the existence of degenerate geometries we encountered in section \ref{sec:degenerateGeometries}. The other is the nonlinear nature of the objective function. A one-dimensional convex function must have a nonnegative second-derivative, and a multi-dimensional convex function must be twice-differentiable and have a positive semidefinite Hessian matrix over its domain \citep[p. 71]{Boyd04}. Nothing guarantees that this is true for our objective function.
 
-% TODO: Explain: objective function looks like least squares. How is this not convex?
+Algorithms do exist for the solution of nonlinear least-squares problems such as NL2SOL \citep{Dennis81} and the Levenberg–Marquardt algorithm \citep{Pujol07}, however, modifying them to account for constraints usually introduces penalty functions and trust regions and they begin to appear quite similar to the interior-point methods described in section \ref{ssec:interiorPoint}. Examples include the open-source Interior Point OPTimizer (IPOPT) \citep{Branch99}.
+
+% It is worth showing that not every least-squares minimization problem is a convex optimization problem.
 
 \subsection{Duality}
-In order to describe and understand the interior-point method we use, it is neccessary that we look at the concept of duality. We begin by defining the \emph{Langrangian} associated with the optimization problem \eqref{eq:op} as
+In order to describe and understand the interior-point method we use, it is neccessary that we look at the concept of duality. Every optimization problem may be viewed from two different perspectives, that of the original, or \emph{primal}, problem and the \emph{dual} problem. Solving the dual problem provides a lower bound to the primal problem as we will show. Additional, by attempting to solve both problems at the same time, as interior-point methods do, an optimal solution may be found more efficiently.
+
+We begin by defining the \emph{Langrangian} associated with the optimization problem \eqref{eq:op} as
 \begin{equation}
 L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^m \lambda_i f_i(x)
 + \sum_{i=1}^p \nu_i h_i(x)
@@ -56,11 +76,11 @@ g(\lambda, \nu) = \inf_{x \in \mathcal{D}} L(x, \lambda, \nu)
 \end{equation}
 where $g: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$. The $\inf$ operator refers to the \emph{infimum} operator, which may also be called the  \emph{greatest lower bound} operator. An important property of the dual function is that it is concave even when the problem is not convex, as it is the pointwise infimum of a family of affine functions of $(\lambda, \nu)$.
 
-\begin{theorem}
+\begin{theorem} \label{thm:lower}
   The Lagrange dual function yields a lower bound on the optimal value of the problem \eqref{eq:op} for $\lambda \succeq 0$ and any $\nu$.
 \end{theorem}
 \begin{proof}
-  Denote the optimal value by $p^\star$ and a feasible point by $x'$ so that it satisfies the constraints $f_i(x') \le 0$ and $h_i(x') = 0$. Then for $\lambda \succeq 0$ and any $\nu$ we have that
+  Denote the optimal value of the dual function by $p^\star$ and let $x'$ denote a feasible input of the Lagrangian, that is it satisfies the constraints $f_i(x') \le 0$ and $h_i(x') = 0$. Then for $\lambda \succeq 0$ and any $\nu$ we have that
   
   $$ \sum_{i=1}^m \lambda_i f_i(x') + \sum_{i=1}^p \lambda_i h_i(x') \le 0 $$
   so that
@@ -70,7 +90,6 @@ where $g: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$. The $\inf$ o
   which must hold for every feasible point $x'$ including the optimal solution $x^\star$ and thus
   $$ g(\lambda, \nu) \le p^\star = f_0(x^\star) $$ 
 \end{proof}
-
 
 As the lagrange dual function provides a lower bound on the optimal value $p^\star$ that depends on $(\lambda,\nu)$, we may be interested in finding the best lower bound. This leads to the \emph{Lagrange dual problem} associated with \eqref{eq:op} which can be stated as
 \begin{align} \label{eq:dualop}
