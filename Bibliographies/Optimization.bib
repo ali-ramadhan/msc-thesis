@@ -2,63 +2,12 @@
 # Optimization theory #
 #######################
 
-@article{Bengio16,
-  title = {Machines who learn},
-  volume = {314},
-  number = {6},
-  journal = {Scientific American},
-  author = {Bengio, Yoshua},
-  year = {2016},
-  pages = {46--51},
-  doi = {10.1038/scientificamerican0616-46}
-}
-
-@article{LeCun15,
-  title = {Deep learning},
-  volume = {521},
-  doi = {10.1038/nature14539},
-  number = {7553},
-  journal = {Nature},
-  author = {LeCun, Yann and Bengio, Yoshua and Hinton, Geoffrey},
-  year = {2015},
-  pages = {436--444}
-} 
-
 @article{Sun15,
   title = {When are nonconvex problems not scary?},
   author = {Sun, Ju and Qu, Qing and Wright, John},
   journal = {arXiv preprint arXiv:1510.06096},
   year = {2015},
   url = {https://arxiv.org/abs/1510.06096}
-}
-
-@inproceedings{Dauphin14,
-  title = {Identifying and attacking the saddle point problem in high-dimensional non-convex optimization},
-  url = {http://papers.nips.cc/paper/5486-sparse-pca-via-covariance-thresholding},
-  booktitle = {Advances in Neural Information Processing Systems 27 (NIPS 2014)},
-  author = {Dauphin, Yann N. and Pascanu, Razvan and Gulcehre, Caglar and Cho, Kyunghyun and Ganguli, Surya and Bengio, Yoshua},
-  year = {2014},
-  pages = {2933--2941}
-}
-
-@article{Pascanu14,
-  title = {On the saddle point problem for non-convex optimization},
-  url = {http://arxiv.org/abs/1405.4604},
-  journal = {arXiv preprint arXiv:1405.4604},
-  author = {Pascanu, Razvan and Dauphin, Yann N. and Ganguli, Surya and Bengio, Yoshua},
-  year = {2014}
-}
-
-@Inbook{Keogh10,
-  author={Keogh, Eamonn and Mueen, Abdullah},
-  editor={Sammut, Claude and Webb, Geoffrey I.},
-  title={Curse of Dimensionality},
-  bookTitle={Encyclopedia of Machine Learning},
-  year={2010},
-  publisher={Springer},
-  address={Boston, MA},
-  pages={257--258},
-  doi={10.1007/978-0-387-30164-8_192}
 }
 
 @article{Pujol07,
@@ -130,12 +79,102 @@
   pages = {369--383}
 }
 
+###########################
+# Curse of dimensionality #
+###########################
+
+@article{Bengio16,
+  title = {Machines who learn},
+  volume = {314},
+  number = {6},
+  journal = {Scientific American},
+  author = {Bengio, Yoshua},
+  year = {2016},
+  pages = {46--51},
+  doi = {10.1038/scientificamerican0616-46}
+}
+
+@article{LeCun15,
+  title = {Deep learning},
+  volume = {521},
+  doi = {10.1038/nature14539},
+  number = {7553},
+  journal = {Nature},
+  author = {LeCun, Yann and Bengio, Yoshua and Hinton, Geoffrey},
+  year = {2015},
+  pages = {436--444}
+}
+
+@inproceedings{Dauphin14,
+  title = {Identifying and attacking the saddle point problem in high-dimensional non-convex optimization},
+  url = {http://papers.nips.cc/paper/5486-sparse-pca-via-covariance-thresholding},
+  booktitle = {Advances in Neural Information Processing Systems 27 (NIPS 2014)},
+  author = {Dauphin, Yann N. and Pascanu, Razvan and Gulcehre, Caglar and Cho, Kyunghyun and Ganguli, Surya and Bengio, Yoshua},
+  year = {2014},
+  pages = {2933--2941}
+}
+
+@article{Pascanu14,
+  title = {On the saddle point problem for non-convex optimization},
+  url = {http://arxiv.org/abs/1405.4604},
+  journal = {arXiv preprint arXiv:1405.4604},
+  author = {Pascanu, Razvan and Dauphin, Yann N. and Ganguli, Surya and Bengio, Yoshua},
+  year = {2014}
+}
+
+@Inbook{Keogh10,
+  author={Keogh, Eamonn and Mueen, Abdullah},
+  editor={Sammut, Claude and Webb, Geoffrey I.},
+  title={Curse of Dimensionality},
+  bookTitle={Encyclopedia of Machine Learning},
+  year={2010},
+  publisher={Springer},
+  address={Boston, MA},
+  pages={257--258},
+  doi={10.1007/978-0-387-30164-8_192}
+}
+
 @book{Bellman57,
   title = {Dynamic programming},
   author = {Bellman, Richard Ernest},
   year = {2013},
   publisher = {Princeton University Press},
 }
+
+##########################
+# Interior-point methods #
+##########################
+
+@article{Waltz06,
+  title={An interior algorithm for nonlinear optimization that combines line search and trust region steps},
+  author={Waltz, Richard A and Morales, Jos{\'e} Luis and Nocedal, Jorge and Orban, Dominique},
+  journal={Mathematical programming},
+  volume={107},
+  number={3},
+  pages={391--408},
+  year={2006}
+}
+
+@article{Byrd00,
+  title={A trust region method based on interior point techniques for nonlinear programming},
+  author={Byrd, Richard H and Gilbert, Jean Charles and Nocedal, Jorge},
+  journal={Mathematical Programming},
+  volume={89},
+  number={1},
+  pages={149--185},
+  year={2000}
+}
+
+@article{Byrd99,
+  title={An interior point algorithm for large-scale nonlinear programming},
+  author={Byrd, Richard H and Hribar, Mary E and Nocedal, Jorge},
+  journal={SIAM Journal on Optimization},
+  volume={9},
+  number={4},
+  pages={877--900},
+  year={1999}
+}
+
 
 ##################
 # Implementation #

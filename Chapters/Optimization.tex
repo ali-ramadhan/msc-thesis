@@ -158,16 +158,17 @@ The approximation employed may be termed the \emph{model function} so that the a
 \end{equation}
 where $p$ is the candidate step so that $x_k + p$ lies within the trust region. A very popular model function takes the form of a quadratic approximation using the first two terms of a Taylor approximation of the objective function at the iterate point
 \begin{equation}
-  m_k(x_k + p) = f(x_k) + p^T \nabla f(x_k) + \frac{1}{2} p^T \nabla^2 f(x_k) p
+  m_k(x_k + p) = f(x_k) + p^T \nabla f(x_k) + \frac{1}{2} p^T H[f(x_k)] p
 \end{equation}
-where $\nabla f(x_k)$ and $\nabla^2 f(x_k)$ are the gradient and Hessian of the objective function $f$ at the point $x_k$ \citep{More83}. A quadratic function is convex and thus such a convex ``subproblem'' that locally approximates the optimization problem can be solved efficiently.
+where $\nabla f(x_k)$ and $H[f(x_k)]$ are the gradient and Hessian respectively, of the objective function $f$ at the point $x_k$ \citep{More83}. A quadratic function is convex and thus such a convex ``subproblem'' that locally approximates the optimization problem can be solved efficiently.
 
-Trust regions see a great deal of use in nonlinear optimization methods, and can be modified for constrained optimization. Beyond the choice of approximation and trust region type, choosing the region size and shape, the step size, and the method used to solve even the trust region subproblem are important. Another class of methods serving a similar purpose are line search methods where a direction is first chosen to search for the next iterate, so that the step size is chosen second. Line search methods are in a sense the dual of trust region methods, where the step size (trust region radius or boundary) is chosen first, then a direction is chosen.
+Trust regions see a great deal of use in nonlinear optimization methods, and can be modified for constrained optimization. Beyond the choice of approximation and trust region type, choosing the region size and shape, the step size, and the method used to solve even the trust region subproblem are important \citep[ch. 4]{Nocedal06}. Another class of methods serving a similar purpose are line search methods where a direction is first chosen to search for the next iterate, so that the step size is chosen second. Line search methods are in a sense the dual of trust region methods, where the step size (trust region radius or boundary) is chosen first, then a direction is chosen \citep[ch. 1]{Nocedal06}.
 
 \subsection{Primal-dual interior point methods} \label{ssec:interiorPoint}
 Having discussed some important ideas and concepts from mathematical optimization theory, we can now begin to discuss the interior-point optimization method we rely on for geometry reconstruction in this chapter.
 
-The idea behind an interior-point method is to modify the an original problem to take into account the constraint functions by modifying the objective function to penalize iterates that leave the feasible region (or break the constraints). As this may modify the optimal solution, the approximation is realxed as a local minimum is approached, so you are essentially solving a series of approximate optimization subproblems. A very popular approximation is to use a logarithmic barrier, that induces a penalty that approaches $\infty$ as you approach the constraint.
+\subsubsection*{Introduction of a logarithmic barrier function}
+The basic idea behind interior-point methods is to modify the original optimization problem to take into account the constraint functions by modifying the objective function to penalize guesses that leave the feasible region, that is guesses that break the inequality and equality constraints. As this may modify the optimal solution, the approximation is parameterized by a real parameter $\mu > 0$ that is relaxed as a local minimum is approached, so you are essentially solving a series of approximate optimization ``subproblems'' that converges to the original problem as $\mu \rightarrow 0$. A very popular approximation is to use a logarithmic barrier that induces a penalty that approaches $\infty$ as you approach any barrier defined by a constraint, that is the penalty increases exponentially as a constraint is close to being violated. This approach is derived and described in detail by \citet{Byrd99,Byrd00,Waltz06} as well as by \citet[ch. 19]{Nocedal06}.
 
 \begin{align}
 \mathrm{minimize} \quad & f_\mu(x,s) = f(x) - \mu \sum_{i=1}^{m} \ln s_i \nonumber \\
@@ -175,7 +176,9 @@ The idea behind an interior-point method is to modify the an original problem to
                            & h_i(x) = 0 \nonumber
 \end{align}
 
-Direct step
+If the problem is locally convex, then a trust region subproblem is created and solved to take the next step. Otherwise, a direct step is taken to solve the KKT optimiality conditions.
+
+\subsubsection*{Direct step by solving the KKT optimiality conditions}
 \begin{equation}
 \begin{pmatrix}
   H   & 0        & J_h^T & J_g^T \\
@@ -203,6 +206,7 @@ H = \nabla^2 f(x) + \sum_i \lambda_i \nabla^2 g_i(x) + \sum_j \lambda_j \nabla^2
 \end{equation}
 $J_g$ and $J_h$ are the Jacobians of the constraint function $g$ and $h$ respectively, $S = \operatorname{diag}(s)$, $\Lambda = \operatorname{diag}(\lambda)$, $\lambda$ and $y$ are the Lagrange multipliers associated with the constraint functions $g$ and $h$ respectively, and $e$ is a vector of ones with the same size as $g$.
 
+\subsubsection*{Conjugate gradient step by solving a trust region subproblem}
 
 \subsection{Curse of dimensionality and possible solutions} \label{ssec:curse}
 The curse of dimensionality, a term first introduced by \citet{Bellman57} when considering problems in dynamic optimization, refers to the exponential increase in volume when adding extra dimensions to Euclidean space \citep{Keogh10}. It manifests itself in two ways when tackling the geometry reconstruction problem for larger and larger molecules, as we need $3N-6$ parameters to describe the geometry of an molecule with $N \ge 3$ atoms. Firstly, the parameter space or phase space to be searched increases exponentially with $N$, and with this increase may come an increase in local minima, and possible an increase in the number of degenerate geometries. While we believe, anecdotally, that interior-point methods will still be feasible for polyatomic molecules with several atoms, convergence will definitely take longer and multiple runs may be required before finding a feasible geometry or any degenerate geometries, possibly necessitating the use of a supercomputer cluster.
