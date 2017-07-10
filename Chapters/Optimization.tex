@@ -113,12 +113,12 @@ so that the dual function provides a lower bound on $p^\star$ by theorem \ref{th
 
 For the fourth condition, we look to the dual function and assume that strong duality holds, that is that $f_0(x^\star) = g(\lambda^\star, \nu^\star)$. Then we can write
 \begin{align}
-  f_0(x^\star) &= g(\lambda^\star, \nu^\star) \\
-  & = \inf_x \left[ f_0(x) + \sum_{i=1}^m \lambda_i^\star f_i(x) + \sum_{i=1}^p \nu_i^\star h_i(x) \right] \\
+  f_0(x^\star) &= g(\lambda^\star, \nu^\star) \nonumber \\
+  & = \inf_x \left[ f_0(x) + \sum_{i=1}^m \lambda_i^\star f_i(x) + \sum_{i=1}^p \nu_i^\star h_i(x) \right] \nonumber \\
   & \le f_0(x^\star)
-    + \underbrace{\sum_{i=1}^m \lambda_i f_i(x^\star)}_{\le 0}
-    + \underbrace{\sum_{i=1}^p \nu_i h_i(x^\star)}_{=0} \\
-  & \le f_0(^\star)
+    + \underbrace{\sum_{i=1}^m \lambda_i^\star f_i(x^\star)}_{\le 0}
+    + \underbrace{\sum_{i=1}^p \nu_i^\star h_i(x^\star)}_{=0} \nonumber \\
+  & \le f_0(x^\star)
 \end{align}
 where we invoked the definition of the dual function on the second line, and the third line follows from the fact that the Lagrangian evaluated at the optimal primal point $x^\star$ provides a lower bound. Then on the fourth line we realize that the equality constraint functions $h_i(x) = 0$ cause the third term to vanish, and we assumed that the Lagrange multipliers obeyed $\lambda_i^\star \ge 0$ while the inequality constraints satisfy $f_i(x) \le 0$ thus causing the second term to be nonpositive. However we require that equality hold on the fourth line as $f_0(x^\star)$ must equal itself. For equality to hold, we thus require that the second term vanish just like the third term,
 \begin{equation}
@@ -148,17 +148,25 @@ h_i(x^\star) & = 0, \; & i & \in {1,\dots,p} \nonumber \\
 which together are called the \emph{Karush-Kuhn-Tucker (KKT) conditions}. They are sometimes referred to as the first-order optimality conditions, as second-order conditions do exist \citep[\S 12.5]{Nocedal06}.
 
 \subsection{Trust regions} \label{ssec:trust}
-Switching gears a little bit, we'll look at a general strategy of solving optimization problem using the concept of a \emph{trust region}. When searching for an optimal solution starting from an initial point $x_0$, the idea is to create and solve an approximate optimization problem at each iterate $x_k$ with the hope that the approximation is easier to solve yet locally accurate enough to help locate the true optimal solution. The approximated is \emph{trusted} only so much, up to some radius or region boundary. A circular or spherical trust region may be used, but so can box and elliptical regions. If a sufficiently better iterate $x_{k+1}$ is not found within the trust region then the region may be shrunk in case the approximation is invalid so far from the iterate $x_k$.
+In general, when searching for an optimal solution an optimization algorithm begins from an initial guess $x_0$. Then successive guesses, or iterates, denoted by $x_k$ for the $k^\mathrm{th}$ guess or iterate are made with the aim of converging on the optimal solution $x^\star$.
 
-The approximation employed may be termed the \emph{model function} so that the approximate problem at iterate $x_k$ becomes $\operatorname{minimize}_p m_k(x_k + p)$ where $p$ is the candidate step so that $x_k + p$ lies within the trust region. A very popular model function takes the form of a quadratic approximation using the first two terms of a Taylor approximation of the objective function at the iterate point
+Switching gears a little bit in this subsection, we'll look at a general strategy of solving optimization problem using the concept of a \emph{trust region} which may be used to determine the next iterate $x_{k+1}$. The idea is to create and solve an approximate optimization problem at each iterate $x_k$ with the hope that the approximation is easier to solve yet locally accurate enough to help locate the true optimal solution. The approximated is \emph{trusted} only so much, up to some radius or region boundary. A circular or spherical trust region may be used, but so can box and elliptical regions. If a sufficiently better iterate $x_{k+1}$ is not found within the trust region then the region may be shrunk in case the approximation becomes grossly invalid for points far way from the iterate $x_k$.
+
+The approximation employed may be termed the \emph{model function} so that the approximate problem at iterate $x_k$ becomes
+\begin{equation}
+\operatorname{minimize}_p m_k(x_k + p)
+\end{equation}
+where $p$ is the candidate step so that $x_k + p$ lies within the trust region. A very popular model function takes the form of a quadratic approximation using the first two terms of a Taylor approximation of the objective function at the iterate point
 \begin{equation}
   m_k(x_k + p) = f(x_k) + p^T \nabla f(x_k) + \frac{1}{2} p^T \nabla^2 f(x_k) p
 \end{equation}
-where $\nabla f(x_k)$ and $\nabla^2 f(x_k)$ are the gradient and Hessian of the objective function $f$ at the point $x_k$ \citep{More83}.
+where $\nabla f(x_k)$ and $\nabla^2 f(x_k)$ are the gradient and Hessian of the objective function $f$ at the point $x_k$ \citep{More83}. A quadratic function is convex and thus such a convex ``subproblem'' that locally approximates the optimization problem can be solved efficiently.
 
 Trust regions see a great deal of use in nonlinear optimization methods, and can be modified for constrained optimization. Beyond the choice of approximation and trust region type, choosing the region size and shape, the step size, and the method used to solve even the trust region subproblem are important. Another class of methods serving a similar purpose are line search methods where a direction is first chosen to search for the next iterate, so that the step size is chosen second. Line search methods are in a sense the dual of trust region methods, where the step size (trust region radius or boundary) is chosen first, then a direction is chosen.
 
 \subsection{Primal-dual interior point methods} \label{ssec:interiorPoint}
+Having discussed some important ideas and concepts from mathematical optimization theory, we can now begin to discuss the interior-point optimization method we rely on for geometry reconstruction in this chapter.
+
 The idea behind an interior-point method is to modify the an original problem to take into account the constraint functions by modifying the objective function to penalize iterates that leave the feasible region (or break the constraints). As this may modify the optimal solution, the approximation is realxed as a local minimum is approached, so you are essentially solving a series of approximate optimization subproblems. A very popular approximation is to use a logarithmic barrier, that induces a penalty that approaches $\infty$ as you approach the constraint.
 
 \begin{align}
