@@ -213,6 +213,10 @@ Two popular random walk MCMC methods include the Metropolis-Hastings algorithm a
 
 One popular algorithm not based on random walks, Hamiltonian MCMC, has risen in popularity in recent years due to its utility in sampling from high-dimensional distributions more effectively than random walk based algorithms. Inspired by a hybrid Monte Carlo method first proposed by \citet{Duane87} for the numerical simulation of lattice field theories, Hamiltonian MCMC takes a Hamiltonian mechanics approach to sampling by subjecting a fictional particle to a potential energy function described by the target probability density distribution. Random sampling is performed by solving Hamilton's equations for the fictional particle. While seemingly bizarre, Hamiltonian MCMC does indeed work quite well in many cases. \citet{Neal11} provides an excellent and practical introduction. Stan (along with it's R wrapper, RStan, and Python wrapper, PyStan) is the most popular and mature implementation \citep{Carpenter17}, finding use in many scientific fields and in the humanities as well.
 
+If a method or framework for geometry reconstruction using Bayesian inference is developed and implemented, may we suggest calling it MMMGRUBS\footnotemark~ (Molecular Motion Movies and Geometry Reconstruction Using Bayesian Statistics).
+
+\footnotetext{Grubs are beetle larvae, as enjoyed by Simba in the 1994 American animated epic musical film \emph{The Lion King}, mmm!}
+
 % \subsection{Other Bayesian methods}
 % Bayesian inference is very suitable for inference in inverse problems and operating within such a framework may yield improved methods for geometry reconstruction \citet{Stuart10}. Recent work that may of interest includes the quantification of uncertainty for differential equations as developed by \citet{Chkrebtii16}, however this only works for time evolving a system of differentials forward.
 
