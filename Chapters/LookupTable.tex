@@ -198,11 +198,17 @@ In our case, we chose to increase the precision by a factor of $5$ each iteratio
 One possible improvement is to store these thousands of extra simulations as extra lookup table rows, effectively extending the lookup table. This storing or caching of the results of expensive function calls is termed \emph{memoization}. It may help if the geometries being reconstructed tend to lie close to each other, however in practice the sparsity of reconstructed geometries relative to the resolution of these extra rows results in almost no improvements in performance.
 
 \subsection{Using simulations to test accuracy} \label{ssec:LTaccuracy}
-Since we used simulations to test the accuracy of the Nelder-Mead simplex method in section \ref{ssec:simplexFail}, it is only fair that we subject the lookup table to the same analysis.
+Since we used simulations to test the accuracy of the Nelder-Mead simplex method in section \ref{ssec:simplexFail}, it is only fair that we subject the lookup table to the same analysis. Figure \ref{fig:LookupTableCalibrationPlots} shows the results of this test.
 
-% TODO: Find or recreate these plots!
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/LookupTableCalibrationPlots}
+  \caption[Testing the Lookup table's ability to reconstruct \ch{OCS} (2,2,2) geometries.]
+  {Testing the lookup table's ability to reconstruct \ch{OCS} (2,2,2) geometries by starting with the ground-state geometry of \ch{OCS} and varying each parameter one-by-one. Solid black lines indicate the expected output geometry.}
+  \label{fig:LookupTableCalibrationPlots}
+\end{figure}
 
-It is important that we do not simulate geometries that are already contained in the lookup table otherwise the reconstruction is trivial.
+We see that the lookup table is able to reconstruct the vast majority of the geometries quite well, except for a single outlier, suggesting that this approach is already much more reliable as no fine tuning is required at all. It is important to note that we did not simulate geometries that are already contained in the lookup table otherwise the reconstruction is trivial as the table already contains the answer, which is extremely unlikely if we are dealing with experimental data.
 
 \section{Reconstruction of experimental data} \label{sec:LTgeometries}
 
