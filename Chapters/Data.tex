@@ -190,6 +190,21 @@ For example, the scatter plot in row $7$, column $1$ plots the oxygens's $p_x$ c
 
 Pairs plots for the 30, 60, 100, and \SI{200}{\fs} data sets are included in appendix \ref{appx:supplementaryFigures} as figures \ref{fig:OCS22230fsMomentumPairPlots}--\ref{fig:OCS222200fsMomentumPairPlots}.
 
+\subsection{Discrepency in the momentum measurements}
+It is also worth looking at the measurements of the momentum vectors for the three atoms to check if they sum to zero, that is if momentum is conserved. We will look at the momentum measurements for a laser pulse length of \SI{7}{\fs}. We plot a histogram of the the momentum discrepency $\Vert \mathbf{p}_O + \mathbf{p}_C + \mathbf{p}_S \Vert$ exhibited by the measurements in figure \ref{fig:OCS2227fsMomentumDiscrepency}(a). In (b) we also plot a histogram for the total momentum $\Vert \mathbf{p}_O \Vert + \Vert \mathbf{p}_C \Vert + \Vert \mathbf{p}_S \Vert$ for comparison.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{Plots/OCS2227fsMomentumError}
+  \caption[Discrepency in the momentum measurements.]
+  {(a) Momentum discrepency and (b) total momentum for momentum vectors measured for the \ch{OCS} $(2,2,2)$ molecule after Coulomb Coulomb by a \SI{7}{\fs} laser pulse. The vertical black line indicates the expected momentum when exploding from the ground-state geometry.}
+  \label{fig:OCS2227fsMomentumDiscrepency}
+\end{figure}
+
+We see that our the measured momentum vectors sum to zero with a discrepency of less than \SI{5e-23}{\kilogram\metre\per\second} in the vast majority of cases. This is compared to the total momentum which peaks around \SI{2.5e-21}{\kilogram\metre\per\second}. Thus the discrepency corresponds to a $<2\%$ error due to momentum not being conserved.
+
+The vertical black line in figure\ref{fig:OCS2227fsMomentumDiscrepency}(b)  indicates the expected momentum when exploding from the ground-state geometry ($r_\mathrm{CO} = \SI{1.15}{\angstrom}, r_\mathrm{CS} = \SI{1.56}{\angstrom}, \theta = \SI{172}{\degree}$), which we sometimes call a $100\%$ Coulombic explosion. In fact the total momentum is distributed about the expected momentum, suggesting that the \ch{OCS} $(2,2,2)$ fragmentation channel is ``highly Coulombic'', or that the Coulomb potential is a good approximation. The agreement is not perfect, however, and this will introduce some error in the reconstructed geometries as we assume a purely Coulombic potential. Significant amounts of initial momentum carried by any of the atomic fragments will also introduce error in the reconstructed geometries.
+
 \subsection{Kernel density estimation} \label{sec:kde}
 Kernel density estimates (KDE's) are used to estimate probability distributions in figures \ref{fig:OCS2227fsMomentum} and \ref{fig:OCS2227fsMomentumPairPlots}, and will be used to estimate probability distributions for the atomic positions of reconstructed geometries in chapters \ref{ch:lookupTable} and \ref{ch:optimization}. They are a method of performing nonparametric statistics, that is, of fitting observations to a probability distribution that has no dependency on a parameter \citep[\S 20.2-20.3]{Kendall99}. They serve roughly the same purpose as a histogram, however histograms tend to be non-smooth and their shape depends on both the width of the bins and the ends points of the bins. To solve at least the first two problems, we can use a KDE. They are especially effective for estimating high-dimensional probability distributions where histograms can be very sparse (see also curse of dimensionality, section \ref{ssec:curse}).
 
