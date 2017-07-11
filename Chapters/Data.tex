@@ -113,14 +113,14 @@ where the partial derivatives can be calculated from \eqref{eq:CEImomenta} as
   \frac{\partial p_y}{\partial y} = \frac{m}{t} &,\quad \frac{\partial p_y}{\partial y_0} = \frac{m}{t} ,\quad \frac{\partial p_y}{\partial t} = -m\frac{y-y_0}{t^2}
   \end{align}
 \end{subequations}
-and so
+and so after plugging in the partial derivatives and rearranging slightly we get that
 \begin{subequations}
   \begin{align}
-  \Delta p_x &= p_x \sqrt{
+  \frac{\Delta p_x}{p_x} &= \sqrt{
     \left( \frac{\Delta x}{x - x_0} \right)^2
     + \left( \frac{\Delta x_0}{x - x_0} \right)^2
     + \left( \frac{\Delta t}{t} \right)^2 } \\
-  \Delta p_y &= p_y \sqrt{
+  \frac{\Delta p_y}{p_y} &= p_y \sqrt{
     \left( \frac{\Delta y}{y - y_0} \right)^2
     + \left( \frac{\Delta y_0}{y - y_0} \right)^2
     + \left( \frac{\Delta t}{t} \right)^2 }
@@ -129,11 +129,26 @@ and so
 
 Repeating the process for $p_z = p_z(q,V,\ell,t_0,t)$ but ignoring the tiny uncertainties in $q$, $V$, and $\ell$, we get
 \begin{equation}
-\Delta p_z = p_z \sqrt{
+\frac{\Delta p_z}{p_z} = p_z \sqrt{
   \left( \frac{2tt_0}{t_0^2 - t^2} \Delta t_0 \right)^2
   + \left( \frac{t^2 + t_0^2}{t(t_0^2 - t^2)} \Delta t^2 \right)^2
 }
 \end{equation}
+
+To calculate the uncertainties in position, $\Delta x$ and $\Delta y$, we repeat the same process for equations \eqref{eq:xy} to arrive at
+\begin{subequations}
+\begin{align}
+\Delta x = \frac{1}{Q_T} \sqrt{ (1-x)^2 (\Delta Q_1^2 + \Delta Q_2^2) + x^2 (\Delta Q_3^2 + \Delta Q_4^2)} \\  
+\Delta y = \frac{1}{Q_T} \sqrt{ (1-y)^2 (\Delta Q_1^2 + \Delta Q_3^2) + y^2 (\Delta Q_2^2 + \Delta Q_4^2)}
+\end{align}
+\end{subequations}
+where $Q_T = Q_1 + Q_2 + Q_3 + Q_4$. The values of $Q_i$ are digitized with the same resolution thus denoting $\Delta Q_i = \Delta Q$ for $i=1,2,3,4$ yields simpler relations
+\begin{subequations}
+  \begin{align}
+  \Delta x = \sqrt{2} \frac{\Delta Q}{Q_T} \sqrt{(1-x)^2 + x^2} \\
+  \Delta y = \sqrt{2} \frac{\Delta Q}{Q_T} \sqrt{(1-y)^2 + y^2}
+  \end{align}
+\end{subequations}
 
 % Errors due to the size of the laser interaction volume seem to be negligible.
 
