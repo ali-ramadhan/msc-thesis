@@ -1,17 +1,27 @@
 % multiStartTriatomic.m:
-% ...
+% Given a list of momentum triples `momenta` for a triatomic molecule
+% whose atoms have masses `masses` and charges `charges`, reconstruct the
+% geometry corresponding to each momentum triple using nonlinear
+% constrained optimization, namely through the primal-dual interior-point
+% methods provided by the fmincon function. The MultiStart class is used
+% to run fmincon using different initial starting points in parallel.
 % 
 % Inputs:
-% * momenta: 
-% * masses:
-% * charges: 
-% * fOutFilenamePrefix: 
-% * startingIndex: 
-% * runs:
+% * momenta: nx9 matrix [p1x p1y ... p3z]
+% * masses:  row vector [m1 m2 m3] with the atomic masses in amu.
+% * charges: row vector [q1 q2 q3] with the atomic charges in units
+%            of the elementary charge e. So they should be integers.
+% * fOutFilenamePrefix: string prefix for the files containing the
+%       reconstructed geometries. See note below for more information.
+% * startingIndex: Not relevant any more, just set to 1.
+% * runs: integer number of times to run fmincon for each measured
+%         momentum triple.
 % 
 % Output: None.
 % 
-% Notes: * This function does not return anything as the reconstructions
+% Notes: * Requires the Optimization, Global Optimization, and Parallel
+%          Processing Toolboxes.
+%        * This function does not return anything as the reconstructions
 %          are done in parallel in a parfor loop. So to avoid multiple
 %          threads writing to the same out variable, the results of each
 %          reconstruction are saved to a separate file called

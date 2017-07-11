@@ -41,7 +41,7 @@
 %             to make sure we don't run the same simulation twice as it's
 %             always faster to check against a lookup table than it is to
 %             simulate more data.
-% * momenta:
+% * momenta: nx9 matrix
 % * tolerance: error threshold below which a geometry is considered to be
 %              a good, or optimal, solution. Generally, using just the
 %              coarse lookup table, you can get down to errors of ~5e-48,
@@ -54,8 +54,8 @@
 %              row of zeros is returned.
 % 
 % Outputs:
-% * bestGeometries:
-% * auxtable:
+% * bestGeometries: nx12 matrix
+% * auxtable: nx12 matrix
 % 
 % Notes: * All momentum triples should be ordered as OCS in table,
 %          auxtable and momenta matrices!
