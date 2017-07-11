@@ -154,13 +154,13 @@ Switching gears a little bit in this subsection, we'll look at a general strateg
 
 The approximation employed may be termed the \emph{model function} so that the approximate problem at iterate $x_k$ becomes
 \begin{equation}
-\operatorname{minimize}_p m_k(x_k + p)
+\operatornamewithlimits{minimize}_p m_k(x_k + p)
 \end{equation}
 where $p$ is the candidate step so that $x_k + p$ lies within the trust region. A very popular model function takes the form of a quadratic approximation using the first two terms of a Taylor approximation of the objective function at the iterate point
 \begin{equation}
   m_k(x_k + p) = f(x_k) + p^T \nabla f(x_k) + \frac{1}{2} p^T H[f(x_k)] p
 \end{equation}
-where $\nabla f(x_k)$ and $H[f(x_k)]$ are the gradient and Hessian respectively, of the objective function $f$ at the point $x_k$ \citep{More83}. A quadratic function is convex and thus such a convex ``subproblem'' that locally approximates the optimization problem can be solved efficiently.
+where $\nabla f(x_k)$ and $H[f(x_k)]$ are the gradient and Hessian respectively, of the objective function $f$ at the point $x_k$ \citep{More83}. Recall that the Hessian is a square matrix of second-order partial derivatives with entries $H[f(x)]_{i,j} = \partial^2 f/\partial x_i \partial x_j$. A quadratic function is convex and thus such a convex ``subproblem'' that locally approximates the optimization problem can be solved efficiently.
 
 Trust regions see a great deal of use in nonlinear optimization methods, and can be modified for constrained optimization. Beyond the choice of approximation and trust region type, choosing the region size and shape, the step size, and the method used to solve even the trust region subproblem are important \citep[ch. 4]{Nocedal06}. Another class of methods serving a similar purpose are line search methods where a direction is first chosen to search for the next iterate, so that the step size is chosen second. Line search methods are in a sense the dual of trust region methods, where the step size (trust region radius or boundary) is chosen first, then a direction is chosen \citep[ch. 1]{Nocedal06}.
 
@@ -170,43 +170,64 @@ Having discussed some important ideas and concepts from mathematical optimizatio
 \subsubsection*{Introduction of a logarithmic barrier function}
 The basic idea behind interior-point methods is to modify the original optimization problem to take into account the constraint functions by modifying the objective function to penalize guesses that leave the feasible region, that is guesses that break the inequality and equality constraints. As this may modify the optimal solution, the approximation is parameterized by a real parameter $\mu > 0$ that is relaxed as a local minimum is approached, so you are essentially solving a series of approximate optimization ``subproblems'' that converges to the original problem as $\mu \rightarrow 0$. A very popular approximation is to use a logarithmic barrier that induces a penalty that approaches $\infty$ as you approach any barrier defined by a constraint, that is the penalty increases exponentially as a constraint is close to being violated. This approach is derived and described in detail by \citet{Byrd99,Byrd00,Waltz06} as well as by \citet[ch. 19]{Nocedal06}.
 
+To begin we will rewrite the original optimization problem \eqref{eq:op} as
 \begin{align}
-\mathrm{minimize} \quad & f_\mu(x,s) = f(x) - \mu \sum_{i=1}^{m} \ln s_i \nonumber \\
-\mathrm{subject\;to} \quad & g_i(x) + s_i = 0 \\
-                           & h_i(x) = 0 \nonumber
+\mathrm{minimize}   \quad & f_0(x) \nonumber \\
+\mathrm{subject\;to} \quad &
+f_i(x) + s_i = 0, \; i \in \left\{1, \dots, m \right\}\\
+& h_i(x) = 0, \; i \in \left\{1, \dots, p \right\} \nonumber
 \end{align}
+where we have transformed the inequalities $f_i(x) \le 0$ into equalities by the introduction of so-called \emph{slack variables} $s_i \ge 0$. If the slack variable $s_i$ associated with the constraint $f_i(x) \le 0$ is positive ($s_ > 0$) for a given solution then the constaint is being obeyed and does not restrict the possible steps the algorithm may take. Points with $s_i < 0$ represent unfeasible solutions that do not obey the constraint $f_i(x) \le 0$. If $s_i = 0$ the constraint $f_i(x) \le 0$ is said to be \emph{binding} in that the possible steps to be taken are restricted but the constraint is still obeyed. The logarithmic barrier will penalize solutions exponentially as any of the slack variables $s_i$ approach zero.
 
-If the problem is locally convex, then a trust region subproblem is created and solved to take the next step. Otherwise, a direct step is taken to solve the KKT optimiality conditions.
+Now that we have introduced slack variables that allow us to penalize solutions that are very close to breaking a constraint, we can now modify the objective function by appending to it the logarithmic barrier penalty function,
+\begin{align} \label{eq:barrier}
+\operatornamewithlimits{minimize}_{x,s}\quad &
+  f_0(x) - \mu \sum_{i=1}^m \ln s_i \nonumber \\
+\mathrm{subject\;to} \quad &
+  f_i(x) + s_i = 0, \; i \in \left\{1, \dots, m \right\} \\
+& h_i(x) = 0, \; i \in \left\{1, \dots, p \right\} \nonumber
+\end{align}
+where $\mu > 0$ is a real positive parameter and $\ln$ denotes the natural logarithm function. The interior-point approach involves solving the barrier subproblem \eqref{eq:barrier} for a sequence of positive barrier parameters $\mu_k$ that converges to zero, thus reproducing and hopefully solving the original optimization problem while accounting for the constraints. Thus interior-point methods get their name from the fact that iterates are prevented from leaving the region of feasible solutions, however most modern interior-point methods can start from any initial guess $x_0$.
+
+At each iteration, if the problem is locally convex then a trust region subproblem is created and solved to take the next step. Otherwise, a direct step is taken that attempts to converge on an optimal solution by solving the KKT optimiality conditions \eqref{eq:kkt}. Thus such methods are sometimes referred to as \emph{primal-dual interior-point methods} as attempting to solve the KKT equations involves attempting to solve both the primal and dual problem simultaneously.
 
 \subsubsection*{Direct step by solving the KKT optimiality conditions}
+Applying Newton's method to the KKT optimality conditions \eqref{eq:kkt} for the barrier subproblem \eqref{eq:barrier} yields a system of equations for the step size and direction to be taken, $\Delta x$ and $\Delta s$, which may be written in matrix form as \citep[p. 566]{Nocedal06}
 \begin{equation}
 \begin{pmatrix}
-  H   & 0        & J_h^T & J_g^T \\
-  0   & S\Lambda & 0     & -S \\
-  J_h & 0        & I     & 0 \\
-  J_g & -S       & 0     & I
+H   & 0       & -J_h^T & -J_f^T \\
+0   & \Lambda & 0      & S \\
+J_h & 0       & 0      & 0 \\
+J_f & -I      & 0      & 0
 \end{pmatrix}
 \begin{pmatrix}
-  \Delta x  \\
-  \Delta s  \\
-  -\Delta y \\
-  -\Delta \lambda \\
+\Delta x  \\
+\Delta s  \\
+\Delta \nu \\
+\Delta \lambda \\
 \end{pmatrix}
-=
+= -
 \begin{pmatrix}
-\nabla f - J_h^T y - J_g^T \lambda  \\
+\nabla f_0(x) - J_f^T \lambda - J_h^T \nu  \\
 S\Lambda - \mu e \\
 h \\
-g + s \\
+f + s \\
 \end{pmatrix}
 \end{equation}
-where $H$ is the Hessian of the Lagrangian of $f_\mu$
+where $f = (f_1, f_2, \dots, f_m)$, $h = (h_1, h_2, \dots, h_p)$, and $s = (s_1, s_2, \dots, s_m)$ are vectors containing the inequality constraint functions, equality constraint functions, and slack variables, respectively. $\lambda \in \mathbb{R}^m$ and $\nu \in \mathbb{R}^p$ are the Lagrange multipliers associated with the constraint functions $f_i$ and $h_i$ respectively. $H$ is the Hessian of the Lagrangian of the objective function $f_0$,
 \begin{equation}
-H = \nabla^2 f(x) + \sum_i \lambda_i \nabla^2 g_i(x) + \sum_j \lambda_j \nabla^2 h_j(x),
+H = H[L(x,\lambda,\nu)] = H[f(x)] + \sum_{i=1}^m \lambda_i H[f_i(x)] + \sum_{i=1}^p \nu_i H[h_i(x)],
 \end{equation}
-$J_g$ and $J_h$ are the Jacobians of the constraint function $g$ and $h$ respectively, $S = \operatorname{diag}(s)$, $\Lambda = \operatorname{diag}(\lambda)$, $\lambda$ and $y$ are the Lagrange multipliers associated with the constraint functions $g$ and $h$ respectively, and $e$ is a vector of ones with the same size as $g$.
+and $J_f$ and $J_h$ are the Jacobian matrices of the constraint functions $f_i(x) \le 0$ and $h_i(x) = 0$ respectively. Recall that the Jacobian matrix is a square matrix containing the first-order partial derivatives of a vector-valued function with entries $J[f(x)]_{i,j} = \partial f_i / \partial x_j$. In this case the $i^\mathrm{th}$ row of $J_f$ is the partial derivatives of the constraint function $f_i(x)$, $(\partial f_i/\partial x_1, \dots, \partial f_i/\partial x_n)$. $S = \operatorname{diag}(s)$ and $\Lambda = \operatorname{diag}(\lambda)$ are diagonal matrices with diagonal entries given by the vectors $s$ and $\lambda$. That is, $S = \operatorname{diag}(s) = \operatorname{diag}(s_1, s_2, \dots, s_m)$ is a matrix with diagonal entries $s_1, s_2, \dots, s_m$, for example. $e$ is a vector of ones with the same size as $h$.
 
-\subsubsection*{Conjugate gradient step by solving a trust region subproblem}
+In order to solve for the steps $\Delta x$ and $\Delta s$, MATLAB factorizes the matrix into its LDL (or Cholesky) decomposition which constitutes the most computationally expensive step of using an interior-point method. This step also allows us to check whether we are at an optimal solution given by a local minima or maxima as the Hessian is positive-definite at an optimal point (also called the second derivative test).
+
+\subsubsection*{Trust region step}
+If the Hessian is not positive-definite (that is, we have not arrived at an optimal point), the algorithm may attempt a trust region step within a trust region of some radius $R$ if the objective function is locally convex. The trust region subproblem is given by
+\begin{equation}
+\operatornamewithlimits{min}_{\Delta x, \Delta s} \nabla f_0(x_k)^T \Delta x + \frac{1}{2} \Delta x^T H[L]\Delta x + \mu e^T S^{-1} \Delta s + \frac{1}{2}\Delta s^T S^{-1} \Lambda \Delta s
+\end{equation}
+subject to the approximate constraints $f + J_f \Delta x + \Delta s = 0$ and   $h + J_h \Delta x = 0$, where all the variables are as defined for the Newton step described above. The steps $\Delta x$ and $\Delta s$ that minimize the quadratic function are taken by the algorithm. $H[L]$ denotes the Hessian of the Lagrangian of the objective function $f_0$. It is worth mentioning that the calculation of the Hessian is a computationally intensive task and thus it is approximated by one of a number of algorithms.
 
 \subsection{Curse of dimensionality and possible solutions} \label{ssec:curse}
 The curse of dimensionality, a term first introduced by \citet{Bellman57} when considering problems in dynamic optimization, refers to the exponential increase in volume when adding extra dimensions to Euclidean space \citep{Keogh10}. It manifests itself in two ways when tackling the geometry reconstruction problem for larger and larger molecules, as we need $3N-6$ parameters to describe the geometry of an molecule with $N \ge 3$ atoms. Firstly, the parameter space or phase space to be searched increases exponentially with $N$, and with this increase may come an increase in local minima, and possible an increase in the number of degenerate geometries. While we believe, anecdotally, that interior-point methods will still be feasible for polyatomic molecules with several atoms, convergence will definitely take longer and multiple runs may be required before finding a feasible geometry or any degenerate geometries, possibly necessitating the use of a supercomputer cluster.
@@ -215,7 +236,7 @@ The second manifestation, which seems more severe from preliminary investigation
 
 One easy method of tackling this problem when attempting to reconstruct larger molecules is to fix certain parameters of the molecule's geometry, ones which may exhibit very low variability. An example may be the triple \ch{C+C} bond in acetylene.
 
-\section{Implementation}
+\section{Implementation} \label{sec:optImplementation}
 As mentioned in the previous section, there are many complications involved with implementing advanced optimization algorithms such as the interior-point method we wish to use, and so we turn to the readily-available and mature implemention in MATLAB's Optimization Toolbox in conjunction with the Global Optimization and Parallel Processing Toolboxes. In the spirit of open science and reproducibility, we strongly feel that we should have chosen an open-source implementation however this was not a consideration at the beginning of this project and the MATLAB implementation seems to be superior to most of the available alternatives we inspected, proprietary and open-source, and is well-documented and easy to use as opposed to specialized mathematical optimization software developed for research purposes. So we see the use of MATLAB as a neccessary evil at this point in time.
 
 The concern behind relying on proprietary software is mainly to do with scientific reproducibility in computational studies \citep{Easterbrook14} for which \citet{Millman14} and \citet{Wilson14} provide excellent advice. MATLAB is popular enough and a standard piece of software in many fields that one may quite easily find a usable instance in an academic setting to run the code in appendix \ref{appx:code} and replicate the results presented here. However, in order to reproduce our results from scratch and verify their correctness, the optimization code would need to be inspected, which is impossible in this case due to the proprietary nature of MATLAB. This was not as big a concern with the lookup table as it did not rely on any MATLAB-specific library functions that do not have direct analogues in other programming environments.
