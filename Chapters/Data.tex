@@ -78,7 +78,7 @@ p_x = \frac{m(x-x_0)}{t} ,\;
 p_y = \frac{m(y-y_0)}{t} ,\;
 p_z = \frac{qV}{2\ell} \left( \frac{t_0^2 - t^2}{t} \right)
 \end{equation}
-where $m$ is the atom's mass, $(x,y)$ is the location the atom collided with the MCP detector, and $(x_0,y_0)$ is the location that the Coulomb explosion originated. The location $(0.5,0.5)$ corresponds to the physical center of the MCP detector. $q$ is the net charge of the atom, $V$ is the value of the constant electric potential the atom is subjected to, and $\ell$ is the distance from the location of the Coulomb explosion to the detector. $t$ is measured time of flight (between Coulomb explosion and detection) of the atom and 
+where $m$ is the atom's mass, $(x,y)$ is the location the atom collided with the MCP detector, and $(x_0,y_0)$ is the location that the Coulomb explosion originated. The location $(0.5,0.5)$ corresponds to the physical center of the MCP detector. $q$ is the net charge of the atom, $V$ is the value of the constant electric field the atom is subjected to, and $\ell$ is the distance from the location of the Coulomb explosion to the detector. $t$ is measured time of flight (between Coulomb explosion and detection) of the atom and 
 \begin{equation}
 t_0 = \sqrt{\frac{2d\ell}{V} \left( \frac{m}{q} \right)}
 \end{equation}
@@ -235,7 +235,7 @@ where $i,j \in \lbrace 1,2,\dots, n \rbrace$ and so the second summation is over
 \begin{subequations}
   \begin{align}
   \frac{d\mathbf{r}_i}{dt} &= \frac{\partial \mathcal{H}}{\partial \mathbf{p}_i} = \frac{\mathbf{p}_i}{m_i} \\
-  \frac{d\mathbf{p}_i}{dt} &= \frac{\partial \mathcal{H}}{\partial \mathbf{r}_i} = \frac{1}{4\pi\epsilon_0}\sum_{j, \; j \ne i} \frac{\mathbf{r}_i - \mathbf{r}_j}{|\mathbf{r}_i - \mathbf{r}_j|^3}
+  \frac{d\mathbf{p}_i}{dt} &= -\frac{\partial \mathcal{H}}{\partial \mathbf{r}_i} = -\frac{1}{4\pi\epsilon_0}\sum_{j, \; j \ne i} \frac{\mathbf{r}_i - \mathbf{r}_j}{|\mathbf{r}_i - \mathbf{r}_j|^3}
   \end{align}
 \end{subequations}
 where $i$ is held fixed over the second summation. With appropriate initial conditions this system of $6n$ scalar first-order ordinary differential equations may be easily solved using, for example, the classical fourth-order Runge-Kutta method for numerically solving ordinary differential equations. The atoms are assumed to be at rest so that $\mathbf{p}_i(t=0) = 0$, while the initial positions, $\mathbf{r}_i(t=0)$, are chosen to correspond to the molecular geometry.

@@ -318,10 +318,10 @@ The high precision to which we were able to recover the two degenerate geometrie
 % \emph{Degenerate geometries exist}---An unexpected result of \\
 
 \noindent
-\emph{Inability to precisely reconstruct geometries}---Using just the lookup table itself, you are limited to recovering molecular geometries contained in the lookup table and nothing in between, severely limiting the resolution of reconstructed geometrie. \\
+\emph{Inability to precisely reconstruct geometries}---Using just the lookup table itself, you are limited to recovering molecular geometries contained in the lookup table and nothing in between, severely limiting the resolution of reconstructed geometries. \\
 
 \noindent
-\emph{Inability to differentiate between global and local minima}---The lookup table cannot choose between two degenerate geometries and due to it's low resolution it cannot distinguish between global and local minima. It may be easily modified to report on multiple solutions but doing so may be computationally expensive. A more sophisticated approach should be sought first. \\
+\emph{Inability to differentiate between global and local minima}---The lookup table cannot choose between two degenerate geometries and due to its low resolution it cannot distinguish between global and local minima. It may be easily modified to report on multiple solutions but doing so may be computationally expensive. A more sophisticated approach should be sought first. \\
 
 \noindent
 \emph{Inability to scale to larger molecules}---As discussed in section \ref{ssec:LTspace}, trying to use the lookup table to reconstruct molecules containing even as little as 4 atoms requires prohibitive amounts of storage space ($\SI{>100}{\tera\byte}$) to store the lookup table. This may be circumvented by fixing some molecular parameters, such as maybe the \ch{C+C} triple bond length in acetylene, if they vary very little and are not of interest. However, this fix only reduces the dimensionality by one so it is unlikely to be an overall solution.

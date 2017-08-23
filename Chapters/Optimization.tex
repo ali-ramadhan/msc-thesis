@@ -59,14 +59,14 @@ Algorithms do exist for the solution of nonlinear least-squares problems such as
 % It is worth showing that not every least-squares minimization problem is a convex optimization problem.
 
 \subsection{Duality}
-In order to describe and understand the interior-point method we use, it is neccessary that we look at the concept of duality. Every optimization problem may be viewed from two different perspectives, that of the original, or \emph{primal}, problem and the \emph{dual} problem. Solving the dual problem provides a lower bound to the primal problem as we will show. Additional, by attempting to solve both problems at the same time, as interior-point methods do, an optimal solution may be found more efficiently.
+In order to describe and understand the interior-point method we use, it is necessary that we look at the concept of duality. Every optimization problem may be viewed from two different perspectives, that of the original, or \emph{primal}, problem and the \emph{dual} problem. Solving the dual problem provides a lower bound to the primal problem as we will show. Additional, by attempting to solve both problems at the same time, as interior-point methods do, an optimal solution may be found more efficiently.
 
-We begin by defining the \emph{Langrangian} associated with the optimization problem \eqref{eq:op} as
+We begin by defining the \emph{Lagrangian} associated with the optimization problem \eqref{eq:op} as
 \begin{equation}
 L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^m \lambda_i f_i(x)
 + \sum_{i=1}^p \nu_i h_i(x)
 \end{equation}
-where $L: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$ and $\operatorname{dom} L = \mathcal{D} \times \mathbb{R}^m \times \mathbb{R}^p$. $\lambda_i$ is the Langrange multiplier associated with the inequality constraint $f_i(x) \leq 0$ and $\nu_i$ is the Langrange multiplier associated with the equality constraint $h_i(x) = 0$. Together, $\lambda \in \mathbb{R}^m$, and $\nu \in \mathbb{R}^p$, are called the \emph{dual variables} or \emph{Langrange multiplier vectors}. The basic idea is that we're accounting for the constraint functions by adjusting the objective function to include a weighted sum of the constraint functions.
+where $L: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$ and $\operatorname{dom} L = \mathcal{D} \times \mathbb{R}^m \times \mathbb{R}^p$. $\lambda_i$ is the Lagrange multiplier associated with the inequality constraint $f_i(x) \leq 0$ and $\nu_i$ is the Langrange multiplier associated with the equality constraint $h_i(x) = 0$. Together, $\lambda \in \mathbb{R}^m$, and $\nu \in \mathbb{R}^p$, are called the \emph{dual variables} or \emph{Langrange multiplier vectors}. The basic idea is that we're accounting for the constraint functions by adjusting the objective function to include a weighted sum of the constraint functions.
 
 The \emph{Lagrange dual function} is defined as the minimum value of the Lagrangian $L$ over $x$
 \begin{equation}
@@ -82,9 +82,9 @@ where $g: \mathbb{R}^m \times \mathbb{R}^p \rightarrow \mathbb{R}$. The $\inf$ o
 \begin{proof}
   Denote the optimal value of the dual function by $p^\star$ and let $x'$ denote a feasible input of the Lagrangian, that is it satisfies the constraints $f_i(x') \le 0$ and $h_i(x') = 0$. Then for $\lambda \succeq 0$ and any $\nu$ we have that
   
-  $$ \sum_{i=1}^m \lambda_i f_i(x') + \sum_{i=1}^p \lambda_i h_i(x') \le 0 $$
+  $$ \sum_{i=1}^m \lambda_i f_i(x') + \sum_{i=1}^p \nu_i h_i(x') \le 0 $$
   so that
-  $$ L(x',\lambda,\nu) = f_0(x') + \sum_{i=1}^m \lambda_i f_i(x') + \sum_{i=1}^p \lambda_i h_i(x') \le f_0(x') $$
+  $$ L(x',\lambda,\nu) = f_0(x') + \sum_{i=1}^m \lambda_i f_i(x') + \sum_{i=1}^p \nu_i h_i(x') \le f_0(x') $$
   and
   $$ g(\lambda, \nu) = \inf_{x \in \mathcal{D}} L(x, \lambda, \nu) \le L(x', \lambda, \nu) \le f_0(x') $$
   which must hold for every feasible point $x'$ including the optimal solution $x^\star$ and thus
@@ -128,7 +128,7 @@ however each term is nonpositive so we can recast this condition as
 \begin{equation}
 \lambda_i f_i(x^\star) = 0, i = 1,2,\dots,m
 \end{equation}
-This provides a forth optimality condition, known as \emph{complementary slackness}.
+This provides a fourth optimality condition, known as \emph{complementary slackness}.
 
 For the fifth condition, we realize that a function's first-derivative must vanish at a minima or maxima. Since $x^\star$ minimizes the Lagrangian $L(x, \lambda^\star, \nu^\star)$ over $x$, its gradient must be zero at the minima or maximum $x^\star$, giving us
 \begin{equation}
