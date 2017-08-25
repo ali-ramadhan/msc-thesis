@@ -22,6 +22,12 @@
 
 \input{classicthesis-config}
 
+% Moved all page numbers to the bottom center:
+% https://tex.stackexchange.com/questions/232693/get-the-page-number-to-the-bottom-with-classicthesis
+\clearscrheadfoot
+\ohead[]{\headmark}
+\cfoot[\pagemark]{\pagemark}
+
 % \makeindex
 
 \addbibresource{Bibliographies/Introduction.bib}
@@ -40,6 +46,12 @@
 %\setbibpreamble{}
 \pagenumbering{roman}
 \pagestyle{plain}
+
+% Moving page numbers to bottom center
+% https://tex.stackexchange.com/questions/148387/setting-page-numbers-in-bottom-center-in-classicthesis-two-sided-page
+% \deftripstyle{pgnumbottomcenter}{}{}{}{}{\pagemark{}}{}
+% \pagestyle{pgnumbottomcenter}
+% \renewcommand{\chapterpagestyle}{pgnumbottomcenter}
 
 \include{FrontBackmatter/ThesisTitlepage}
 \include{FrontBackmatter/AuthorDeclaration}
